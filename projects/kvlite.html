@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>KVLite · Vinodhini</title>
-<meta name="description" content="KVLite, a crash-safe key-value database in Python with a write-ahead log, checksums, crash recovery and a Redis-style TCP server. Built by Vinodhini.">
+<meta name="description" content="KVLite, a crash-safe key-value database in Python with a write-ahead log and TCP server. Built by Vinodhini.">
 <meta property="og:title" content="KVLite · Vinodhini">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -25,146 +25,20 @@
   </header>
   <main>
 
-    <section class="d-hero">
-      <a class="back" href="../index.html#projects">← Back to portfolio</a><br><br>
-      <span class="eyebrow">Databases</span>
+    <section class="d-hero lean">
+      <a class="back" href="../index.html#projects">← Back to portfolio</a>
+      <span class="eyebrow">Database · Python</span>
       <h1>KVLite</h1>
-      <p class="tagline">A key-value database that survives a crash, a half-written record, or a pulled plug.</p>
-      <div class="chips"><span class="chip hot">Python</span><span class="chip">Write-ahead log</span><span class="chip">CRC32</span><span class="chip">TCP sockets</span><span class="chip">Concurrency</span><span class="chip">GitHub Actions</span></div>
-      <div class="cta-row">
-        <a class="btn primary" href="https://github.com/vinovj27/Kvlite" target="_blank" rel="noopener">View project<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 17 17 7M9 7h8v8"/></svg></a>
-        <a class="btn" href="https://github.com/vinovj27/Kvlite/tree/main/kvlite" target="_blank" rel="noopener"><svg viewBox="0 0 16 16" aria-hidden="true" style="fill:currentColor;stroke:none"><path d="M8 0C3.58 0 0 3.58 0 8a8 8 0 0 0 5.47 7.59c.4.07.55-.17.55-.38v-1.33c-2.23.48-2.7-1.07-2.7-1.07-.36-.92-.89-1.17-.89-1.17-.73-.5.06-.49.06-.49.8.06 1.23.83 1.23.83.71 1.23 1.88.87 2.34.67.07-.52.28-.87.5-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82a7.6 7.6 0 0 1 4 0c1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48v2.2c0 .21.15.46.55.38A8 8 0 0 0 16 8c0-4.42-3.58-8-8-8z"/></svg>Source code</a>
-      </div>
-      <img class="d-shot" src="../assets/thumbs/kvlite.jpg" alt="Two KVLite terminal sessions: data written, server restarted, all 4 records recovered" width="960" height="600">
+      <p class="tagline">A database that survives a pulled plug.</p>
+      <div class="cta-row"><a class="btn primary" href="https://github.com/vinovj27/Kvlite" target="_blank" rel="noopener">View project<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 17 17 7M9 7h8v8"/></svg></a><a class="btn" href="https://github.com/vinovj27/Kvlite/tree/main/kvlite" target="_blank" rel="noopener"><svg viewBox="0 0 16 16" aria-hidden="true" style="fill:currentColor;stroke:none"><path d="M8 0C3.58 0 0 3.58 0 8a8 8 0 0 0 5.47 7.59c.4.07.55-.17.55-.38v-1.33c-2.23.48-2.7-1.07-2.7-1.07-.36-.92-.89-1.17-.89-1.17-.73-.5.06-.49.06-.49.8.06 1.23.83 1.23.83.71 1.23 1.88.87 2.34.67.07-.52.28-.87.5-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82a7.6 7.6 0 0 1 4 0c1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48v2.2c0 .21.15.46.55.38A8 8 0 0 0 16 8c0-4.42-3.58-8-8-8z"/></svg>Source code</a></div>
+      <img class="d-shot" src="../assets/thumbs/kvlite.jpg" alt="KVLite recovering every record after a restart" width="960" height="600">
     </section>
 
-    <section class="d-section">
-      <h2>Overview</h2>
-      <div>
-        <p>A database's hardest promise is durability: once it says "saved", the data must still be there after a crash. I built KVLite to learn how real databases keep that promise, using the same technique as Redis's append-only file and Postgres crash recovery.</p>
-        <p>Every write is appended to a checksummed <strong>write-ahead log</strong> before it is applied in memory. On restart, KVLite replays the log. If a power cut left a half-written record, its checksum fails, replay stops there, and the log is truncated back to the last good record. A TCP server speaks a Redis-style text protocol to many clients at once.</p>
-      </div>
-    </section>
-
-    <section class="d-section">
-      <h2>At a glance</h2>
-      <div class="figs">
-        <div><b>~59K</b><span>buffered writes per second</span></div>
-        <div><b>~1.6M</b><span>reads per second</span></div>
-        <div><b>0</b><span>acknowledged writes lost across restarts in tests</span></div>
-      </div>
-    </section>
-
-    <section class="d-section">
-      <h2>Architecture</h2>
-      <div>
-        <div class="flow">
-          <div class="node"><b>Clients</b><span>Redis-style commands over TCP</span></div><span class="arrow">→</span>
-          <div class="node key"><b>KVStore</b><span>1 · append to wal.log (CRC32, optional fsync) · 2 · apply in memory</span></div><span class="arrow">→</span>
-          <div class="node"><b>Disk</b><span>wal.log + snapshot.db</span></div>
-        </div>
-        <p style="margin-top:18px">Compaction keeps the log from growing forever:</p>
-        <div class="states">
-          <span class="s q">live keys</span><span class="a">→</span><span class="s r">snapshot.tmp</span><span class="a">fsync →</span><span class="s d">atomic rename</span><span class="a">→</span><span class="s x">truncate WAL</span>
-        </div>
-      </div>
-    </section>
-
-    <section class="d-section">
-      <h2>Guarantees</h2>
-      <div class="table-wrap"><table class="spec">
-        <thead><tr><th>Problem</th><th>How KVLite handles it</th></tr></thead>
-        <tbody>
-          <tr><td>The process crashes after a write</td><td>The record is already in the write-ahead log, which is replayed on startup.</td></tr>
-          <tr><td>Power fails mid-write</td><td>The torn record fails its CRC32 check; replay stops there and the log is truncated to the last good record.</td></tr>
-          <tr><td>A record is corrupted on disk</td><td>A checksum mismatch means the record is never applied.</td></tr>
-          <tr><td>Compaction crashes halfway</td><td>The new snapshot is written to a temp file, fsynced, then atomically renamed, so the old or new snapshot is always complete.</td></tr>
-          <tr><td>Keys or values contain tabs or newlines</td><td>Keys and values are base64-encoded in the log, so any text is safe.</td></tr>
-          <tr><td>Many clients increment one counter</td><td>Storage operations share one lock, so <code>INCR</code> is atomic.</td></tr>
-        </tbody>
-      </table></div>
-    </section>
-
-    <section class="d-section">
-      <h2>The core idea in code</h2>
-      <div>
-        <p>Each log record carries its own checksum, so recovery can tell a complete record from a torn one:</p>
-        <div class="code"><pre><span class="k">def</span> encode(op, key, value=<span class="s">""</span>, expires_at=<span class="n">0.0</span>):
-    body = f<span class="s">"{op}\t{b64(key)}\t{b64(value)}\t{expires_at!r}"</span>
-    <span class="k">return</span> f<span class="s">"{body}\t{zlib.crc32(body.encode()):08x}\n"</span>.encode()</pre></div>
-        <p style="margin-top:18px">Writes are logged before they become visible:</p>
-        <div class="code"><pre><span class="k">with</span> self._lock:
-    self._wal.write(encode(<span class="s">"SET"</span>, key, value, expires_at))
-    self._wal.flush()
-    <span class="k">if</span> self.durability <span class="k">is</span> Durability.FSYNC:
-        os.fsync(self._wal.fileno())
-    self._data[key] = (value, expires_at)</pre></div>
-      </div>
-    </section>
-
-    <section class="d-section">
-      <h2>In action</h2>
-      <div>
-        <div class="term"><div class="bar"><i></i><i></i><i></i></div>
-<pre><span class="p">kvlite&gt;</span> SET user:1 Ada Lovelace
-<span class="ok">+OK</span>
-<span class="p">kvlite&gt;</span> SETEX session:42 60 tok_abc
-<span class="ok">+OK</span>
-<span class="p">kvlite&gt;</span> INCR page_views
-<span class="ok">:1</span>
-<span class="p">kvlite&gt;</span> GET user:1
-<span class="ok">$Ada Lovelace</span>
-<span class="p">kvlite&gt;</span> STATS
-<span class="ok">+keys=3 wal_records=3 recovered=0 compactions=0</span></pre></div>
-        <p style="margin-top:14px">Stop the server with Ctrl+C and start it again: every key is still there, and <code>STATS</code> reports how many records were recovered.</p>
-      </div>
-    </section>
-
-    <section class="d-section">
-      <h2>Durability vs. speed</h2>
-      <div>
-        <div class="table-wrap"><table class="spec">
-          <thead><tr><th>Mode</th><th>Writes/s</th><th>Reads/s</th><th>Survives</th></tr></thead>
-          <tbody>
-            <tr><td><code>fsync</code></td><td>~7,000</td><td>~1.1M</td><td>power loss</td></tr>
-            <tr><td><code>buffered</code></td><td>~59,000</td><td>~1.6M</td><td>a process crash</td></tr>
-          </tbody>
-        </table></div>
-        <p style="margin-top:14px">The gap is the cost of making the disk confirm every write, a trade-off every database makes. Measured with the built-in benchmark on a small cloud VM; numbers vary by machine.</p>
-      </div>
-    </section>
-
-    <section class="d-section">
-      <h2>What the tests prove</h2>
-      <ul class="ticks">
-        <li>Data survives restart, including deletes and overwrites</li>
-        <li>A torn write after a simulated crash is truncated, and new writes then succeed</li>
-        <li>A record with a forged checksum is never applied</li>
-        <li>TTL expiry works in memory and across restarts</li>
-        <li>Compaction shrinks the log to zero and keeps every live key</li>
-        <li>6,000 writes from 6 threads, interleaved with compactions, all survive restart</li>
-        <li>8 threads × 500 <code>INCR</code>s land on exactly 4,000</li>
-        <li>10 TCP clients in parallel read back their own writes</li>
-      </ul>
-    </section>
-
-    <section class="d-section" id="run">
-      <h2>Run it</h2>
-      <div>
-        <p>Python 3.10 or newer, no installs needed.</p>
-        <div class="code"><pre>python -m kvlite serve                 <span class="c"># start on port 6380, data in ./data</span>
-python -m kvlite cli                   <span class="c"># interactive client in a second terminal</span>
-python -m kvlite bench                 <span class="c"># throughput in both durability modes</span>
-python -m unittest discover -s tests</pre></div>
-      </div>
-    </section>
-
-    <section class="d-section">
-      <h2>What I'd build next</h2>
-      <div class="next"><div>Group commit: batch several writers into one fsync</div><div>Sorted on-disk segments (an LSM tree) so data can exceed memory</div><div>Leader/follower replication by streaming the WAL</div></div>
-    </section>
-    <section class="d-section">
-      <h2>Keep exploring</h2>
+    <section class="lean-block"><div class="big-figs"><div><b>~59K</b><span>writes per second</span></div><div><b>~1.6M</b><span>reads per second</span></div><div><b>0</b><span>writes lost across restarts</span></div></div></section>
+    <section class="lean-block"><h2 class="mini">Highlights</h2><div class="hl-cards"><article><span class="ic"><svg viewBox="0 0 24 24" aria-hidden="true"><ellipse cx="12" cy="6" rx="8" ry="3"/><path d="M4 6v12c0 1.7 3.6 3 8 3s8-1.3 8-3V6M4 12c0 1.7 3.6 3 8 3s8-1.3 8-3"/></svg></span><h3>Write-ahead log</h3><p>Every write is logged before it's applied.</p></article><article><span class="ic"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="5" y="11" width="14" height="10" rx="2"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/></svg></span><h3>Crash recovery</h3><p>Checksums catch half-written records and roll back cleanly.</p></article><article><span class="ic"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="9" cy="8" r="3.5"/><path d="M2.5 20a6.5 6.5 0 0 1 13 0M16 4.5a3.5 3.5 0 0 1 0 7M21.5 20a6.5 6.5 0 0 0-4-6"/></svg></span><h3>Many clients</h3><p>A TCP server with a Redis-style protocol.</p></article></div></section>
+    <section class="lean-block"><h2 class="mini">Built with</h2><div class="chips"><span class="chip hot">Python</span><span class="chip">Write-ahead log</span><span class="chip">CRC32</span><span class="chip">TCP sockets</span><span class="chip">GitHub Actions</span></div></section>
+    <section class="lean-block">
+      <h2 class="mini">Keep exploring</h2>
       <div class="pager"><a href="../experience/tcs.html"><span>Experience</span><b>Software Engineering Intern · TCS</b></a><a href="conveyor.html"><span>Project</span><b>Conveyor</b></a><a href="sift.html"><span>Project</span><b>Sift</b></a></div>
     </section>
   </main>

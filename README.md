@@ -30,5 +30,6 @@ To publish, open **Settings → Pages**, choose **Deploy from a branch**, branch
 
 - Home page content lives in `src/page.html`; detail pages live in `src/projects/` and `src/experience/`.
 - Shared styles are in `assets/site.css`; card preview images are in `assets/thumbs/`.
-- After editing anything in `src/`, run `python tools/build_pages.py` to regenerate `index.html`, `projects/` and `experience/`.
+- Project and experience pages are generated from the table in `tools/detail_pages.py`: edit it, then run `python tools/detail_pages.py && python tools/build_pages.py`.
+- After editing `src/page.html`, run `python tools/build_pages.py` to regenerate `index.html`, `projects/` and `experience/`.
 - Replace `assets/vinodhini-round.jpg` to change the photo (square crop, about 720 px).

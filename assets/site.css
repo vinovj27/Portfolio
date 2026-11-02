@@ -299,3 +299,29 @@ table.spec code, .d-section code { font: 500 .92em var(--mono); color: var(--hig
 .work-grid.one { grid-template-columns: minmax(0, 1fr); }
 
 .d-shot { display: block; width: 100%; max-width: 100%; height: auto; margin-top: 30px; border-radius: 16px; border: 1px solid var(--line); box-shadow: 0 30px 70px -35px #000; }
+
+/* lean detail pages */
+.d-hero.lean { border-bottom: 0; margin-bottom: 0; text-align: center; display: flex; flex-direction: column; align-items: center; }
+.d-hero.lean .back { align-self: flex-start; margin-bottom: 26px; }
+.d-hero.lean h1 { background: linear-gradient(100deg, var(--ink) 30%, var(--accent-soft)); -webkit-background-clip: text; background-clip: text; color: transparent; }
+.d-hero.lean .tagline { margin-inline: auto; }
+.d-hero.lean .cta-row { justify-content: center; }
+.d-hero.lean .d-shot { margin-top: 40px; box-shadow: 0 40px 120px -40px color-mix(in srgb, var(--accent) 55%, #000); }
+.lean-block { padding-block: clamp(36px, 5vw, 56px) 0; }
+footer { margin-top: clamp(40px, 6vw, 72px); }
+h2.mini { font: 500 13px/1 var(--mono); letter-spacing: .14em; text-transform: uppercase; color: var(--accent-soft); margin: 0 0 18px; }
+.big-figs { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 14px; }
+@media (max-width: 640px) { .big-figs { grid-template-columns: minmax(0, 1fr); } }
+.big-figs div { background: var(--surface); border: 1px solid var(--line); border-radius: 18px; padding: 26px 24px; text-align: center; }
+.big-figs b { display: block; font: 800 clamp(40px, 5vw, 56px)/1 var(--display); letter-spacing: -.04em; color: var(--highlight); font-variant-numeric: tabular-nums; }
+.big-figs span { display: block; margin-top: 10px; color: var(--muted); font-size: 15px; }
+.hl-cards { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 14px; }
+@media (max-width: 760px) { .hl-cards { grid-template-columns: minmax(0, 1fr); } }
+.hl-cards article { background: var(--surface); border: 1px solid var(--line); border-radius: 18px; padding: 24px; transition: border-color .2s, transform .2s; }
+.hl-cards article:hover { border-color: var(--accent); transform: translateY(-3px); }
+.hl-cards .ic { width: 46px; height: 46px; border-radius: 12px; display: grid; place-items: center; background: color-mix(in srgb, var(--accent) 18%, var(--surface)); margin-bottom: 16px; }
+.hl-cards .ic svg { width: 24px; height: 24px; fill: none; stroke: var(--accent-soft); stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; }
+.hl-cards h3 { font: 700 20px/1.25 var(--display); margin: 0 0 6px; }
+.hl-cards p { margin: 0; color: var(--muted); font-size: 15.5px; }
+.chips.big { align-content: start; }
+.chips.big .chip { font-size: 15.5px; padding: 11px 15px; }

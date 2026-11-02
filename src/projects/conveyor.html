@@ -1,129 +1,15 @@
 title: Conveyor
-description: Conveyor, a distributed task queue in Python with leases, retries, exponential backoff and a dead-letter queue. Built by Vinodhini.
+description: Conveyor, a distributed task queue in Python with leases, retries and a dead-letter queue. Built by Vinodhini.
 <!--SPLIT-->
-    <section class="d-hero">
-      <a class="back" href="../index.html#projects">← Back to portfolio</a><br><br>
-      <span class="eyebrow">Distributed systems</span>
+    <section class="d-hero lean">
+      <a class="back" href="../index.html#projects">← Back to portfolio</a>
+      <span class="eyebrow">Distributed systems · Python</span>
       <h1>Conveyor</h1>
-      <p class="tagline">A distributed task queue that keeps going when workers crash, dependencies time out, or the broker restarts.</p>
-      <div class="chips"><span class="chip hot">Python</span><span class="chip">SQLite</span><span class="chip">HTTP API</span><span class="chip">Multiprocessing</span><span class="chip">Threading</span><span class="chip">GitHub Actions</span></div>
-      <div class="cta-row">
-        <a class="btn primary" href="https://github.com/vinovj27/Conveyor" target="_blank" rel="noopener">View project<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 17 17 7M9 7h8v8"/></svg></a>
-        <a class="btn" href="https://github.com/vinovj27/Conveyor/tree/main/conveyor" target="_blank" rel="noopener">{GITHUB}Source code</a>
-      </div>
-      <img class="d-shot" src="../assets/thumbs/conveyor.jpg" alt="Conveyor's live dashboard after a demo run: 149 jobs done, 2 dead-lettered, per-task latency" width="960" height="600">
+      <p class="tagline">A task queue that keeps working when workers crash.</p>
+      <div class="cta-row"><a class="btn primary" href="https://github.com/vinovj27/Conveyor" target="_blank" rel="noopener">View project<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 17 17 7M9 7h8v8"/></svg></a><a class="btn" href="https://github.com/vinovj27/Conveyor/tree/main/conveyor" target="_blank" rel="noopener">{GITHUB}Source code</a></div>
+      <img class="d-shot" src="../assets/thumbs/conveyor.jpg" alt="Conveyor's live dashboard after a demo run" width="960" height="600">
     </section>
 <!--SPLIT-->
-    <section class="d-section">
-      <h2>Overview</h2>
-      <div>
-        <p>Most web apps push slow work (sending email, resizing images, calling flaky APIs) onto a background queue such as Celery or Sidekiq. I built one from scratch to understand what makes them reliable.</p>
-        <p>A broker stores every job in SQLite and hands jobs to worker processes over HTTP. Each claim is a time-limited <strong>lease</strong>: running workers renew it with heartbeats, and if a worker dies, the lease expires and another worker takes the job. Failures retry with exponential backoff, and jobs that never succeed move to a dead-letter queue where a person can inspect and retry them.</p>
-      </div>
-    </section>
-
-    <section class="d-section">
-      <h2>At a glance</h2>
-      <div class="figs">
-        <div><b>0</b><span>duplicate claims with 8 threads racing for 300 jobs</span></div>
-        <div><b>0</b><span>jobs lost when a worker process is killed mid-run</span></div>
-        <div><b>13</b><span>tests, passing on Linux, macOS and Windows</span></div>
-      </div>
-    </section>
-
-    <section class="d-section">
-      <h2>Architecture</h2>
-      <div>
-        <div class="flow">
-          <div class="node"><b>Producers</b><span>enqueue over HTTP</span></div><span class="arrow">→</span>
-          <div class="node key"><b>Broker</b><span>SQLite (WAL) · leases · retries · dead letters</span></div><span class="arrow">⇄</span>
-          <div class="node"><b>Worker processes</b><span>N threads each · heartbeats</span></div>
-        </div>
-        <p style="margin-top:18px">Job lifecycle:</p>
-        <div class="states">
-          <span class="s q">queued</span><span class="a">→</span><span class="s r">running</span><span class="a">→</span><span class="s d">done</span>
-          <span class="a" style="margin-left:10px">or</span>
-          <span class="s r">running</span><span class="a">→</span><span class="s q">queued</span><span class="a">(retry after backoff, or lease expired) →</span><span class="s x">dead</span>
-        </div>
-      </div>
-    </section>
-
-    <section class="d-section">
-      <h2>Guarantees</h2>
-      <div class="table-wrap"><table class="spec">
-        <thead><tr><th>Problem</th><th>How Conveyor handles it</th></tr></thead>
-        <tbody>
-          <tr><td>Two workers grab one job</td><td>A claim is a single atomic <code>UPDATE … RETURNING</code> inside <code>BEGIN IMMEDIATE</code>, so only one worker can win.</td></tr>
-          <tr><td>A worker crashes mid-job</td><td>Its lease stops being renewed and expires; the next claim puts the job back in the queue.</td></tr>
-          <tr><td>A crashed worker reports late</td><td>Completions are fenced by worker ID, so a stale worker can't overwrite the result of the one that took over.</td></tr>
-          <tr><td>A dependency is down</td><td>Retries use exponential backoff with full jitter, capped, so retries don't stampede.</td></tr>
-          <tr><td>A job can never succeed</td><td>After <code>max_attempts</code> it moves to the dead-letter queue with its last error.</td></tr>
-          <tr><td>The broker restarts</td><td>Jobs live in SQLite in write-ahead-log mode, so the queue survives.</td></tr>
-        </tbody>
-      </table></div>
-    </section>
-
-    <section class="d-section">
-      <h2>The core idea in code</h2>
-      <div>
-        <p>Claiming a job is one statement: pick the highest-priority ready job and lease it, atomically.</p>
-        <div class="code"><pre><span class="k">UPDATE</span> jobs <span class="k">SET</span> status = <span class="s">'running'</span>, attempts = attempts + <span class="n">1</span>,
-                worker = ?, lease_until = ?
-<span class="k">WHERE</span> id = (<span class="k">SELECT</span> id <span class="k">FROM</span> jobs
-            <span class="k">WHERE</span> status = <span class="s">'queued'</span> <span class="k">AND</span> run_at &lt;= ? <span class="k">AND</span> queue <span class="k">IN</span> (…)
-            <span class="k">ORDER BY</span> priority <span class="k">DESC</span>, run_at, id <span class="k">LIMIT</span> <span class="n">1</span>)
-<span class="k">RETURNING</span> *</pre></div>
-        <p style="margin-top:18px">Backoff with full jitter spreads retries out instead of hitting a recovering service all at once:</p>
-        <div class="code"><pre><span class="k">def</span> backoff(self, attempts):
-    ceiling = min(self.backoff_cap, self.backoff_base * <span class="n">2</span> ** attempts)
-    <span class="k">return</span> random.uniform(self.backoff_base, max(self.backoff_base, ceiling))</pre></div>
-      </div>
-    </section>
-
-    <section class="d-section">
-      <h2>Chaos demo</h2>
-      <div>
-        <p><code>python -m conveyor demo</code> starts a broker, launches three worker processes, enqueues 151 jobs (CPU work, flaky calls, slow jobs and one that always fails), then kills a worker mid-job.</p>
-        <div class="term"><div class="bar"><i></i><i></i><i></i></div>
-<pre><span class="p">$</span> python -m conveyor demo
-Dashboard: http://127.0.0.1:8700
-Started 3 worker processes on 151 jobs
-<span class="bad">  Chaos: killed worker-1 mid-job; its leases expire and other workers pick the jobs up</span>
-<span class="ok">Finished in 5.8s · 118 done · 20 needed retries · 3 in the dead-letter queue</span></pre></div>
-        <p style="margin-top:14px">Every job resolves: completed, retried to success, or dead-lettered with its error. A live dashboard shows queue depth, active workers, per-task latency and a one-click retry for dead jobs.</p>
-      </div>
-    </section>
-
-    <section class="d-section">
-      <h2>What the tests prove</h2>
-      <ul class="ticks">
-        <li>Priority first, then first-in first-out within a priority</li>
-        <li>Delayed jobs are never claimed early, and named queues stay isolated</li>
-        <li>8 threads racing over 300 jobs claim each job exactly once</li>
-        <li>An expired lease is redelivered, and the stale worker is fenced out</li>
-        <li>Heartbeats keep a long job's lease alive</li>
-        <li>Retries back off, then dead-letter; a dead job can be retried</li>
-        <li>Jobs survive a broker restart</li>
-        <li>End to end over HTTP with multiple workers</li>
-      </ul>
-    </section>
-
-    <section class="d-section" id="run">
-      <h2>Run it</h2>
-      <div>
-        <p>Python 3.10 or newer, no installs needed.</p>
-        <div class="code"><pre><span class="c"># see everything at once</span>
-python -m conveyor demo
-
-<span class="c"># or run the parts yourself</span>
-python -m conveyor broker                  <span class="c"># terminal 1: broker + dashboard on :8700</span>
-python -m conveyor worker --concurrency 4  <span class="c"># terminal 2</span>
-python -m conveyor enqueue count_primes --args '{"limit": 2000000}' --priority 5
-python -m unittest discover -s tests</pre></div>
-      </div>
-    </section>
-
-    <section class="d-section">
-      <h2>What I'd build next</h2>
-      <div class="next"><div>Scheduled, cron-style recurring jobs</div><div>Per-queue rate limits</div><div>A Postgres backend using <code>SELECT … FOR UPDATE SKIP LOCKED</code></div></div>
-    </section>
+    <section class="lean-block"><div class="big-figs"><div><b>0</b><span>jobs lost when a worker is killed</span></div><div><b>0</b><span>duplicate claims under 8-thread races</span></div><div><b>151</b><span>jobs in ~6 s across 3 processes</span></div></div></section>
+    <section class="lean-block"><h2 class="mini">Highlights</h2><div class="hl-cards"><article><span class="ic"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3 4 6v6c0 5 3.5 8 8 9 4.5-1 8-4 8-9V6l-8-3z"/><path d="m9 12 2 2 4-4"/></svg></span><h3>Crash-proof</h3><p>Leases expire on dead workers, so their jobs go to healthy ones.</p></article><article><span class="ic"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20 11a8 8 0 0 0-14.9-3M4 4v4h4M4 13a8 8 0 0 0 14.9 3M20 20v-4h-4"/></svg></span><h3>Smart retries</h3><p>Exponential backoff with jitter, then a dead-letter queue.</p></article><article><span class="ic"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 20V10M10 20V4M16 20v-7M22 20H2"/></svg></span><h3>Live dashboard</h3><p>Queue depth, workers and one-click retry, updated every second.</p></article></div></section>
+    <section class="lean-block"><h2 class="mini">Built with</h2><div class="chips"><span class="chip hot">Python</span><span class="chip">SQLite</span><span class="chip">HTTP API</span><span class="chip">Multiprocessing</span><span class="chip">GitHub Actions</span></div></section>

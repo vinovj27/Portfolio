@@ -43,8 +43,8 @@ def nav() -> str:
 def pager(folder: str, current: str) -> str:
     links = [f'<a href="{"" if f == folder else "../" + f + "/"}{slug}.html"><span>{label}</span><b>{name}</b></a>'
              for f, slug, label, name in PAGES if slug != current]
-    return f"""    <section class="d-section">
-      <h2>Keep exploring</h2>
+    return f"""    <section class="lean-block">
+      <h2 class="mini">Keep exploring</h2>
       <div class="pager">{''.join(links)}</div>
     </section>
 """
