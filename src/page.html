@@ -1,423 +1,680 @@
 <title>Vinodhini · Software Engineer</title>
 <meta name="claude:viewport-fit-sides" content="cover">
-<meta name="description" content="Vinodhini — software engineer building reliable backend and data systems in Python.">
+<meta name="description" content="Vinodhini — software engineer. Python backend systems, data reconciliation at TCS, and open-source projects in distributed systems, search and databases.">
 <meta property="og:title" content="Vinodhini · Software Engineer">
-<meta property="og:description" content="I build backend systems that stay correct under pressure.">
+<meta property="og:description" content="Python backend systems, data reconciliation at scale, and open-source infrastructure projects.">
 <meta property="og:image" content="assets/og.jpg">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,600;12..96,800&family=Hanken+Grotesk:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Sora:wght@600;700;800&family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,700&family=JetBrains+Mono:wght@400;500&display=swap">
 <style>
-/* Layout: a ruled ledger — a narrow label column on the left, entries on the right. */
+/* Layout: dark studio — split hero with an orbiting portrait, then wide case-study bands. Single dark theme by design. */
 :root {
-  --paper: #edf3ee;
-  --sheet: #f7faf7;
-  --ink: #0f241b;
-  --muted: #4d6258;
-  --rule: #c7d5cb;
-  --accent: #0b7a4b;
-  --debit: #b3402a;
-  --term-bg: #0f1f18;
-  --term-ink: #d8e8de;
-  --term-dim: #7f998b;
-  --term-ok: #4fd18b;
-  --term-bad: #ff8a73;
-  --display: "Bricolage Grotesque", "Arial Narrow", system-ui, sans-serif;
-  --body: "Hanken Grotesk", system-ui, -apple-system, "Segoe UI", sans-serif;
-  --mono: "IBM Plex Mono", ui-monospace, "SFMono-Regular", Menlo, monospace;
+  color-scheme: dark;
+  --bg: #141318;
+  --surface: #1c1a22;
+  --surface-2: #24212c;
+  --line: #312d3b;
+  --ink: #f2f0f7;
+  --muted: #a6a1b3;
+  --accent: #8f45ff;
+  --accent-soft: #b88cff;
+  --accent-ink: #ffffff;
+  --highlight: #f6c94e;
+  --ok: #4fd18b;
+  --warn: #f6c94e;
+  --bad: #ff7a85;
+  --display: "Sora", "Segoe UI", system-ui, sans-serif;
+  --body: "DM Sans", system-ui, -apple-system, "Segoe UI", sans-serif;
+  --mono: "JetBrains Mono", ui-monospace, Menlo, Consolas, monospace;
 }
-@media (prefers-color-scheme: dark) {
-  :root:not([data-theme="light"]) {
-    --paper: #0a1611; --sheet: #0f1e17; --ink: #e4eee7; --muted: #93aa9d; --rule: #1f3529;
-    --accent: #3fcf89; --debit: #ff8a73; --term-bg: #06100b; color-scheme: dark;
-  }
-}
-:root[data-theme="dark"] {
-  --paper: #0a1611; --sheet: #0f1e17; --ink: #e4eee7; --muted: #93aa9d; --rule: #1f3529;
-  --accent: #3fcf89; --debit: #ff8a73; --term-bg: #06100b; color-scheme: dark;
-}
-
 * { box-sizing: border-box; }
 html { scroll-behavior: smooth; }
-body {
-  overflow-x: hidden;
-  background: var(--paper); color: var(--ink);
-  font: 400 17px/1.6 var(--body);
-  -webkit-font-smoothing: antialiased;
-}
+body { background: var(--bg); color: var(--ink); font: 400 17px/1.65 var(--body); -webkit-font-smoothing: antialiased; overflow-x: hidden; }
 a { color: inherit; }
-:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; border-radius: 4px; }
-.wrap {
-  max-width: 1160px; margin: 0 auto;
-  padding-left: max(16px, env(safe-area-inset-left, 0px));
-  padding-right: max(16px, env(safe-area-inset-right, 0px));
-}
-@media (min-width: 720px) { .wrap { padding-left: max(32px, env(safe-area-inset-left, 0px)); padding-right: max(32px, env(safe-area-inset-right, 0px)); } }
-
+::selection { background: var(--accent); color: var(--accent-ink); }
+:focus-visible { outline: 2px solid var(--accent-soft); outline-offset: 3px; border-radius: 6px; }
+.wrap { max-width: 1180px; margin: 0 auto; padding-left: max(20px, env(safe-area-inset-left, 0px)); padding-right: max(20px, env(safe-area-inset-right, 0px)); }
+.purple { color: var(--accent-soft); }
 .mono { font-family: var(--mono); }
-.label {
-  font: 500 12px/1.4 var(--mono); letter-spacing: .12em; text-transform: uppercase; color: var(--muted);
-}
+.eyebrow { font: 500 13px/1 var(--mono); letter-spacing: .14em; text-transform: uppercase; color: var(--accent-soft); display: inline-flex; align-items: center; gap: 10px; }
+.eyebrow::before { content: ""; width: 26px; height: 2px; background: var(--accent); border-radius: 2px; }
+h2.title { font: 700 clamp(32px, 4.4vw, 50px)/1.08 var(--display); letter-spacing: -.03em; margin: 14px 0 16px; text-wrap: balance; }
+.lead { color: var(--muted); max-width: 64ch; margin: 0; }
 
-/* top bar */
-.bar { display: flex; justify-content: space-between; align-items: center; gap: 16px; padding-block: 22px; border-bottom: 1px solid var(--rule); }
-.bar .mark { font: 800 18px/1 var(--display); letter-spacing: -.02em; text-decoration: none; }
-.bar .mark span { color: var(--accent); }
-.bar nav { display: flex; gap: 22px; flex-wrap: wrap; }
-.bar nav a { font: 500 14px/1 var(--body); text-decoration: none; color: var(--muted); }
-.bar nav a:hover { color: var(--ink); }
-@media (max-width: 560px) { .bar nav a.opt { display: none; } }
+/* nav */
+header.nav { display: flex; align-items: center; justify-content: space-between; gap: 16px; padding-block: 26px; }
+.brand { font: 700 20px/1 var(--display); text-decoration: none; letter-spacing: -.02em; }
+.brand span { color: var(--accent-soft); }
+nav ul { display: flex; gap: clamp(14px, 3vw, 38px); list-style: none; margin: 0; padding: 0; flex-wrap: wrap; justify-content: flex-end; }
+nav a { text-decoration: none; color: var(--muted); font-weight: 500; font-size: 16px; transition: color .15s; }
+nav a:hover, nav a.on { color: var(--ink); }
+nav a.on { color: var(--accent-soft); }
+nav a.hire { color: var(--ink); text-decoration: underline; text-underline-offset: 5px; text-decoration-thickness: 1.5px; }
+@media (max-width: 640px) { nav li.opt { display: none; } }
 
 /* hero */
-.hero { display: grid; grid-template-columns: minmax(0, 1.45fr) minmax(0, 1fr); gap: clamp(28px, 5vw, 64px); padding-block: clamp(36px, 6vw, 72px) clamp(36px, 5vw, 64px); align-items: center; }
-@media (max-width: 860px) { .hero { grid-template-columns: minmax(0, 1fr); } .portrait { max-width: 460px; } }
-.hero h1 {
-  font: 800 clamp(54px, 8.6vw, 118px)/.9 var(--display);
-  font-variation-settings: "opsz" 96;
-  letter-spacing: -.045em; margin: 18px 0 26px;
-}
-.hero h1 .dot { color: var(--accent); }
-.thesis { font: 600 clamp(22px, 2.6vw, 30px)/1.25 var(--display); letter-spacing: -.015em; max-width: 22ch; margin: 0 0 18px; text-wrap: balance; }
-.lede { color: var(--muted); max-width: 52ch; margin: 0 0 28px; }
-.actions { display: flex; flex-wrap: wrap; gap: 12px; }
-.btn {
-  display: inline-flex; align-items: center; gap: 10px; padding: 12px 18px; border-radius: 999px;
-  font: 600 15px/1 var(--body); text-decoration: none; border: 1.5px solid var(--ink); background: transparent; color: var(--ink); cursor: pointer;
-  transition: transform .15s ease, background .15s ease, color .15s ease;
-}
-.btn.primary { background: var(--ink); color: var(--paper); }
-.btn:hover { transform: translateY(-2px); }
-.btn svg { width: 16px; height: 16px; fill: currentColor; }
+.hero { display: grid; grid-template-columns: minmax(0, 1.05fr) minmax(0, 1fr); align-items: center; gap: clamp(32px, 5vw, 72px); padding-block: clamp(28px, 6vw, 70px) clamp(56px, 8vw, 96px); }
+@media (max-width: 880px) { .hero { grid-template-columns: minmax(0, 1fr); } .hero .visual { order: -1; } }
+.hi { font-size: 22px; color: var(--ink); margin: 0 0 8px; }
+.hero h1 { font: 700 clamp(40px, 5.6vw, 66px)/1.12 var(--display); letter-spacing: -.035em; margin: 0 0 26px; }
+.hero h1 .role { position: relative; display: inline-block; white-space: nowrap; }
+.hero h1 .role svg { position: absolute; left: 4%; right: 0; bottom: -14px; width: 92%; height: 16px; overflow: visible; }
+.hero h1 .role path { fill: none; stroke: var(--highlight); stroke-width: 5; stroke-linecap: round; stroke-dasharray: 340; stroke-dashoffset: 0; animation: draw 1.1s .5s ease-out both; }
+@keyframes draw { from { stroke-dashoffset: 340; } }
+.hero p.bio { color: #cfcbd9; max-width: 50ch; margin: 0 0 34px; font-size: 18px; }
+.actions { display: flex; flex-wrap: wrap; gap: 16px; }
+.btn { display: inline-flex; align-items: center; gap: 12px; padding: 15px 24px; border-radius: 10px; font: 700 16px/1 var(--body); text-decoration: none; border: 2px solid var(--accent); cursor: pointer; transition: transform .15s, background .15s, box-shadow .15s; background: transparent; color: var(--ink); }
+.btn svg { width: 19px; height: 19px; stroke: currentColor; fill: none; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+.btn.primary { background: var(--accent); color: var(--accent-ink); }
+.btn:hover { transform: translateY(-2px); box-shadow: 0 10px 30px -10px var(--accent); }
+.status { margin-top: 30px; display: inline-flex; align-items: center; gap: 10px; color: var(--muted); font: 500 14px/1.4 var(--mono); }
+.status i { width: 9px; height: 9px; border-radius: 50%; background: var(--ok); box-shadow: 0 0 0 4px color-mix(in srgb, var(--ok) 22%, transparent); animation: pulse 2s infinite; }
+@keyframes pulse { 50% { box-shadow: 0 0 0 8px transparent; } }
 
-.portrait { position: relative; margin: 0; }
-.portrait img { display: block; width: 100%; max-width: 100%; aspect-ratio: 4 / 5; object-fit: cover; object-position: 50% 22%; border-radius: 6px; filter: saturate(1.05); }
-.portrait figcaption {
-  position: absolute; left: 14px; right: 14px; bottom: 14px; display: flex; justify-content: space-between; gap: 10px; flex-wrap: wrap;
-  padding: 10px 12px; border-radius: 6px; background: color-mix(in srgb, var(--term-bg) 82%, transparent); color: var(--term-ink);
-  font: 500 12px/1.4 var(--mono); backdrop-filter: blur(6px);
-}
-.portrait figcaption b { color: var(--term-ok); font-weight: 500; }
+.visual { position: relative; width: 100%; max-width: 520px; margin-inline: auto; aspect-ratio: 1; }
+.dots { position: absolute; background-image: radial-gradient(var(--accent) 2.4px, transparent 2.6px); background-size: 26px 26px; opacity: .85; }
+.dots.a { right: -2%; top: 6%; width: 38%; height: 30%; }
+.dots.b { left: 2%; bottom: -2%; width: 34%; height: 26%; }
+.ring { position: absolute; inset: 0; border: 1.5px solid var(--line); border-radius: 50%; }
+.photo { position: absolute; inset: 9%; border-radius: 50%; overflow: hidden; background: var(--surface); box-shadow: 0 30px 80px -30px #000; }
+.photo img { width: 100%; height: 100%; object-fit: cover; display: block; }
+.orbit { position: absolute; width: 50px; height: 50px; border-radius: 50%; display: grid; place-items: center; background: var(--bg); border: 1.5px solid var(--line); transform: translate(-50%, -50%); text-decoration: none; transition: border-color .2s, transform .2s; }
+.orbit svg { width: 22px; height: 22px; fill: var(--ink); }
+.orbit span { font: 700 13px/1 var(--mono); color: var(--ink); }
+a.orbit:hover { border-color: var(--accent); transform: translate(-50%, -50%) scale(1.08); }
+.orbit.o1 { left: 14.6%; top: 14.6%; } .orbit.o2 { left: 50%; top: 0; } .orbit.o3 { left: 85.4%; top: 14.6%; } .orbit.o4 { left: 0; top: 50%; } .orbit.o5 { left: 14.6%; top: 85.4%; }
+.badge-float { position: absolute; right: 2%; bottom: 10%; background: var(--surface-2); border: 1px solid var(--line); border-radius: 14px; padding: 12px 16px; box-shadow: 0 20px 40px -20px #000; }
+.badge-float b { display: block; font: 700 22px/1 var(--display); color: var(--highlight); }
+.badge-float span { font-size: 13px; color: var(--muted); }
 
-/* terminal */
-.term {
-  margin-top: clamp(32px, 5vw, 48px); background: var(--term-bg); color: var(--term-ink); border-radius: 10px;
-  font: 400 13.5px/1.7 var(--mono); overflow: hidden; grid-column: 1 / -1;
-}
-.term header { display: flex; justify-content: space-between; gap: 12px; padding: 10px 16px; border-bottom: 1px solid #ffffff14; color: var(--term-dim); font-size: 12px; }
-.term header i { display: inline-block; width: 9px; height: 9px; border-radius: 50%; background: #ffffff26; margin-right: 6px; }
-.term pre { margin: 0; padding: 16px 18px 18px; min-height: 13.5em; overflow-x: auto; white-space: pre; }
-.term .p { color: var(--term-dim); } .term .ok { color: var(--term-ok); } .term .bad { color: var(--term-bad); }
-.caret { display: inline-block; width: .6em; height: 1.1em; vertical-align: -.2em; background: var(--term-ok); animation: blink 1s steps(1) infinite; }
-@keyframes blink { 50% { opacity: 0; } }
+/* stats */
+.stats { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); border: 1px solid var(--line); border-radius: 16px; background: var(--surface); overflow: hidden; }
+.stats div { padding: 24px 22px; border-right: 1px solid var(--line); }
+.stats div:last-child { border-right: 0; }
+.stats b { display: block; font: 700 clamp(26px, 3vw, 34px)/1 var(--display); letter-spacing: -.02em; font-variant-numeric: tabular-nums; }
+.stats span { color: var(--muted); font-size: 14.5px; }
+@media (max-width: 760px) { .stats { grid-template-columns: repeat(2, minmax(0, 1fr)); } .stats div:nth-child(2) { border-right: 0; } .stats div:nth-child(-n+2) { border-bottom: 1px solid var(--line); } }
 
-/* statement sections */
-.section { display: grid; grid-template-columns: 200px minmax(0, 1fr); gap: 32px; padding-block: clamp(48px, 7vw, 80px); border-top: 1px solid var(--rule); }
-@media (max-width: 860px) { .section { grid-template-columns: minmax(0, 1fr); gap: 18px; } }
-.section > .label { padding-top: 8px; }
-.section h2 { font: 800 clamp(34px, 4.6vw, 54px)/1 var(--display); letter-spacing: -.035em; margin: 0 0 14px; text-wrap: balance; }
-.section .intro { color: var(--muted); max-width: 60ch; margin: 0 0 36px; }
+section.block { padding-block: clamp(70px, 9vw, 110px) 0; }
+
+/* about */
+.about { display: grid; grid-template-columns: minmax(0, 1.1fr) minmax(0, 1fr); gap: clamp(28px, 5vw, 64px); align-items: start; }
+@media (max-width: 880px) { .about { grid-template-columns: minmax(0, 1fr); } }
+.about p { color: #cfcbd9; margin: 0 0 16px; max-width: 60ch; }
+.skills { display: grid; gap: 18px; }
+.skillrow h3 { margin: 0 0 10px; font: 500 13px/1 var(--mono); letter-spacing: .1em; text-transform: uppercase; color: var(--muted); }
+.chips { display: flex; flex-wrap: wrap; gap: 8px; }
+.chip { font: 500 14px/1 var(--body); padding: 9px 13px; border-radius: 8px; background: var(--surface); border: 1px solid var(--line); }
+.chip.hot { border-color: color-mix(in srgb, var(--accent) 60%, var(--line)); background: color-mix(in srgb, var(--accent) 14%, var(--surface)); }
+
+/* case study */
+.case { margin-top: 40px; background: var(--surface); border: 1px solid var(--line); border-radius: 22px; overflow: hidden; }
+.case-head { padding: clamp(24px, 4vw, 44px); background: radial-gradient(120% 140% at 100% 0%, color-mix(in srgb, var(--accent) 22%, transparent), transparent 60%); border-bottom: 1px solid var(--line); }
+.case-meta { display: flex; flex-wrap: wrap; gap: 10px 22px; color: var(--muted); font: 500 14px/1.4 var(--mono); margin-bottom: 18px; }
+.case-meta b { color: var(--ink); font-weight: 500; }
+.case-head h3 { font: 700 clamp(28px, 3.6vw, 42px)/1.12 var(--display); letter-spacing: -.03em; margin: 0 0 14px; text-wrap: balance; }
+.case-head p { color: #cfcbd9; max-width: 72ch; margin: 0; }
+.case-body { padding: clamp(24px, 4vw, 44px); display: grid; gap: clamp(36px, 5vw, 56px); }
+.case h4 { font: 700 21px/1.3 var(--display); margin: 0 0 14px; letter-spacing: -.01em; }
+.case-kpis { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 12px; }
+@media (max-width: 760px) { .case-kpis { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+.case-kpis div { background: var(--bg); border: 1px solid var(--line); border-radius: 12px; padding: 16px; }
+.case-kpis b { display: block; font: 700 26px/1.1 var(--display); color: var(--accent-soft); font-variant-numeric: tabular-nums; }
+.case-kpis span { font-size: 14px; color: var(--muted); }
+
+.funnel { display: grid; gap: 8px; }
+.stage { display: grid; grid-template-columns: 34px minmax(0, 1fr) auto; gap: 14px; align-items: center; padding: 13px 16px; border-radius: 12px; background: var(--bg); border: 1px solid var(--line); }
+.stage .n { width: 34px; height: 34px; border-radius: 50%; display: grid; place-items: center; font: 700 14px/1 var(--mono); background: var(--surface-2); color: var(--accent-soft); }
+.stage strong { display: block; font-weight: 700; }
+.stage small { color: var(--muted); font-size: 14px; }
+.stage em { font: 500 13px/1 var(--mono); font-style: normal; color: var(--muted); white-space: nowrap; }
+.stage:nth-child(1) { margin-right: 0; } .stage:nth-child(2) { margin-inline: 2%; } .stage:nth-child(3) { margin-inline: 4%; } .stage:nth-child(4) { margin-inline: 6%; } .stage:nth-child(5) { margin-inline: 8%; border-style: dashed; }
+@media (max-width: 600px) { .stage { margin-inline: 0 !important; grid-template-columns: 34px minmax(0, 1fr); } .stage em { grid-column: 2; } }
+
+.problems { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 12px; }
+.problem { background: var(--bg); border: 1px solid var(--line); border-radius: 12px; padding: 16px 18px; }
+.problem code { font: 500 14px/1.5 var(--mono); color: var(--highlight); display: block; margin-bottom: 6px; }
+.problem p { margin: 0; color: var(--muted); font-size: 15px; }
+
+.bug { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 16px; }
+@media (max-width: 760px) { .bug { grid-template-columns: minmax(0, 1fr); } }
+.bug .panel { border-radius: 12px; padding: 18px; background: var(--bg); border: 1px solid var(--line); }
+.bug .panel.before { border-color: color-mix(in srgb, var(--bad) 45%, var(--line)); }
+.bug .panel.after { border-color: color-mix(in srgb, var(--ok) 45%, var(--line)); }
+.bug .tag { font: 700 12px/1 var(--mono); letter-spacing: .1em; text-transform: uppercase; }
+.bug .before .tag { color: var(--bad); } .bug .after .tag { color: var(--ok); }
+.bug p { margin: 10px 0 0; color: #cfcbd9; font-size: 15.5px; }
+.steps-inline { margin: 14px 0 0; padding-left: 20px; color: var(--muted); font-size: 15.5px; }
+.steps-inline li { margin-bottom: 6px; }
+
+.timeline { list-style: none; margin: 0; padding: 0; display: grid; gap: 0; border-left: 2px solid var(--line); }
+.timeline li { position: relative; padding: 0 0 22px 26px; }
+.timeline li::before { content: ""; position: absolute; left: -8px; top: 6px; width: 14px; height: 14px; border-radius: 50%; background: var(--bg); border: 2px solid var(--accent); }
+.timeline strong { display: block; font-weight: 700; }
+.timeline span { color: var(--muted); font-size: 15.5px; }
+.two { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: clamp(24px, 4vw, 48px); }
+@media (max-width: 880px) { .two { grid-template-columns: minmax(0, 1fr); } }
+ul.ticks { list-style: none; padding: 0; margin: 0; display: grid; gap: 10px; }
+ul.ticks li { position: relative; padding-left: 28px; color: #cfcbd9; font-size: 16px; }
+ul.ticks li::before { content: ""; position: absolute; left: 0; top: 7px; width: 14px; height: 8px; border-left: 2.5px solid var(--ok); border-bottom: 2.5px solid var(--ok); transform: rotate(-45deg); }
+.note { font-size: 14px; color: var(--muted); border-left: 3px solid var(--line); padding-left: 14px; margin: 0; }
+
+/* demo */
+.demo { background: var(--bg); border: 1px solid color-mix(in srgb, var(--accent) 50%, var(--line)); border-radius: 16px; padding: clamp(18px, 3vw, 28px); }
+.demo-grid { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 14px; margin: 16px 0 12px; }
+@media (max-width: 640px) { .demo-grid { grid-template-columns: minmax(0, 1fr); } }
+.demo fieldset { border: 1px solid var(--line); border-radius: 12px; padding: 12px 14px 14px; margin: 0; min-width: 0; }
+.demo legend { font: 500 12px/1 var(--mono); letter-spacing: .1em; text-transform: uppercase; color: var(--muted); padding: 0 6px; }
+.demo label { display: block; font-size: 13px; color: var(--muted); margin-top: 8px; }
+.demo input { width: 100%; font: 500 16px/1.2 var(--mono); padding: 10px 12px; border-radius: 8px; border: 1px solid var(--line); background: var(--surface); color: var(--ink); margin-top: 4px; }
+.demo input:focus { border-color: var(--accent); outline: none; }
+.presets { display: flex; flex-wrap: wrap; gap: 8px; }
+.presets button { font: 500 13px/1 var(--mono); padding: 8px 11px; border-radius: 8px; border: 1px solid var(--line); background: var(--surface); color: var(--muted); cursor: pointer; }
+.presets button:hover { color: var(--ink); border-color: var(--accent); }
+.trace { display: grid; gap: 6px; margin-top: 8px; }
+.trace div { display: grid; grid-template-columns: 22px minmax(0, 1fr) auto; gap: 10px; align-items: baseline; font-size: 15px; padding: 8px 10px; border-radius: 8px; }
+.trace .hit { background: color-mix(in srgb, var(--ok) 12%, transparent); }
+.trace .mark { font-family: var(--mono); font-weight: 700; }
+.trace .hit .mark { color: var(--ok); } .trace .miss .mark { color: var(--bad); } .trace .skip { color: var(--muted); } .trace .skip .mark { color: var(--muted); }
+.trace code { font: 400 13px/1.4 var(--mono); color: var(--muted); overflow-wrap: anywhere; }
+.verdict { margin-top: 12px; display: flex; flex-wrap: wrap; align-items: center; gap: 12px; font-weight: 700; }
+.verdict .pill { font: 700 13px/1 var(--mono); padding: 7px 11px; border-radius: 99px; }
+.pill.match { background: color-mix(in srgb, var(--ok) 20%, transparent); color: var(--ok); }
+.pill.review { background: color-mix(in srgb, var(--warn) 20%, transparent); color: var(--warn); }
+.pill.none { background: color-mix(in srgb, var(--bad) 20%, transparent); color: var(--bad); }
 
 /* projects */
-.projects { display: grid; gap: 22px; }
-.project {
-  display: grid; grid-template-columns: minmax(0, 1.1fr) minmax(0, 1fr); gap: 28px;
-  background: var(--sheet); border: 1px solid var(--rule); border-radius: 10px; padding: clamp(20px, 3vw, 32px);
-}
-@media (max-width: 860px) { .project { grid-template-columns: minmax(0, 1fr); } }
-.project .kind { color: var(--accent); }
-.project h3 { font: 800 clamp(30px, 3.6vw, 42px)/1 var(--display); letter-spacing: -.03em; margin: 8px 0 12px; }
-.project p { margin: 0 0 16px; max-width: 54ch; }
-.project ul.points { margin: 0 0 20px; padding: 0; list-style: none; display: grid; gap: 8px; }
-.project ul.points li { padding-left: 20px; position: relative; color: var(--muted); }
-.project ul.points li::before { content: "+"; position: absolute; left: 0; color: var(--accent); font-family: var(--mono); font-weight: 500; }
-.chips { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 20px; }
-.chip { font: 500 12px/1 var(--mono); padding: 6px 9px; border-radius: 5px; border: 1px solid var(--rule); color: var(--muted); }
-.repo { font: 500 14px/1 var(--mono); color: var(--accent); text-decoration: none; border-bottom: 1.5px solid currentColor; padding-bottom: 3px; }
-.repo:hover { color: var(--ink); }
+.projects { display: grid; gap: 22px; margin-top: 40px; }
+.project { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: clamp(22px, 4vw, 44px); background: var(--surface); border: 1px solid var(--line); border-radius: 22px; padding: clamp(22px, 4vw, 40px); transition: border-color .2s; }
+.project:hover { border-color: color-mix(in srgb, var(--accent) 55%, var(--line)); }
+@media (max-width: 880px) { .project { grid-template-columns: minmax(0, 1fr); } }
+.project .kind { font: 500 13px/1 var(--mono); letter-spacing: .1em; text-transform: uppercase; color: var(--accent-soft); }
+.project h3 { font: 800 clamp(30px, 3.6vw, 40px)/1 var(--display); letter-spacing: -.035em; margin: 12px 0 12px; }
+.project .tagline { font-size: 19px; color: var(--ink); margin: 0 0 14px; font-weight: 500; }
+.project p { color: var(--muted); margin: 0 0 16px; }
+.project .links { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 22px; }
+.project .links a { display: inline-flex; align-items: center; gap: 8px; font: 700 15px/1 var(--body); text-decoration: none; padding: 11px 16px; border-radius: 9px; border: 1.5px solid var(--line); }
+.project .links a:hover { border-color: var(--accent); }
+.project .links svg { width: 17px; height: 17px; fill: currentColor; }
+.figs { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 10px; margin-bottom: 16px; }
+.figs div { background: var(--bg); border: 1px solid var(--line); border-radius: 12px; padding: 14px; }
+.figs b { display: block; font: 700 22px/1.1 var(--display); color: var(--highlight); font-variant-numeric: tabular-nums; }
+.figs span { font-size: 13px; color: var(--muted); line-height: 1.35; display: block; margin-top: 4px; }
+.term { background: #0c0b0f; border: 1px solid var(--line); border-radius: 12px; overflow: hidden; }
+.term .bar { display: flex; gap: 6px; padding: 10px 14px; border-bottom: 1px solid var(--line); }
+.term .bar i { width: 10px; height: 10px; border-radius: 50%; background: var(--line); }
+.term pre { margin: 0; padding: 14px 16px; font: 400 13px/1.7 var(--mono); color: #d9d5e3; overflow-x: auto; white-space: pre; }
+.term .p { color: var(--muted); } .term .ok { color: var(--ok); } .term .bad { color: var(--bad); } .term .hl { color: var(--highlight); }
 
-.figures { display: grid; align-content: start; gap: 0; border-top: 1px solid var(--rule); }
-.figure { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 16px; align-items: baseline; padding-block: 14px; border-bottom: 1px solid var(--rule); }
-.figure span { color: var(--muted); font-size: 15px; }
-.figure strong { font: 600 clamp(22px, 2.4vw, 28px)/1 var(--display); letter-spacing: -.02em; font-variant-numeric: tabular-nums; text-align: right; }
-.figure strong.cr { color: var(--accent); }
-.snippet { margin-top: 18px; background: var(--term-bg); color: var(--term-ink); border-radius: 8px; padding: 14px 16px; font: 400 12.5px/1.7 var(--mono); overflow-x: auto; white-space: pre; }
-.snippet .p { color: var(--term-dim); } .snippet .ok { color: var(--term-ok); } .snippet .bad { color: var(--term-bad); }
-
-/* ledger rows: experience */
-.ledger { width: 100%; border-collapse: collapse; }
-.ledger td { padding: 18px 0; border-bottom: 1px solid var(--rule); vertical-align: top; }
-.ledger td.when { width: 150px; padding-right: 20px; font: 500 13px/1.6 var(--mono); color: var(--muted); }
-.ledger h4 { margin: 0 0 4px; font: 600 20px/1.3 var(--display); letter-spacing: -.01em; }
-.ledger p { margin: 0; color: var(--muted); max-width: 62ch; }
-@media (max-width: 560px) { .ledger td.when { width: auto; display: block; padding-bottom: 0; border: 0; } .ledger td { display: block; } }
-
-/* skills */
-.skills { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 0 32px; }
-.skills div { border-top: 2px solid var(--ink); padding-top: 14px; padding-bottom: 26px; }
-.skills h4 { margin: 0 0 10px; }
-.skills p { margin: 0; color: var(--muted); }
+/* education */
+.edu { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 16px; margin-top: 36px; }
+.edu article { background: var(--surface); border: 1px solid var(--line); border-radius: 16px; padding: 22px; }
+.edu .when { font: 500 13px/1 var(--mono); color: var(--accent-soft); }
+.edu h3 { font: 700 20px/1.3 var(--display); margin: 10px 0 8px; }
+.edu p { margin: 0; color: var(--muted); font-size: 15.5px; }
 
 /* contact */
-.contact { padding-block: clamp(56px, 8vw, 100px); border-top: 1px solid var(--rule); }
-.contact h2 { font: 800 clamp(44px, 8vw, 104px)/.92 var(--display); letter-spacing: -.045em; margin: 14px 0 30px; max-width: 14ch; text-wrap: balance; }
-.contact h2 em { font-style: normal; color: var(--accent); }
-.email { display: flex; flex-wrap: wrap; align-items: center; gap: 12px; margin-bottom: 18px; }
-.email code { font: 500 clamp(17px, 2.2vw, 22px)/1.3 var(--mono); user-select: all; overflow-wrap: anywhere; }
-.copied { font: 500 13px/1 var(--mono); color: var(--accent); }
-footer { padding-block: 24px 40px; border-top: 1px solid var(--rule); display: flex; justify-content: space-between; gap: 12px; flex-wrap: wrap; color: var(--muted); font: 400 13px/1.5 var(--mono); }
+.contact { margin-top: clamp(70px, 9vw, 110px); border-radius: 26px; padding: clamp(32px, 6vw, 72px); background: radial-gradient(90% 120% at 0% 0%, color-mix(in srgb, var(--accent) 35%, transparent), transparent 60%), var(--surface); border: 1px solid var(--line); text-align: left; }
+.contact h2 { font: 800 clamp(36px, 6vw, 72px)/1.02 var(--display); letter-spacing: -.04em; margin: 16px 0 18px; max-width: 16ch; text-wrap: balance; }
+.contact p { color: #cfcbd9; max-width: 56ch; margin: 0 0 28px; }
+.mailbox { display: flex; flex-wrap: wrap; align-items: center; gap: 12px; background: var(--bg); border: 1px solid var(--line); border-radius: 12px; padding: 10px 10px 10px 18px; max-width: 560px; margin-bottom: 18px; }
+.mailbox code { flex: 1; min-width: 0; font: 500 clamp(15px, 2vw, 18px)/1.3 var(--mono); user-select: all; overflow-wrap: anywhere; }
+.mailbox .btn { padding: 11px 16px; font-size: 14px; }
+#copied { font: 500 13px/1 var(--mono); color: var(--ok); min-height: 1em; display: block; margin-bottom: 18px; }
+footer { display: flex; justify-content: space-between; gap: 12px; flex-wrap: wrap; padding-block: 36px 44px; color: var(--muted); font: 400 14px/1.5 var(--mono); }
 
 @media (prefers-reduced-motion: reduce) {
   html { scroll-behavior: auto; }
-  .btn, .caret { transition: none; animation: none; }
+  *, *::before { animation: none !important; transition: none !important; }
 }
 </style>
 
 <div class="wrap">
-  <div class="bar">
-    <a class="mark" href="#top" aria-label="Vinodhini, home">vinodhini<span>.</span>dev</a>
+  <header class="nav">
+    <a class="brand" href="#home">Vinodhini<span>.</span></a>
     <nav aria-label="Sections">
-      <a href="#work">Work</a>
-      <a class="opt" href="#experience">Experience</a>
-      <a class="opt" href="#skills">Skills</a>
-      <a href="#contact">Contact</a>
+      <ul>
+        <li><a href="#home" class="on">Home</a></li>
+        <li class="opt"><a href="#about">About</a></li>
+        <li class="opt"><a href="#experience">Experience</a></li>
+        <li><a href="#projects">Projects</a></li>
+        <li><a href="#contact" class="hire">Hire me</a></li>
+      </ul>
     </nav>
-  </div>
+  </header>
 
-  <main id="top">
+  <main id="home">
     <section class="hero">
       <div>
-        <div class="label">Software engineer · Python · Backend &amp; data systems</div>
-        <h1>Vinodhini<span class="dot">.</span></h1>
-        <p class="thesis">I build backend systems that stay correct under pressure.</p>
-        <p class="lede">I'm finishing an MS in Information Systems at UMBC and spent summer 2026 as a software engineering intern at Tata Consultancy Services. I like the hard parts of backend work: concurrency, crash recovery, search, and data that has to be right.</p>
+        <p class="hi">Hi there!</p>
+        <h1>I'm <span class="purple">Vinodhini</span>,<br><span class="role">Software Engineer.<svg viewBox="0 0 300 16" preserveAspectRatio="none" aria-hidden="true"><path d="M3 11 C 70 3, 150 4, 297 7"/></svg></span></h1>
+        <p class="bio">I build Python backend systems that stay correct when the data gets messy and the load gets real. At TCS I engineered a matching pipeline that reconciled 85,000+ banking signer records across international name formats. I'm finishing an MS in Information Systems at UMBC.</p>
         <div class="actions">
-          <a class="btn primary" href="#work">See the work</a>
-          <a class="btn" href="https://github.com/vinovj27" target="_blank" rel="noopener">
-            <svg viewBox="0 0 16 16" aria-hidden="true"><path d="M8 0C3.58 0 0 3.58 0 8a8 8 0 0 0 5.47 7.59c.4.07.55-.17.55-.38v-1.33c-2.23.48-2.7-1.07-2.7-1.07-.36-.92-.89-1.17-.89-1.17-.73-.5.06-.49.06-.49.8.06 1.23.83 1.23.83.71 1.23 1.88.87 2.34.67.07-.52.28-.87.5-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82a7.6 7.6 0 0 1 4 0c1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48v2.2c0 .21.15.46.55.38A8 8 0 0 0 16 8c0-4.42-3.58-8-8-8z"/></svg>
-            github.com/vinovj27
+          <a class="btn primary" href="mailto:vinodhini.vijay09@gmail.com">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3 7 9 6 9-6"/></svg>Send a mail
+          </a>
+          <a class="btn" href="#projects">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="m8 9-4 3 4 3M16 9l4 3-4 3M14 5l-4 14"/></svg>See my work
           </a>
         </div>
+        <div class="status"><i></i>Open to software engineering roles · from January 2027</div>
       </div>
-      <figure class="portrait">
-        <img src="assets/vinodhini.jpg" alt="Portrait of Vinodhini in a black blazer, standing in a park" width="720" height="846">
-        <figcaption><span>MS Information Systems · UMBC</span><b>Open to SWE roles · Jan 2027</b></figcaption>
-      </figure>
 
-      <div class="term" aria-label="Sample output from the three projects">
-        <header><span><i></i><i></i><i></i>~/vinovj27</span><span id="termTag">live demo</span></header>
-        <pre id="term"></pre>
+      <div class="visual">
+        <div class="dots a" aria-hidden="true"></div>
+        <div class="dots b" aria-hidden="true"></div>
+        <div class="ring" aria-hidden="true"></div>
+        <div class="photo"><img src="assets/vinodhini-round.jpg" alt="Portrait of Vinodhini" width="720" height="720"></div>
+        <a class="orbit o1" href="https://github.com/vinovj27" target="_blank" rel="noopener" aria-label="GitHub profile">
+          <svg viewBox="0 0 16 16" aria-hidden="true"><path d="M8 0C3.58 0 0 3.58 0 8a8 8 0 0 0 5.47 7.59c.4.07.55-.17.55-.38v-1.33c-2.23.48-2.7-1.07-2.7-1.07-.36-.92-.89-1.17-.89-1.17-.73-.5.06-.49.06-.49.8.06 1.23.83 1.23.83.71 1.23 1.88.87 2.34.67.07-.52.28-.87.5-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82a7.6 7.6 0 0 1 4 0c1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48v2.2c0 .21.15.46.55.38A8 8 0 0 0 16 8c0-4.42-3.58-8-8-8z"/></svg>
+        </a>
+        <a class="orbit o2" href="mailto:vinodhini.vijay09@gmail.com" aria-label="Email">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 5h18a1 1 0 0 1 1 1v12a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1V6a1 1 0 0 1 1-1zm1.4 2L12 12.2 19.6 7H4.4zM20 8.7l-7.4 5.1a1 1 0 0 1-1.2 0L4 8.7V17h16V8.7z"/></svg>
+        </a>
+        <div class="orbit o3" aria-hidden="true"><span>py</span></div>
+        <div class="orbit o4" aria-hidden="true"><span>SQL</span></div>
+        <div class="orbit o5" aria-hidden="true"><span>{ }</span></div>
+        <div class="badge-float"><b>85K+</b><span>records reconciled at TCS</span></div>
       </div>
     </section>
 
-    <section class="section" id="work">
-      <div class="label">Selected work</div>
-      <div>
-        <h2>Three systems, built from first principles.</h2>
-        <p class="intro">Each project is open source, written in Python with only the standard library, tested in CI on Linux, macOS and Windows, and starts with one command. No frameworks on purpose: every lease, checksum and ranking score is code I wrote and can explain.</p>
+    <div class="stats" aria-label="Highlights">
+      <div><b>85,315</b><span>signer records in the final TCS dataset</span></div>
+      <div><b>3</b><span>open-source systems, built from scratch</span></div>
+      <div><b>42</b><span>automated tests across my projects</span></div>
+      <div><b>18/18</b><span>CI checks passing on Linux, macOS and Windows</span></div>
+    </div>
 
-        <div class="projects">
-          <article class="project">
+    <section class="block" id="about">
+      <div class="about">
+        <div>
+          <span class="eyebrow">About me</span>
+          <h2 class="title">I like the problems that hide in real data.</h2>
+          <p>I'm a software engineer finishing my MS in Information Systems at UMBC (December 2026). This summer I interned at Tata Consultancy Services, where I owned a data-reconciliation tool for a banking migration, from the first script to a hardened pipeline my mentor used on production data.</p>
+          <p>Outside work I build infrastructure to understand it properly: a distributed task queue, a search engine and a crash-safe database, each written from scratch in Python, tested on three operating systems, and open source.</p>
+          <p>I work best where correctness matters: when two records might be the same person, when a worker might crash mid-job, when a write must survive a power cut.</p>
+        </div>
+        <div class="skills">
+          <div class="skillrow"><h3>Languages</h3><div class="chips"><span class="chip hot">Python</span><span class="chip hot">SQL</span><span class="chip">Java</span><span class="chip">PL/SQL</span><span class="chip">JavaScript</span><span class="chip">Scala</span></div></div>
+          <div class="skillrow"><h3>Backend &amp; systems</h3><div class="chips"><span class="chip hot">Distributed systems</span><span class="chip">REST APIs</span><span class="chip">asyncio</span><span class="chip">Concurrency</span><span class="chip">TCP sockets</span><span class="chip">Spring Boot</span></div></div>
+          <div class="skillrow"><h3>Data</h3><div class="chips"><span class="chip hot">Data reconciliation</span><span class="chip">Fuzzy matching</span><span class="chip">Unicode text handling</span><span class="chip">SQLite</span><span class="chip">Oracle</span><span class="chip">Apache Spark</span><span class="chip">Search &amp; indexing</span></div></div>
+          <div class="skillrow"><h3>Practice</h3><div class="chips"><span class="chip">Git</span><span class="chip">GitHub Actions CI</span><span class="chip">Automated testing</span><span class="chip">Debugging</span><span class="chip">Excel reporting</span></div></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="block" id="experience">
+      <span class="eyebrow">Experience · case study</span>
+      <h2 class="title">Matching the same person across four banking systems.</h2>
+      <p class="lead">My internship project, start to finish. Client systems are described generically and every example name below is illustrative.</p>
+
+      <article class="case">
+        <div class="case-head">
+          <div class="case-meta"><span><b>Tata Consultancy Services</b></span><span>Software Engineering Intern</span><span>May – Aug 2026</span><span>BFSI · banking migration</span></div>
+          <h3>Signer Data Migration &amp; Reconciliation</h3>
+          <p>Before a bank cuts over to a new platform, every authorised signer must exist, with the right details, in every system that depends on them. I built the Python tool that checks this: it reads encrypted Excel exports from a source system and three target systems, matches each signer across systems despite inconsistent spellings, verifies addresses and tax IDs, and produces a reviewer-ready Excel report with a confidence score for every match.</p>
+        </div>
+
+        <div class="case-body">
+          <div class="case-kpis">
+            <div><b>37.5K → 85K</b><span>source records as the scope grew mid-project</span></div>
+            <div><b>3 of 4</b><span>analyses delivered: address, tax ID and cross-system name matching</span></div>
+            <div><b>8</b><span>real edge cases from mentor review, each traced to a root cause</span></div>
+            <div><b>100%</b><span>of results labelled with the stage that matched and a confidence score</span></div>
+          </div>
+
+          <div>
+            <h4>The tiered matching funnel I designed</h4>
+            <p class="lead" style="margin-bottom:16px">Each stage runs only on records the previous stage could not resolve, so cheap exact checks handle most records and expensive fuzzy logic touches only the hard ones. Every result records which stage found it.</p>
+            <div class="funnel">
+              <div class="stage"><span class="n">1</span><div><strong>Exact match</strong><small>Name and date of birth identical across systems</small></div><em>confidence 100%</em></div>
+              <div class="stage"><span class="n">2</span><div><strong>First-word match</strong><small>Handles truncated compound surnames and repeated names</small></div><em>confidence 100%</em></div>
+              <div class="stage"><span class="n">3</span><div><strong>Accent-normalised match</strong><small>Unicode normalisation plus language rules like Ü → UE and Ł → L</small></div><em>confidence 100%</em></div>
+              <div class="stage"><span class="n">4</span><div><strong>Possible match</strong><small>Letter-frequency similarity, first name and last name scored separately</small></div><em>scaled score · human review</em></div>
+              <div class="stage"><span class="n">∅</span><div><strong>Unmatched</strong><small>Reported side by side for investigation, never silently dropped</small></div><em>flagged</em></div>
+            </div>
+          </div>
+
+          <div>
+            <h4>Try the matcher</h4>
+            <div class="demo">
+              <p class="lead" style="font-size:15.5px">A JavaScript re-creation of the funnel's logic, so you can see why each pair matches or doesn't. Pick an example or type your own names.</p>
+              <div class="presets" id="presets" style="margin-top:14px">
+                <button type="button" data-a="Jonas|Müller" data-b="Jonas|Mueller">Müller · Mueller</button>
+                <button type="button" data-a="José|García-López" data-b="Jose|Garcia Lopez">García-López</button>
+                <button type="button" data-a="Łukasz|Wiśniewski" data-b="Lukasz|Wisniewski">Ł is not an accent</button>
+                <button type="button" data-a="Anna|Kowalska Nowak" data-b="Anna|Kowalska">Truncated surname</button>
+                <button type="button" data-a="Ravi|Kumar Kumar" data-b="Ravi|Kumar">Repeated name</button>
+                <button type="button" data-a="Katherine|Novak" data-b="Kathrine|Novak">Typo → review</button>
+                <button type="button" data-a="Mia|Lorenz" data-b="Lia|Morenz">The bug I fixed</button>
+              </div>
+              <div class="demo-grid">
+                <fieldset><legend>Source system</legend>
+                  <label for="aFirst">First name</label><input id="aFirst" autocomplete="off" value="Jonas">
+                  <label for="aLast">Last name</label><input id="aLast" autocomplete="off" value="Müller">
+                </fieldset>
+                <fieldset><legend>Target system</legend>
+                  <label for="bFirst">First name</label><input id="bFirst" autocomplete="off" value="Jonas">
+                  <label for="bLast">Last name</label><input id="bLast" autocomplete="off" value="Mueller">
+                </fieldset>
+              </div>
+              <div class="trace" id="trace" aria-live="polite"></div>
+              <div class="verdict" id="verdict"></div>
+            </div>
+          </div>
+
+          <div>
+            <h4>Real-world name problems, and how the pipeline handles each</h4>
+            <div class="problems">
+              <div class="problem"><code>MÜLLER ≠ MUELLER</code><p>German convention spells Ü as UE. Unicode normalisation alone gives MULLER, so I added a multi-letter expansion table.</p></div>
+              <div class="problem"><code>ŁUKASZ ≠ LUKASZ</code><p>Polish Ł is its own letter, not L plus an accent, so standard stripping can't decompose it. It needed an explicit mapping.</p></div>
+              <div class="problem"><code>JOSÉ GARCÍA-LÓPEZ</code><p>Generic stripping via Unicode decomposition covers French, Spanish, Polish, Croatian and other Latin scripts without per-language lists.</p></div>
+              <div class="problem"><code>KOWALSKA NOWAK → KOWALSKA</code><p>One system truncated compound surnames, so first-word matching runs as a fallback.</p></div>
+              <div class="problem"><code>KUMAR KUMAR</code><p>The same name entered in both name fields. Duplicate-word removal cleans it before comparison.</p></div>
+              <div class="problem"><code>DÉBORAH + compound surname</code><p>Needed accent stripping and truncation together. I generated first-word variants after normalisation so the stages compose.</p></div>
+            </div>
+          </div>
+
+          <div>
+            <h4>The hardest bug: unrelated names matching</h4>
+            <div class="bug">
+              <div class="panel before"><span class="tag">Symptom</span>
+                <p>After adding the letter-frequency "possible match" stage, completely unrelated names were being flagged as matches.</p>
+                <ol class="steps-inline">
+                  <li>Ruled out duplicate function definitions, stale cached files and wrong file paths</li>
+                  <li>Hand-calculated expected scores to prove the logic should reject these pairs</li>
+                  <li>Wrote an isolated, zero-dependency test script to separate "the math is wrong" from "something else interferes"</li>
+                </ol>
+              </div>
+              <div class="panel after"><span class="tag">Root cause &amp; fix</span>
+                <p>A variable-naming collision merged first and last names into one bag of letters, so a mismatch in one part could be cancelled out by a coincidental overlap in the other.</p>
+                <p>I compared first names to first names and last names to last names independently, and added a length pre-filter that rejects unrelated candidates before scoring.</p>
+              </div>
+            </div>
+          </div>
+
+          <div class="two">
             <div>
-              <div class="label kind">Distributed systems · Python</div>
-              <h3>Conveyor</h3>
-              <p>A distributed task queue in the spirit of Celery. A broker stores jobs in SQLite and leases them to worker processes over HTTP, so work survives crashes, flaky dependencies and restarts.</p>
-              <ul class="points">
-                <li>Atomic job claims, so two workers never run the same job</li>
-                <li>Leases with heartbeats: a crashed worker's jobs return to the queue</li>
-                <li>Exponential backoff with jitter, priorities, delays and a dead-letter queue</li>
+              <h4>Scaling to the full dataset</h4>
+              <ul class="ticks">
+                <li>Mid-project the source export grew from 37,508 to 85,315 records with a completely different column schema. A normalisation layer translated it, so no downstream function had to change.</li>
+                <li>Fuzzy matching scanned the whole target index for every unmatched record, which became too slow. Bucketing candidates by first letter cut the search space while keeping accuracy.</li>
+                <li>A loose similarity threshold was producing false positives reported at 100%. I raised the threshold and made the function report its true similarity score.</li>
               </ul>
-              <div class="chips"><span class="chip">Python</span><span class="chip">SQLite</span><span class="chip">HTTP API</span><span class="chip">Multiprocessing</span><span class="chip">Concurrency</span><span class="chip">GitHub Actions</span></div>
-              <a class="repo" href="https://github.com/vinovj27/conveyor" target="_blank" rel="noopener">vinovj27/conveyor →</a>
             </div>
             <div>
-              <div class="figures">
-                <div class="figure"><span>Duplicate claims, 8 threads racing for 300 jobs</span><strong class="cr">0</strong></div>
-                <div class="figure"><span>Jobs lost when a worker is killed mid-run</span><strong class="cr">0</strong></div>
-                <div class="figure"><span>151-job demo across 3 worker processes</span><strong>~6 s</strong></div>
-              </div>
-<pre class="snippet"><span class="p">$</span> python -m conveyor demo
+              <h4>What I delivered</h4>
+              <ul class="ticks">
+                <li>A multi-sheet Excel report with match status, matching stage and confidence for every signer</li>
+                <li>Side-by-side source and target names and IDs, so reviewers verify a match without re-running code</li>
+                <li>An accented-character audit across every source system, sizing the encoding problem for the team</li>
+                <li>A standalone transliteration tool that converts accented names to plain-English spellings across four systems</li>
+              </ul>
+            </div>
+          </div>
+
+          <div>
+            <h4>How the project unfolded</h4>
+            <ol class="timeline">
+              <li><strong>Kickoff</strong><span>Knowledge-transfer session on the migration and four scoped analyses comparing a source system with three targets.</span></li>
+              <li><strong>Core script</strong><span>Read encrypted Excel exports, indexed targets by name for fast lookup, and built address and tax-ID verification with fuzzy matching (difflib).</span></li>
+              <li><strong>First review: 5 missed matches</strong><span>Umlauts, accents, hyphens, repeated names and truncated surnames. My mentor asked for confidence-scored "probable matches" instead of yes/no.</span></li>
+              <li><strong>Accent-matching engine</strong><span>Unicode normalisation, multi-letter expansion, duplicate-word removal and the tiered funnel.</span></li>
+              <li><strong>Debugging cycle</strong><span>Isolated and fixed the cross-field scoring bug described above.</span></li>
+              <li><strong>Second review: 3 more cases</strong><span>Each had a different root cause: a stage-composition gap, a compound first name, and one record that existed only in the target, which exposed a limit of the one-way analysis.</span></li>
+              <li><strong>Scale-up</strong><span>Moved to the 85K-record export: schema normalisation, candidate bucketing and threshold correction.</span></li>
+              <li><strong>Outcome</strong><span>Analyses 1–3 complete and validated against production edge cases. I recommended a reverse-direction check as the next enhancement.</span></li>
+            </ol>
+          </div>
+
+          <p class="note">Built with Python, difflib, Unicode normalisation (unicodedata) and Excel input/output, working from a mentor's review of real records.</p>
+        </div>
+      </article>
+    </section>
+
+    <section class="block" id="projects">
+      <span class="eyebrow">Projects</span>
+      <h2 class="title">Infrastructure I built to understand it.</h2>
+      <p class="lead">Three open-source systems in Python using only the standard library. Each has a full test suite, runs in CI on Linux, macOS and Windows, and starts with one command.</p>
+
+      <div class="projects">
+        <article class="project">
+          <div>
+            <span class="kind">Distributed systems</span>
+            <h3>Conveyor</h3>
+            <p class="tagline">A distributed task queue that keeps going when workers crash.</p>
+            <p>A broker stores jobs in SQLite and leases them to worker processes over HTTP, in the spirit of Celery and Sidekiq. If a worker dies mid-job, its lease expires and another worker picks the job up. Failing jobs retry with exponential backoff and jitter, and jobs that keep failing land in a dead-letter queue for inspection.</p>
+            <ul class="ticks">
+              <li>Atomic job claims with <code class="mono">UPDATE … RETURNING</code> inside an immediate transaction</li>
+              <li>Heartbeat lease renewal, plus fencing so a stale worker can't overwrite a result</li>
+              <li>Priorities, delayed jobs, named queues and a live dashboard with one-click retry</li>
+            </ul>
+            <div class="links">
+              <a href="https://github.com/vinovj27/Conveyor" target="_blank" rel="noopener"><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M8 0C3.58 0 0 3.58 0 8a8 8 0 0 0 5.47 7.59c.4.07.55-.17.55-.38v-1.33c-2.23.48-2.7-1.07-2.7-1.07-.36-.92-.89-1.17-.89-1.17-.73-.5.06-.49.06-.49.8.06 1.23.83 1.23.83.71 1.23 1.88.87 2.34.67.07-.52.28-.87.5-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82a7.6 7.6 0 0 1 4 0c1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48v2.2c0 .21.15.46.55.38A8 8 0 0 0 16 8c0-4.42-3.58-8-8-8z"/></svg>View code</a>
+            </div>
+          </div>
+          <div>
+            <div class="figs">
+              <div><b>0</b><span>duplicate claims, 8 threads racing for 300 jobs</span></div>
+              <div><b>0</b><span>jobs lost when a worker is killed mid-run</span></div>
+              <div><b>~6 s</b><span>151-job demo across 3 processes</span></div>
+            </div>
+            <div class="term"><div class="bar"><i></i><i></i><i></i></div>
+<pre><span class="p">$</span> python -m conveyor demo
+Dashboard: http://127.0.0.1:8700
 Started 3 worker processes on 151 jobs
-<span class="bad">  Chaos: killed worker-1 mid-job</span>
+<span class="bad">  Chaos: killed worker-1 mid-job; its leases
+  expire and other workers pick the jobs up</span>
 <span class="ok">Finished in 5.8s · 118 done · 20 needed retries
-  · 3 in the dead-letter queue</span></pre>
-            </div>
-          </article>
+  · 3 in the dead-letter queue</span></pre></div>
+            <div class="chips" style="margin-top:14px"><span class="chip">Python</span><span class="chip">SQLite</span><span class="chip">HTTP API</span><span class="chip">Multiprocessing</span><span class="chip">Threading</span></div>
+          </div>
+        </article>
 
-          <article class="project">
-            <div>
-              <div class="label kind">Search · Python</div>
-              <h3>Sift</h3>
-              <p>A full-text search engine with an instant-search web UI. It indexes the Python standard library's documentation out of the box, or any folder of notes and code.</p>
-              <ul class="points">
-                <li>Positional inverted index with BM25 ranking and title boosting</li>
-                <li>"Exact phrases", +required and -excluded terms, stemming</li>
-                <li>Typo correction, autocomplete and highlighted snippets</li>
-              </ul>
-              <div class="chips"><span class="chip">Python</span><span class="chip">Information retrieval</span><span class="chip">Algorithms</span><span class="chip">JSON API</span><span class="chip">JavaScript</span></div>
-              <a class="repo" href="https://github.com/vinovj27/sift" target="_blank" rel="noopener">vinovj27/sift →</a>
+        <article class="project">
+          <div>
+            <span class="kind">Search &amp; information retrieval</span>
+            <h3>Sift</h3>
+            <p class="tagline">A search engine that answers in milliseconds and forgives typos.</p>
+            <p>Sift builds a positional inverted index and ranks results with Okapi BM25. Out of the box it indexes the Python standard library's own documentation, about 4,000 modules, classes and functions, read with <code class="mono">ast</code> so no library code runs. It can also index any folder of notes or code. A web UI searches as you type.</p>
+            <ul class="ticks">
+              <li>Exact phrases using token positions, plus +required and -excluded terms</li>
+              <li>Code-aware tokens: <code class="mono">ThreadPoolExecutor</code> becomes thread, pool, executor</li>
+              <li>"Did you mean" via bounded edit distance, autocomplete and highlighted snippets</li>
+            </ul>
+            <div class="links">
+              <a href="https://github.com/vinovj27/Sift" target="_blank" rel="noopener"><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M8 0C3.58 0 0 3.58 0 8a8 8 0 0 0 5.47 7.59c.4.07.55-.17.55-.38v-1.33c-2.23.48-2.7-1.07-2.7-1.07-.36-.92-.89-1.17-.89-1.17-.73-.5.06-.49.06-.49.8.06 1.23.83 1.23.83.71 1.23 1.88.87 2.34.67.07-.52.28-.87.5-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82a7.6 7.6 0 0 1 4 0c1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48v2.2c0 .21.15.46.55.38A8 8 0 0 0 16 8c0-4.42-3.58-8-8-8z"/></svg>View code</a>
             </div>
-            <div>
-              <div class="figures">
-                <div class="figure"><span>Documents indexed from the standard library</span><strong>3,930</strong></div>
-                <div class="figure"><span>Typical query time</span><strong class="cr">1–5 ms</strong></div>
-                <div class="figure"><span>External dependencies</span><strong>0</strong></div>
-              </div>
-<pre class="snippet"><span class="p">$</span> python -m sift search "serialize object to json"
+          </div>
+          <div>
+            <div class="figs">
+              <div><b>3,930</b><span>documents indexed from the standard library</span></div>
+              <div><b>1–5 ms</b><span>typical query time</span></div>
+              <div><b>BM25</b><span>ranking with 3× title boost</span></div>
+            </div>
+            <div class="term"><div class="bar"><i></i><i></i><i></i></div>
+<pre><span class="p">$</span> python -m sift search "serialize object to json"
 652 results in 3.7 ms
 <span class="ok">1. json.dump(obj, fp)</span>
-<span class="p">$</span> python -m sift search "subprocesss timout"
-<span class="ok">Did you mean: subprocess timeout</span></pre>
-            </div>
-          </article>
+   <span class="hl">Serialize</span> obj as a <span class="hl">JSON</span> formatted stream…
 
-          <article class="project">
-            <div>
-              <div class="label kind">Databases · Python</div>
-              <h3>KVLite</h3>
-              <p>A persistent key-value database with an asyncio TCP server. Every write goes to a checksummed write-ahead log first, so data survives a crash, a torn write or a pulled plug.</p>
-              <ul class="points">
-                <li>Crash recovery that detects and truncates corrupted log tails</li>
-                <li>Snapshot compaction with fsync and atomic rename</li>
-                <li>TTL expiry, atomic INCR and many concurrent clients</li>
-              </ul>
-              <div class="chips"><span class="chip">Python</span><span class="chip">asyncio</span><span class="chip">Write-ahead log</span><span class="chip">CRC32</span><span class="chip">TCP sockets</span></div>
-              <a class="repo" href="https://github.com/vinovj27/kvlite" target="_blank" rel="noopener">vinovj27/kvlite →</a>
+<span class="p">$</span> python -m sift search "subprocesss timout"
+<span class="ok">Did you mean: subprocess timeout</span></pre></div>
+            <div class="chips" style="margin-top:14px"><span class="chip">Python</span><span class="chip">Algorithms</span><span class="chip">Information retrieval</span><span class="chip">JSON API</span><span class="chip">JavaScript</span></div>
+          </div>
+        </article>
+
+        <article class="project">
+          <div>
+            <span class="kind">Databases</span>
+            <h3>KVLite</h3>
+            <p class="tagline">A key-value database that survives a pulled plug.</p>
+            <p>Every write is appended to a checksummed write-ahead log before it's applied, the approach behind Redis's append-only file and Postgres crash recovery. On restart, KVLite replays the log; if a power cut left a half-written record, its checksum fails and the log is truncated to the last good entry. An asyncio TCP server speaks a Redis-style protocol to many clients at once.</p>
+            <ul class="ticks">
+              <li>CRC32 per record, with base64-encoded keys and values so any text is safe</li>
+              <li>Snapshot compaction with fsync and atomic rename, so the snapshot is never half-written</li>
+              <li>TTL expiry, atomic INCR, and fsync or buffered durability modes</li>
+            </ul>
+            <div class="links">
+              <a href="https://github.com/vinovj27/Kvlite" target="_blank" rel="noopener"><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M8 0C3.58 0 0 3.58 0 8a8 8 0 0 0 5.47 7.59c.4.07.55-.17.55-.38v-1.33c-2.23.48-2.7-1.07-2.7-1.07-.36-.92-.89-1.17-.89-1.17-.73-.5.06-.49.06-.49.8.06 1.23.83 1.23.83.71 1.23 1.88.87 2.34.67.07-.52.28-.87.5-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82a7.6 7.6 0 0 1 4 0c1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48v2.2c0 .21.15.46.55.38A8 8 0 0 0 16 8c0-4.42-3.58-8-8-8z"/></svg>View code</a>
             </div>
-            <div>
-              <div class="figures">
-                <div class="figure"><span>Buffered writes per second</span><strong>~59,000</strong></div>
-                <div class="figure"><span>Reads per second</span><strong>~1.6M</strong></div>
-                <div class="figure"><span>Writes lost across restart in tests</span><strong class="cr">0</strong></div>
-              </div>
-<pre class="snippet"><span class="p">kvlite&gt;</span> SETEX session:42 60 tok_abc
+          </div>
+          <div>
+            <div class="figs">
+              <div><b>~59K</b><span>buffered writes per second</span></div>
+              <div><b>~1.6M</b><span>reads per second</span></div>
+              <div><b>0</b><span>writes lost across restarts in tests</span></div>
+            </div>
+            <div class="term"><div class="bar"><i></i><i></i><i></i></div>
+<pre><span class="p">kvlite&gt;</span> SET user:1 Ada Lovelace
+<span class="ok">+OK</span>
+<span class="p">kvlite&gt;</span> SETEX session:42 60 tok_abc
 <span class="ok">+OK</span>
 <span class="p">kvlite&gt;</span> INCR page_views
 <span class="ok">:1</span>
-<span class="p">kvlite&gt;</span> GET user:1
-<span class="ok">$Ada Lovelace</span></pre>
-            </div>
-          </article>
-        </div>
+<span class="p">kvlite&gt;</span> STATS
+<span class="ok">+keys=3 wal_records=3 recovered=0</span></pre></div>
+            <div class="chips" style="margin-top:14px"><span class="chip">Python</span><span class="chip">asyncio</span><span class="chip">Write-ahead log</span><span class="chip">CRC32</span><span class="chip">TCP</span></div>
+          </div>
+        </article>
       </div>
     </section>
 
-    <section class="section" id="experience">
-      <div class="label">Experience &amp; education</div>
-      <div>
-        <h2>Where I've been.</h2>
-        <table class="ledger">
-          <tr>
-            <td class="when">May – Aug 2026</td>
-            <td><h4>Software Engineering Intern · Tata Consultancy Services</h4><p>Summer internship on an enterprise delivery team for a Banking, Financial Services and Insurance (BFSI) client project.</p></td>
-          </tr>
-          <tr>
-            <td class="when">Dec 2026</td>
-            <td><h4>MS Information Systems · UMBC</h4><p>Coursework in database application development with Oracle SQL and PL/SQL (stored procedures, exception handling, multi-table queries) and in machine learning model evaluation (confusion matrices, ROC analysis).</p></td>
-          </tr>
-          <tr>
-            <td class="when">2026</td>
-            <td><h4>BeMyApp × IBM AI challenge</h4><p>Solo entry designing a real-time football match commentary assistant on IBM Granite.</p></td>
-          </tr>
-          <tr>
-            <td class="when">Ongoing</td>
-            <td><h4>Apache Spark practice</h4><p>DataFrame, Spark SQL and RDD exercises in Scala and spark-shell, from reading JSON to writing filtered CSV output.</p></td>
-          </tr>
-        </table>
-      </div>
-    </section>
-
-    <section class="section" id="skills">
-      <div class="label">Toolkit</div>
-      <div>
-        <h2>What I work with.</h2>
-        <div class="skills">
-          <div><h4 class="label">Languages</h4><p>Python, Java, SQL, PL/SQL, JavaScript, Scala</p></div>
-          <div><h4 class="label">Backend</h4><p>REST APIs, asyncio, concurrency, task queues, TCP sockets, Spring Boot</p></div>
-          <div><h4 class="label">Data</h4><p>SQLite, Oracle, Apache Spark, search and indexing, write-ahead logging</p></div>
-          <div><h4 class="label">Practice</h4><p>Git, GitHub Actions, automated testing, IntelliJ IDEA</p></div>
-        </div>
+    <section class="block" id="education">
+      <span class="eyebrow">Education &amp; more</span>
+      <h2 class="title">Learning, in and out of class.</h2>
+      <div class="edu">
+        <article><span class="when">Graduating Dec 2026</span><h3>MS Information Systems · UMBC</h3><p>Database application development in Oracle SQL and PL/SQL (stored procedures, exception handling, multi-table queries), plus machine-learning model evaluation with confusion matrices and ROC analysis.</p></article>
+        <article><span class="when">2026</span><h3>BeMyApp × IBM AI challenge</h3><p>Solo entry designing a real-time football match commentary assistant on IBM Granite.</p></article>
+        <article><span class="when">Ongoing</span><h3>Apache Spark practice</h3><p>DataFrame, Spark SQL and RDD exercises in Scala and spark-shell, from reading JSON to writing filtered CSV output.</p></article>
       </div>
     </section>
 
     <section class="contact" id="contact">
-      <div class="label">Contact</div>
-      <h2>Hiring for a software engineering role? <em>Let's talk.</em></h2>
-      <div class="email">
+      <span class="eyebrow">Hire me</span>
+      <h2>Let's build something <span class="purple">reliable</span> together.</h2>
+      <p>I'm looking for software engineering roles starting January 2027, in backend, data or infrastructure, anywhere in the US. I reply within a day.</p>
+      <div class="mailbox">
         <code id="email">vinodhini.vijay09@gmail.com</code>
-        <button class="btn" id="copy" type="button">Copy email</button>
-        <span class="copied" id="copied" aria-live="polite"></span>
+        <button class="btn primary" id="copy" type="button">Copy email</button>
       </div>
+      <span id="copied" aria-live="polite"></span>
       <div class="actions">
-        <a class="btn primary" href="https://github.com/vinovj27" target="_blank" rel="noopener">GitHub profile</a>
+        <a class="btn" href="https://github.com/vinovj27" target="_blank" rel="noopener">github.com/vinovj27</a>
       </div>
     </section>
   </main>
 
   <footer>
     <span>© <span id="year">2026</span> Vinodhini</span>
-    <span>Hand-built HTML &amp; CSS · no frameworks</span>
+    <span>Hand-built in HTML, CSS &amp; JavaScript</span>
   </footer>
 </div>
 
 <script>
 (() => {
-  const lines = [
-    ['p', '$ ', 'cmd', 'python -m conveyor demo'],
-    ['bad', '  Chaos: killed worker-1 mid-job'],
-    ['ok', 'Finished in 5.8s · 118 done · 20 needed retries · 3 in the dead-letter queue'],
-    ['p', '$ ', 'cmd', 'python -m sift search "serialize object to json"'],
-    ['dim', '652 results in 3.7 ms'],
-    ['ok', '1. json.dump(obj, fp)'],
-    ['p', '$ ', 'cmd', 'echo "SET user:1 Ada Lovelace" | python -m kvlite cli'],
-    ['ok', 'kvlite> +OK'],
-  ];
-  const term = document.getElementById('term');
-  const esc = s => s.replace(/[&<>]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;' }[c]));
-  const render = (done, partial) => done.map(l => l[0] === 'p'
-      ? `<span class="p">${l[1]}</span>${esc(l[3])}`
-      : `<span class="${l[0] === 'dim' ? 'p' : l[0]}">${esc(l[1])}</span>`).join('\n')
-    + (partial !== undefined ? (done.length ? '\n' : '') + partial : '');
-  const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-  if (reduce) { term.innerHTML = render(lines); return; }
-  term.innerHTML = render(lines);
-  let i = 0, ch = 0, done = [];
-  const tick = () => {
-    if (i >= lines.length) {
-      term.innerHTML = render(done) + '\n<span class="p">$ </span><span class="caret"></span>';
-      setTimeout(() => { i = 0; done = []; tick(); }, 5000);
+  const EXPAND = { 'Ä': 'AE', 'Ö': 'OE', 'Ü': 'UE', 'ß': 'SS', 'Æ': 'AE', 'Œ': 'OE' };
+  const DISTINCT = { 'Ł': 'L', 'Ø': 'O', 'Đ': 'D', 'Ħ': 'H', 'Ŧ': 'T', 'Þ': 'TH', 'Ð': 'D', 'ı': 'I' };
+  const clean = s => s.toUpperCase().replace(/[-'’.,]/g, ' ').replace(/\s+/g, ' ').trim();
+  const strip = s => s.normalize('NFD').replace(/\p{M}/gu, '');
+  const distinct = s => s.replace(/[ŁØĐĦŦÞÐı]/g, c => DISTINCT[c] || c);
+  const dedupe = s => [...new Set(s.split(' '))].join(' ');
+  const plain = s => dedupe(strip(distinct(clean(s))));
+  const expanded = s => dedupe(strip(distinct(clean(s).replace(/[ÄÖÜßÆŒ]/g, c => EXPAND[c]))));
+  const first = s => s.split(' ')[0];
+  const counts = s => { const m = {}; for (const ch of s.replace(/ /g, '')) m[ch] = (m[ch] || 0) + 1; return m; };
+  const letterSim = (a, b) => {
+    const ca = counts(a), cb = counts(b);
+    let diff = 0;
+    for (const k of new Set([...Object.keys(ca), ...Object.keys(cb)])) diff += Math.abs((ca[k] || 0) - (cb[k] || 0));
+    const total = a.replace(/ /g, '').length + b.replace(/ /g, '').length;
+    return total ? 1 - diff / total : 0;
+  };
+  const variants = s => [...new Set([plain(s), expanded(s)])];
+  const anyEq = (xs, ys) => xs.some(x => ys.includes(x));
+
+  function evaluate(af, al, bf, bl) {
+    const steps = [];
+    const done = v => ({ steps, verdict: v });
+    const wordOne = s => first(dedupe(clean(s)));
+    const normFirst = s => variants(s).map(first);
+
+    const exact = clean(af) === clean(bf) && clean(al) === clean(bl);
+    steps.push({ name: 'Exact match', ok: exact, detail: `${clean(af)} ${clean(al)}  vs  ${clean(bf)} ${clean(bl)}` });
+    if (exact) return done({ kind: 'match', text: 'Matched at stage 1', conf: 100 });
+
+    const fw = wordOne(af) === wordOne(bf) && wordOne(al) === wordOne(bl);
+    steps.push({ name: 'First-word match', ok: fw, detail: `${wordOne(af)} ${wordOne(al)}  vs  ${wordOne(bf)} ${wordOne(bl)}  (repeated words removed)` });
+    if (fw) return done({ kind: 'match', text: 'Matched at stage 2', conf: 100 });
+
+    const accent = anyEq(normFirst(af), normFirst(bf)) && anyEq(normFirst(al), normFirst(bl));
+    steps.push({ name: 'Accent-normalised match', ok: accent, detail: `${variants(af).join(' / ')} ${variants(al).join(' / ')}  vs  ${variants(bf).join(' / ')} ${variants(bl).join(' / ')}` });
+    if (accent) return done({ kind: 'match', text: 'Matched at stage 3', conf: 100 });
+
+    const pa = [plain(af), plain(al)], pb = [plain(bf), plain(bl)];
+    const lenOk = Math.abs(pa[0].length - pb[0].length) <= 3 && Math.abs(pa[1].length - pb[1].length) <= 3;
+    const sf = letterSim(pa[0], pb[0]), sl = letterSim(pa[1], pb[1]);
+    const score = Math.min(sf, sl);
+    const blob = Math.round(letterSim(pa.join(''), pb.join('')) * 100);
+    const ok = lenOk && score >= 0.8;
+    const detail = (lenOk ? `first names ${Math.round(sf * 100)}% · last names ${Math.round(sl * 100)}% · needs 80% on both` : 'length pre-filter rejects this pair before scoring')
+      + ` · old combined-name method would have scored ${blob}%`;
+    steps.push({ name: 'Possible match (letter frequency)', ok, detail });
+    return done(ok
+      ? { kind: 'review', text: 'Possible match: sent for human review', conf: Math.round(score * 100) }
+      : { kind: 'none', text: 'No match: reported side by side for investigation', conf: null });
+  }
+
+  const STAGES = ['Exact match', 'First-word match', 'Accent-normalised match', 'Possible match (letter frequency)'];
+  function withSkips(steps) {
+    return STAGES.map(n => steps.find(s => s.name === n) || { name: n, skip: true, detail: 'skipped: already resolved' });
+  }
+
+  const $ = id => document.getElementById(id);
+  const esc = s => String(s).replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
+  function render() {
+    const vals = ['aFirst', 'aLast', 'bFirst', 'bLast'].map(id => $(id).value);
+    if (vals.some(v => !v.trim())) {
+      $('trace').innerHTML = '';
+      $('verdict').innerHTML = '<span class="pill none">Enter all four names</span>';
       return;
     }
-    const l = lines[i];
-    if (l[0] === 'p') {
-      ch++;
-      term.innerHTML = render(done, `<span class="p">$ </span>${esc(l[3].slice(0, ch))}<span class="caret"></span>`);
-      if (ch < l[3].length) return setTimeout(tick, 28 + Math.random() * 40);
-      ch = 0;
-      done.push(l); i++;
-      return setTimeout(tick, 380);
-    }
-    done.push(l); i++;
-    term.innerHTML = render(done);
-    setTimeout(tick, 220);
-  };
-  setTimeout(() => { done = []; tick(); }, 1200);
-})();
-
-document.getElementById('year').textContent = new Date().getFullYear();
-document.getElementById('copy').addEventListener('click', async () => {
-  const email = document.getElementById('email');
-  const note = document.getElementById('copied');
-  try {
-    await navigator.clipboard.writeText(email.textContent);
-    note.textContent = 'Copied';
-  } catch {
-    const range = document.createRange();
-    range.selectNodeContents(email);
-    const sel = window.getSelection();
-    sel.removeAllRanges();
-    sel.addRange(range);
-    note.textContent = 'Selected — press Ctrl/⌘ + C';
+    const { steps, verdict } = evaluate(...vals);
+    $('trace').innerHTML = withSkips(steps).map(s => `<div class="${s.skip ? 'skip' : s.ok ? 'hit' : 'miss'}"><span class="mark">${s.skip ? '–' : s.ok ? '✓' : '✗'}</span><span><strong>${esc(s.name)}</strong><br><code>${esc(s.detail)}</code></span></div>`).join('');
+    const label = verdict.kind === 'match' ? 'MATCH' : verdict.kind === 'review' ? 'REVIEW' : 'NO MATCH';
+    $('verdict').innerHTML = `<span class="pill ${verdict.kind}">${label}${verdict.conf != null ? ' · ' + verdict.conf + '%' : ''}</span><span>${esc(verdict.text)}</span>`;
   }
-  setTimeout(() => { note.textContent = ''; }, 2500);
-});
+  ['aFirst', 'aLast', 'bFirst', 'bLast'].forEach(id => $(id).addEventListener('input', render));
+  $('presets').querySelectorAll('button').forEach(b => b.addEventListener('click', () => {
+    const [af, al] = b.dataset.a.split('|'), [bf, bl] = b.dataset.b.split('|');
+    $('aFirst').value = af; $('aLast').value = al; $('bFirst').value = bf; $('bLast').value = bl;
+    render();
+  }));
+  render();
+
+  $('year').textContent = new Date().getFullYear();
+  $('copy').addEventListener('click', async () => {
+    const email = $('email').textContent;
+    try {
+      await navigator.clipboard.writeText(email);
+      $('copied').textContent = 'Copied to clipboard';
+    } catch {
+      const r = document.createRange();
+      r.selectNodeContents($('email'));
+      const sel = getSelection(); sel.removeAllRanges(); sel.addRange(r);
+      $('copied').textContent = 'Selected: press Ctrl/⌘ + C to copy';
+    }
+    setTimeout(() => { $('copied').textContent = ''; }, 2600);
+  });
+
+  const links = [...document.querySelectorAll('nav a[href^="#"]')];
+  const sections = links.map(a => document.querySelector(a.getAttribute('href'))).filter(Boolean);
+  const onScroll = () => {
+    let current = sections[0];
+    for (const s of sections) if (s.getBoundingClientRect().top < innerHeight * 0.35) current = s;
+    links.forEach(a => a.classList.toggle('on', a.getAttribute('href') === '#' + current.id && !a.classList.contains('hire')));
+  };
+  addEventListener('scroll', onScroll, { passive: true });
+})();
 </script>

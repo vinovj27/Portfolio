@@ -4,7 +4,7 @@ Personal portfolio of Vinodhini — software engineer building backend and data 
 
 **Live site:** https://vinovj27.github.io/Portfolio/
 
-A single hand-written HTML page: no build step, no framework, light and dark themes, and a responsive layout down to phone width.
+A single hand-written HTML page: no build step, no framework, a dark design, an interactive name-matching demo from my TCS internship, and a responsive layout down to phone width.
 
 ## Featured projects
 
@@ -30,4 +30,4 @@ To publish, open **Settings → Pages**, choose **Deploy from a branch**, branch
 
 - Text and links live in `index.html`; `src/page.html` is the same page without the document wrapper.
 - Colors and fonts are tokens at the top of the `<style>` block.
-- Replace `assets/vinodhini.jpg` to change the photo (portrait crop, about 720 px wide).
+- Replace `assets/vinodhini-round.jpg` to change the photo (square crop, about 720 px).
