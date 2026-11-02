@@ -1,0 +1,422 @@
+<title>Vinodhini · Software Engineer</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<meta name="description" content="Vinodhini — software engineer building correct, fast systems for banking and data. Java, Python, SQL.">
+<meta property="og:title" content="Vinodhini · Software Engineer">
+<meta property="og:description" content="I build systems that move money correctly.">
+<meta property="og:image" content="assets/og.jpg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,600;12..96,800&family=Hanken+Grotesk:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<style>
+/* Layout: a bank statement — a narrow label column on the left, entries on the right, ruled like a ledger. */
+:root {
+  --paper: #edf3ee;
+  --sheet: #f7faf7;
+  --ink: #0f241b;
+  --muted: #4d6258;
+  --rule: #c7d5cb;
+  --accent: #0b7a4b;
+  --debit: #b3402a;
+  --term-bg: #0f1f18;
+  --term-ink: #d8e8de;
+  --term-dim: #7f998b;
+  --term-ok: #4fd18b;
+  --term-bad: #ff8a73;
+  --display: "Bricolage Grotesque", "Arial Narrow", system-ui, sans-serif;
+  --body: "Hanken Grotesk", system-ui, -apple-system, "Segoe UI", sans-serif;
+  --mono: "IBM Plex Mono", ui-monospace, "SFMono-Regular", Menlo, monospace;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --paper: #0a1611; --sheet: #0f1e17; --ink: #e4eee7; --muted: #93aa9d; --rule: #1f3529;
+    --accent: #3fcf89; --debit: #ff8a73; --term-bg: #06100b; color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --paper: #0a1611; --sheet: #0f1e17; --ink: #e4eee7; --muted: #93aa9d; --rule: #1f3529;
+  --accent: #3fcf89; --debit: #ff8a73; --term-bg: #06100b; color-scheme: dark;
+}
+
+* { box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+body {
+  overflow-x: hidden;
+  background: var(--paper); color: var(--ink);
+  font: 400 17px/1.6 var(--body);
+  -webkit-font-smoothing: antialiased;
+}
+a { color: inherit; }
+:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; border-radius: 4px; }
+.wrap {
+  max-width: 1160px; margin: 0 auto;
+  padding-left: max(16px, env(safe-area-inset-left, 0px));
+  padding-right: max(16px, env(safe-area-inset-right, 0px));
+}
+@media (min-width: 720px) { .wrap { padding-left: max(32px, env(safe-area-inset-left, 0px)); padding-right: max(32px, env(safe-area-inset-right, 0px)); } }
+
+.mono { font-family: var(--mono); }
+.label {
+  font: 500 12px/1.4 var(--mono); letter-spacing: .12em; text-transform: uppercase; color: var(--muted);
+}
+
+/* top bar */
+.bar { display: flex; justify-content: space-between; align-items: center; gap: 16px; padding-block: 22px; border-bottom: 1px solid var(--rule); }
+.bar .mark { font: 800 18px/1 var(--display); letter-spacing: -.02em; text-decoration: none; }
+.bar .mark span { color: var(--accent); }
+.bar nav { display: flex; gap: 22px; flex-wrap: wrap; }
+.bar nav a { font: 500 14px/1 var(--body); text-decoration: none; color: var(--muted); }
+.bar nav a:hover { color: var(--ink); }
+@media (max-width: 560px) { .bar nav a.opt { display: none; } }
+
+/* hero */
+.hero { display: grid; grid-template-columns: minmax(0, 1.45fr) minmax(0, 1fr); gap: clamp(28px, 5vw, 64px); padding-block: clamp(36px, 6vw, 72px) clamp(36px, 5vw, 64px); align-items: center; }
+@media (max-width: 860px) { .hero { grid-template-columns: minmax(0, 1fr); } .portrait { max-width: 460px; } }
+.hero h1 {
+  font: 800 clamp(54px, 8.6vw, 118px)/.9 var(--display);
+  font-variation-settings: "opsz" 96;
+  letter-spacing: -.045em; margin: 18px 0 26px;
+}
+.hero h1 .dot { color: var(--accent); }
+.thesis { font: 600 clamp(22px, 2.6vw, 30px)/1.25 var(--display); letter-spacing: -.015em; max-width: 22ch; margin: 0 0 18px; text-wrap: balance; }
+.lede { color: var(--muted); max-width: 52ch; margin: 0 0 28px; }
+.actions { display: flex; flex-wrap: wrap; gap: 12px; }
+.btn {
+  display: inline-flex; align-items: center; gap: 10px; padding: 12px 18px; border-radius: 999px;
+  font: 600 15px/1 var(--body); text-decoration: none; border: 1.5px solid var(--ink); background: transparent; color: var(--ink); cursor: pointer;
+  transition: transform .15s ease, background .15s ease, color .15s ease;
+}
+.btn.primary { background: var(--ink); color: var(--paper); }
+.btn:hover { transform: translateY(-2px); }
+.btn svg { width: 16px; height: 16px; fill: currentColor; }
+
+.portrait { position: relative; margin: 0; }
+.portrait img { display: block; width: 100%; max-width: 100%; aspect-ratio: 4 / 5; object-fit: cover; object-position: 50% 22%; border-radius: 6px; filter: saturate(1.05); }
+.portrait figcaption {
+  position: absolute; left: 14px; right: 14px; bottom: 14px; display: flex; justify-content: space-between; gap: 10px; flex-wrap: wrap;
+  padding: 10px 12px; border-radius: 6px; background: color-mix(in srgb, var(--term-bg) 82%, transparent); color: var(--term-ink);
+  font: 500 12px/1.4 var(--mono); backdrop-filter: blur(6px);
+}
+.portrait figcaption b { color: var(--term-ok); font-weight: 500; }
+
+/* terminal */
+.term {
+  margin-top: clamp(32px, 5vw, 48px); background: var(--term-bg); color: var(--term-ink); border-radius: 10px;
+  font: 400 13.5px/1.7 var(--mono); overflow: hidden; grid-column: 1 / -1;
+}
+.term header { display: flex; justify-content: space-between; gap: 12px; padding: 10px 16px; border-bottom: 1px solid #ffffff14; color: var(--term-dim); font-size: 12px; }
+.term header i { display: inline-block; width: 9px; height: 9px; border-radius: 50%; background: #ffffff26; margin-right: 6px; }
+.term pre { margin: 0; padding: 16px 18px 18px; min-height: 13.5em; overflow-x: auto; white-space: pre; }
+.term .p { color: var(--term-dim); } .term .ok { color: var(--term-ok); } .term .bad { color: var(--term-bad); }
+.caret { display: inline-block; width: .6em; height: 1.1em; vertical-align: -.2em; background: var(--term-ok); animation: blink 1s steps(1) infinite; }
+@keyframes blink { 50% { opacity: 0; } }
+
+/* statement sections */
+.section { display: grid; grid-template-columns: 200px minmax(0, 1fr); gap: 32px; padding-block: clamp(48px, 7vw, 80px); border-top: 1px solid var(--rule); }
+@media (max-width: 860px) { .section { grid-template-columns: minmax(0, 1fr); gap: 18px; } }
+.section > .label { padding-top: 8px; }
+.section h2 { font: 800 clamp(34px, 4.6vw, 54px)/1 var(--display); letter-spacing: -.035em; margin: 0 0 14px; text-wrap: balance; }
+.section .intro { color: var(--muted); max-width: 60ch; margin: 0 0 36px; }
+
+/* projects */
+.projects { display: grid; gap: 22px; }
+.project {
+  display: grid; grid-template-columns: minmax(0, 1.1fr) minmax(0, 1fr); gap: 28px;
+  background: var(--sheet); border: 1px solid var(--rule); border-radius: 10px; padding: clamp(20px, 3vw, 32px);
+}
+@media (max-width: 860px) { .project { grid-template-columns: minmax(0, 1fr); } }
+.project .kind { color: var(--accent); }
+.project h3 { font: 800 clamp(30px, 3.6vw, 42px)/1 var(--display); letter-spacing: -.03em; margin: 8px 0 12px; }
+.project p { margin: 0 0 16px; max-width: 54ch; }
+.project ul.points { margin: 0 0 20px; padding: 0; list-style: none; display: grid; gap: 8px; }
+.project ul.points li { padding-left: 20px; position: relative; color: var(--muted); }
+.project ul.points li::before { content: "+"; position: absolute; left: 0; color: var(--accent); font-family: var(--mono); font-weight: 500; }
+.chips { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 20px; }
+.chip { font: 500 12px/1 var(--mono); padding: 6px 9px; border-radius: 5px; border: 1px solid var(--rule); color: var(--muted); }
+.repo { font: 500 14px/1 var(--mono); color: var(--accent); text-decoration: none; border-bottom: 1.5px solid currentColor; padding-bottom: 3px; }
+.repo:hover { color: var(--ink); }
+
+.figures { display: grid; align-content: start; gap: 0; border-top: 1px solid var(--rule); }
+.figure { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 16px; align-items: baseline; padding-block: 14px; border-bottom: 1px solid var(--rule); }
+.figure span { color: var(--muted); font-size: 15px; }
+.figure strong { font: 600 clamp(22px, 2.4vw, 28px)/1 var(--display); letter-spacing: -.02em; font-variant-numeric: tabular-nums; text-align: right; }
+.figure strong.cr { color: var(--accent); }
+.snippet { margin-top: 18px; background: var(--term-bg); color: var(--term-ink); border-radius: 8px; padding: 14px 16px; font: 400 12.5px/1.7 var(--mono); overflow-x: auto; white-space: pre; }
+.snippet .p { color: var(--term-dim); } .snippet .ok { color: var(--term-ok); } .snippet .bad { color: var(--term-bad); }
+
+/* ledger rows: experience */
+.ledger { width: 100%; border-collapse: collapse; }
+.ledger td { padding: 18px 0; border-bottom: 1px solid var(--rule); vertical-align: top; }
+.ledger td.when { width: 150px; padding-right: 20px; font: 500 13px/1.6 var(--mono); color: var(--muted); }
+.ledger h4 { margin: 0 0 4px; font: 600 20px/1.3 var(--display); letter-spacing: -.01em; }
+.ledger p { margin: 0; color: var(--muted); max-width: 62ch; }
+@media (max-width: 560px) { .ledger td.when { width: auto; display: block; padding-bottom: 0; border: 0; } .ledger td { display: block; } }
+
+/* skills */
+.skills { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 0 32px; }
+.skills div { border-top: 2px solid var(--ink); padding-top: 14px; padding-bottom: 26px; }
+.skills h4 { margin: 0 0 10px; }
+.skills p { margin: 0; color: var(--muted); }
+
+/* contact */
+.contact { padding-block: clamp(56px, 8vw, 100px); border-top: 1px solid var(--rule); }
+.contact h2 { font: 800 clamp(44px, 8vw, 104px)/.92 var(--display); letter-spacing: -.045em; margin: 14px 0 30px; max-width: 14ch; text-wrap: balance; }
+.contact h2 em { font-style: normal; color: var(--accent); }
+.email { display: flex; flex-wrap: wrap; align-items: center; gap: 12px; margin-bottom: 18px; }
+.email code { font: 500 clamp(17px, 2.2vw, 22px)/1.3 var(--mono); user-select: all; overflow-wrap: anywhere; }
+.copied { font: 500 13px/1 var(--mono); color: var(--accent); }
+footer { padding-block: 24px 40px; border-top: 1px solid var(--rule); display: flex; justify-content: space-between; gap: 12px; flex-wrap: wrap; color: var(--muted); font: 400 13px/1.5 var(--mono); }
+
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  .btn, .caret { transition: none; animation: none; }
+}
+</style>
+
+<div class="wrap">
+  <div class="bar">
+    <a class="mark" href="#top" aria-label="Vinodhini, home">vinodhini<span>.</span>dev</a>
+    <nav aria-label="Sections">
+      <a href="#work">Work</a>
+      <a class="opt" href="#experience">Experience</a>
+      <a class="opt" href="#skills">Skills</a>
+      <a href="#contact">Contact</a>
+    </nav>
+  </div>
+
+  <main id="top">
+    <section class="hero">
+      <div>
+        <div class="label">Software engineer · Java · Data systems</div>
+        <h1>Vinodhini<span class="dot">.</span></h1>
+        <p class="thesis">I build systems that move money correctly.</p>
+        <p class="lede">I work on banking software at Tata Consultancy Services and I'm finishing an MS in Information Systems at UMBC. I like the hard parts of backend work: concurrency, durability, and data that has to add up to the cent.</p>
+        <div class="actions">
+          <a class="btn primary" href="#work">See the work</a>
+          <a class="btn" href="https://github.com/vinovj27" target="_blank" rel="noopener">
+            <svg viewBox="0 0 16 16" aria-hidden="true"><path d="M8 0C3.58 0 0 3.58 0 8a8 8 0 0 0 5.47 7.59c.4.07.55-.17.55-.38v-1.33c-2.23.48-2.7-1.07-2.7-1.07-.36-.92-.89-1.17-.89-1.17-.73-.5.06-.49.06-.49.8.06 1.23.83 1.23.83.71 1.23 1.88.87 2.34.67.07-.52.28-.87.5-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82a7.6 7.6 0 0 1 4 0c1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48v2.2c0 .21.15.46.55.38A8 8 0 0 0 16 8c0-4.42-3.58-8-8-8z"/></svg>
+            github.com/vinovj27
+          </a>
+        </div>
+      </div>
+      <figure class="portrait">
+        <img src="assets/vinodhini.jpg" alt="Portrait of Vinodhini in a black blazer, standing in a park" width="720" height="846">
+        <figcaption><span>MS Information Systems · UMBC</span><b>Open to SWE roles · Jan 2027</b></figcaption>
+      </figure>
+
+      <div class="term" aria-label="Sample output from the three projects">
+        <header><span><i></i><i></i><i></i>~/vinovj27</span><span id="termTag">live demo</span></header>
+        <pre id="term"></pre>
+      </div>
+    </section>
+
+    <section class="section" id="work">
+      <div class="label">Selected work</div>
+      <div>
+        <h2>Three systems, built from first principles.</h2>
+        <p class="intro">Each project is open source, has a test suite that runs in CI, and starts with one command. They are written without frameworks on purpose, so every lock, checksum and score is code I wrote and can explain.</p>
+
+        <div class="projects">
+          <article class="project">
+            <div>
+              <div class="label kind">Banking · Java 17</div>
+              <h3>LedgerFlow</h3>
+              <p>A core-banking ledger service. It opens accounts, moves money between them and keeps double-entry books that always balance, even with thousands of transfers racing at once.</p>
+              <ul class="points">
+                <li>Deadlock-free transfers using ordered account locks</li>
+                <li>Idempotency keys, so a retried payment is never charged twice</li>
+                <li>Trial-balance audit endpoint and a live web console</li>
+              </ul>
+              <div class="chips"><span class="chip">Java 17</span><span class="chip">REST</span><span class="chip">Concurrency</span><span class="chip">BigDecimal</span><span class="chip">Docker</span><span class="chip">GitHub Actions</span></div>
+              <a class="repo" href="https://github.com/vinovj27/ledgerflow" target="_blank" rel="noopener">vinovj27/ledgerflow →</a>
+            </div>
+            <div>
+              <div class="figures">
+                <div class="figure"><span>Concurrent transfers in stress test</span><strong>32,000</strong></div>
+                <div class="figure"><span>Money created or lost</span><strong class="cr">$0.00</strong></div>
+                <div class="figure"><span>External dependencies</span><strong>0</strong></div>
+              </div>
+<pre class="snippet"><span class="p">$</span> curl -X POST :8080/api/transfers \
+    -H 'Idempotency-Key: t-1' \
+    -d '{"from":"ACC-1001","to":"ACC-1002","amount":"125.50"}'
+<span class="ok">201</span> {"id":"TX-2","kind":"TRANSFER","amount":125.50}</pre>
+            </div>
+          </article>
+
+          <article class="project">
+            <div>
+              <div class="label kind">Databases · Java 17</div>
+              <h3>KVLite</h3>
+              <p>A persistent key-value database with a Redis-style TCP server. Every write hits a checksummed write-ahead log first, so the data survives a crash, a torn write or a pulled plug.</p>
+              <ul class="points">
+                <li>Crash recovery that detects and truncates corrupted log tails</li>
+                <li>Snapshot compaction with fsync and atomic rename</li>
+                <li>TTL expiry, concurrent clients and a throughput benchmark</li>
+              </ul>
+              <div class="chips"><span class="chip">Java 17</span><span class="chip">WAL</span><span class="chip">CRC32</span><span class="chip">TCP sockets</span><span class="chip">fsync</span></div>
+              <a class="repo" href="https://github.com/vinovj27/kvlite" target="_blank" rel="noopener">vinovj27/kvlite →</a>
+            </div>
+            <div>
+              <div class="figures">
+                <div class="figure"><span>Buffered writes per second</span><strong>~250,000</strong></div>
+                <div class="figure"><span>Reads per second</span><strong>~2.3M</strong></div>
+                <div class="figure"><span>Writes lost across restart in tests</span><strong class="cr">0</strong></div>
+              </div>
+<pre class="snippet"><span class="p">kvlite&gt;</span> SETEX session:42 60 tok_abc
+<span class="ok">+OK</span>
+<span class="p">kvlite&gt;</span> GET user:1
+<span class="ok">$Ada Lovelace</span>
+<span class="p">kvlite&gt;</span> STATS
+<span class="ok">+keys=2 wal_records=2 recovered=0 compactions=0</span></pre>
+            </div>
+          </article>
+
+          <article class="project">
+            <div>
+              <div class="label kind">Fraud detection · Python</div>
+              <h3>TxnGuard</h3>
+              <p>A real-time fraud engine that learns each customer's normal spending and scores every card transaction with plain-English reasons, streamed to a live dashboard.</p>
+              <ul class="points">
+                <li>Per-customer streaming profiles using Welford's online variance</li>
+                <li>Rules for card testing, impossible travel and account takeover</li>
+                <li>Noisy-OR risk scoring with approve, review and block decisions</li>
+              </ul>
+              <div class="chips"><span class="chip">Python 3.10+</span><span class="chip">Streaming</span><span class="chip">Statistics</span><span class="chip">Server-Sent Events</span><span class="chip">CLI</span></div>
+              <a class="repo" href="https://github.com/vinovj27/txnguard" target="_blank" rel="noopener">vinovj27/txnguard →</a>
+            </div>
+            <div>
+              <div class="figures">
+                <div class="figure"><span>Precision on labelled stream</span><strong>96.5%</strong></div>
+                <div class="figure"><span>Fraud dollars stopped</span><strong class="cr">98.3%</strong></div>
+                <div class="figure"><span>Legitimate transactions flagged</span><strong>0.13%</strong></div>
+              </div>
+<pre class="snippet"><span class="bad">BLOCK</span>  97.2  C0082  $8.82  GiftCard Depot
+       9 micro-charges under $10 in 5 min
+<span class="bad">BLOCK</span>  91.8  C0181  $502.82  CoinXpress
+       $502.82 vs typical $23.37 (z=7.4)
+       first purchase in 'crypto' at above-normal amount</pre>
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="experience">
+      <div class="label">Experience &amp; education</div>
+      <div>
+        <h2>Where I've been working.</h2>
+        <table class="ledger">
+          <tr>
+            <td class="when">Industry</td>
+            <td><h4>Tata Consultancy Services</h4><p>Working on a Banking, Financial Services and Insurance (BFSI) project as part of an enterprise delivery team.</p></td>
+          </tr>
+          <tr>
+            <td class="when">Dec 2026</td>
+            <td><h4>MS Information Systems · UMBC</h4><p>Coursework in database application development with Oracle SQL and PL/SQL (stored procedures, exception handling, multi-table queries) and in machine learning model evaluation (confusion matrices, ROC analysis).</p></td>
+          </tr>
+          <tr>
+            <td class="when">2026</td>
+            <td><h4>BeMyApp × IBM AI challenge</h4><p>Solo entry designing a real-time football match commentary assistant on IBM Granite.</p></td>
+          </tr>
+          <tr>
+            <td class="when">Ongoing</td>
+            <td><h4>Apache Spark practice</h4><p>DataFrame, Spark SQL and RDD exercises in Scala and spark-shell, from reading JSON to writing filtered CSV output.</p></td>
+          </tr>
+        </table>
+      </div>
+    </section>
+
+    <section class="section" id="skills">
+      <div class="label">Toolkit</div>
+      <div>
+        <h2>What I work with.</h2>
+        <div class="skills">
+          <div><h4 class="label">Languages</h4><p>Java, Python, SQL, PL/SQL, Scala</p></div>
+          <div><h4 class="label">Backend</h4><p>Spring Boot, REST APIs, concurrency, HTTP servers, sockets</p></div>
+          <div><h4 class="label">Data</h4><p>Oracle, Apache Spark, query design, write-ahead logging, statistics</p></div>
+          <div><h4 class="label">Practice</h4><p>Git, GitHub Actions, Docker, IntelliJ IDEA, automated testing</p></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="contact" id="contact">
+      <div class="label">Contact</div>
+      <h2>Hiring for a junior SWE role? <em>Let's talk.</em></h2>
+      <div class="email">
+        <code id="email">vinodhini.vijay09@gmail.com</code>
+        <button class="btn" id="copy" type="button">Copy email</button>
+        <span class="copied" id="copied" aria-live="polite"></span>
+      </div>
+      <div class="actions">
+        <a class="btn primary" href="https://github.com/vinovj27" target="_blank" rel="noopener">GitHub profile</a>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <span>© <span id="year">2026</span> Vinodhini</span>
+    <span>Hand-built HTML &amp; CSS · no frameworks</span>
+  </footer>
+</div>
+
+<script>
+(() => {
+  const lines = [
+    ['p', '$ ', 'cmd', './build.sh test    # ledgerflow'],
+    ['ok', '  PASS  concurrentTransfersConserveMoneyWithoutDeadlock (148 ms)'],
+    ['ok', '  10 passed, 0 failed'],
+    ['p', '$ ', 'cmd', 'echo "SET user:1 Ada Lovelace" | ./build.sh cli'],
+    ['ok', 'kvlite> +OK'],
+    ['p', '$ ', 'cmd', 'python -m txnguard simulate -n 25000'],
+    ['dim', '  Precision 96.5%  ·  Recall 79.8%  ·  F1 0.874'],
+    ['bad', '  BLOCK 97.2  C0082  9 micro-charges under $10 in 5 min'],
+  ];
+  const term = document.getElementById('term');
+  const esc = s => s.replace(/[&<>]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;' }[c]));
+  const render = (done, partial) => done.map(l => l[0] === 'p'
+      ? `<span class="p">${l[1]}</span>${esc(l[3])}`
+      : `<span class="${l[0] === 'dim' ? 'p' : l[0]}">${esc(l[1])}</span>`).join('\n')
+    + (partial !== undefined ? (done.length ? '\n' : '') + partial : '');
+  const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  if (reduce) { term.innerHTML = render(lines); return; }
+  term.innerHTML = render(lines);
+  let i = 0, ch = 0, done = [];
+  const tick = () => {
+    if (i >= lines.length) {
+      term.innerHTML = render(done) + '\n<span class="p">$ </span><span class="caret"></span>';
+      setTimeout(() => { i = 0; done = []; tick(); }, 5000);
+      return;
+    }
+    const l = lines[i];
+    if (l[0] === 'p') {
+      ch++;
+      term.innerHTML = render(done, `<span class="p">$ </span>${esc(l[3].slice(0, ch))}<span class="caret"></span>`);
+      if (ch < l[3].length) return setTimeout(tick, 28 + Math.random() * 40);
+      ch = 0;
+      done.push(l); i++;
+      return setTimeout(tick, 380);
+    }
+    done.push(l); i++;
+    term.innerHTML = render(done);
+    setTimeout(tick, 220);
+  };
+  setTimeout(() => { done = []; tick(); }, 1200);
+})();
+
+document.getElementById('year').textContent = new Date().getFullYear();
+document.getElementById('copy').addEventListener('click', async () => {
+  const email = document.getElementById('email');
+  const note = document.getElementById('copied');
+  try {
+    await navigator.clipboard.writeText(email.textContent);
+    note.textContent = 'Copied';
+  } catch {
+    const range = document.createRange();
+    range.selectNodeContents(email);
+    const sel = window.getSelection();
+    sel.removeAllRanges();
+    sel.addRange(range);
+    note.textContent = 'Selected — press Ctrl/⌘ + C';
+  }
+  setTimeout(() => { note.textContent = ''; }, 2500);
+});
+</script>
