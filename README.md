@@ -28,6 +28,7 @@ To publish, open **Settings → Pages**, choose **Deploy from a branch**, branch
 
 ## Editing
 
-- Text and links live in `index.html`; `src/page.html` is the same page without the document wrapper.
-- Colors and fonts are tokens at the top of the `<style>` block.
+- Home page content lives in `src/page.html`; detail pages live in `src/projects/`.
+- Shared styles are in `assets/site.css`; the TCS name-matching demo is `assets/matcher.js`.
+- After editing anything in `src/`, run `python tools/build_pages.py` to regenerate `index.html` and `projects/`.
 - Replace `assets/vinodhini-round.jpg` to change the photo (square crop, about 720 px).

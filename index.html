@@ -12,228 +12,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Sora:wght@600;700;800&family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,700&family=JetBrains+Mono:wght@400;500&display=swap">
-<style>
-/* Layout: dark studio — split hero with an orbiting portrait, then wide case-study bands. Single dark theme by design. */
-:root {
-  color-scheme: dark;
-  --bg: #141318;
-  --surface: #1c1a22;
-  --surface-2: #24212c;
-  --line: #312d3b;
-  --ink: #f2f0f7;
-  --muted: #a6a1b3;
-  --accent: #8f45ff;
-  --accent-soft: #b88cff;
-  --accent-ink: #ffffff;
-  --highlight: #f6c94e;
-  --ok: #4fd18b;
-  --warn: #f6c94e;
-  --bad: #ff7a85;
-  --display: "Sora", "Segoe UI", system-ui, sans-serif;
-  --body: "DM Sans", system-ui, -apple-system, "Segoe UI", sans-serif;
-  --mono: "JetBrains Mono", ui-monospace, Menlo, Consolas, monospace;
-}
-* { box-sizing: border-box; }
-html { scroll-behavior: smooth; }
-body { background: var(--bg); color: var(--ink); font: 400 17px/1.65 var(--body); -webkit-font-smoothing: antialiased; overflow-x: hidden; }
-a { color: inherit; }
-::selection { background: var(--accent); color: var(--accent-ink); }
-:focus-visible { outline: 2px solid var(--accent-soft); outline-offset: 3px; border-radius: 6px; }
-.wrap { max-width: 1180px; margin: 0 auto; padding-left: max(20px, env(safe-area-inset-left, 0px)); padding-right: max(20px, env(safe-area-inset-right, 0px)); }
-.purple { color: var(--accent-soft); }
-.mono { font-family: var(--mono); }
-.eyebrow { font: 500 13px/1 var(--mono); letter-spacing: .14em; text-transform: uppercase; color: var(--accent-soft); display: inline-flex; align-items: center; gap: 10px; }
-.eyebrow::before { content: ""; width: 26px; height: 2px; background: var(--accent); border-radius: 2px; }
-h2.title { font: 700 clamp(32px, 4.4vw, 50px)/1.08 var(--display); letter-spacing: -.03em; margin: 14px 0 16px; text-wrap: balance; }
-.lead { color: var(--muted); max-width: 64ch; margin: 0; }
-
-/* nav */
-header.nav { display: flex; align-items: center; justify-content: space-between; gap: 16px; padding-block: 26px; }
-.brand { font: 700 20px/1 var(--display); text-decoration: none; letter-spacing: -.02em; }
-.brand span { color: var(--accent-soft); }
-nav ul { display: flex; gap: clamp(14px, 3vw, 38px); list-style: none; margin: 0; padding: 0; flex-wrap: wrap; justify-content: flex-end; }
-nav a { text-decoration: none; color: var(--muted); font-weight: 500; font-size: 16px; transition: color .15s; }
-nav a:hover, nav a.on { color: var(--ink); }
-nav a.on { color: var(--accent-soft); }
-nav a.hire { color: var(--ink); text-decoration: underline; text-underline-offset: 5px; text-decoration-thickness: 1.5px; }
-@media (max-width: 640px) { nav li.opt { display: none; } }
-
-/* hero */
-.hero { display: grid; grid-template-columns: minmax(0, 1.05fr) minmax(0, 1fr); align-items: center; gap: clamp(32px, 5vw, 72px); padding-block: clamp(28px, 6vw, 70px) clamp(56px, 8vw, 96px); }
-@media (max-width: 880px) { .hero { grid-template-columns: minmax(0, 1fr); } .hero .visual { order: -1; } }
-.hi { font-size: 22px; color: var(--ink); margin: 0 0 8px; }
-.hero h1 { font: 700 clamp(40px, 5.6vw, 66px)/1.12 var(--display); letter-spacing: -.035em; margin: 0 0 26px; }
-.hero h1 .role { position: relative; display: inline-block; white-space: nowrap; }
-.hero h1 .role svg { position: absolute; left: 4%; right: 0; bottom: -14px; width: 92%; height: 16px; overflow: visible; }
-.hero h1 .role path { fill: none; stroke: var(--highlight); stroke-width: 5; stroke-linecap: round; stroke-dasharray: 340; stroke-dashoffset: 0; animation: draw 1.1s .5s ease-out both; }
-@keyframes draw { from { stroke-dashoffset: 340; } }
-.hero p.bio { color: #cfcbd9; max-width: 50ch; margin: 0 0 34px; font-size: 18px; }
-.actions { display: flex; flex-wrap: wrap; gap: 16px; }
-.btn { display: inline-flex; align-items: center; gap: 12px; padding: 15px 24px; border-radius: 10px; font: 700 16px/1 var(--body); text-decoration: none; border: 2px solid var(--accent); cursor: pointer; transition: transform .15s, background .15s, box-shadow .15s; background: transparent; color: var(--ink); }
-.btn svg { width: 19px; height: 19px; stroke: currentColor; fill: none; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
-.btn.primary { background: var(--accent); color: var(--accent-ink); }
-.btn:hover { transform: translateY(-2px); box-shadow: 0 10px 30px -10px var(--accent); }
-.status { margin-top: 30px; display: inline-flex; align-items: center; gap: 10px; color: var(--muted); font: 500 14px/1.4 var(--mono); }
-.status i { width: 9px; height: 9px; border-radius: 50%; background: var(--ok); box-shadow: 0 0 0 4px color-mix(in srgb, var(--ok) 22%, transparent); animation: pulse 2s infinite; }
-@keyframes pulse { 50% { box-shadow: 0 0 0 8px transparent; } }
-
-.visual { position: relative; width: 100%; max-width: 520px; margin-inline: auto; aspect-ratio: 1; }
-.dots { position: absolute; background-image: radial-gradient(var(--accent) 2.4px, transparent 2.6px); background-size: 26px 26px; opacity: .85; }
-.dots.a { right: -2%; top: 6%; width: 38%; height: 30%; }
-.dots.b { left: 2%; bottom: -2%; width: 34%; height: 26%; }
-.ring { position: absolute; inset: 0; border: 1.5px solid var(--line); border-radius: 50%; }
-.photo { position: absolute; inset: 9%; border-radius: 50%; overflow: hidden; background: var(--surface); box-shadow: 0 30px 80px -30px #000; }
-.photo img { width: 100%; height: 100%; object-fit: cover; display: block; }
-.orbit { position: absolute; width: 50px; height: 50px; border-radius: 50%; display: grid; place-items: center; background: var(--bg); border: 1.5px solid var(--line); transform: translate(-50%, -50%); text-decoration: none; transition: border-color .2s, transform .2s; }
-.orbit svg { width: 22px; height: 22px; fill: var(--ink); }
-.orbit span { font: 700 13px/1 var(--mono); color: var(--ink); }
-a.orbit:hover { border-color: var(--accent); transform: translate(-50%, -50%) scale(1.08); }
-.orbit.o1 { left: 14.6%; top: 14.6%; } .orbit.o2 { left: 50%; top: 0; } .orbit.o3 { left: 85.4%; top: 14.6%; } .orbit.o4 { left: 0; top: 50%; } .orbit.o5 { left: 14.6%; top: 85.4%; }
-.badge-float { position: absolute; right: 2%; bottom: 10%; background: var(--surface-2); border: 1px solid var(--line); border-radius: 14px; padding: 12px 16px; box-shadow: 0 20px 40px -20px #000; }
-.badge-float b { display: block; font: 700 22px/1 var(--display); color: var(--highlight); }
-.badge-float span { font-size: 13px; color: var(--muted); }
-
-/* stats */
-.stats { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); border: 1px solid var(--line); border-radius: 16px; background: var(--surface); overflow: hidden; }
-.stats div { padding: 24px 22px; border-right: 1px solid var(--line); }
-.stats div:last-child { border-right: 0; }
-.stats b { display: block; font: 700 clamp(26px, 3vw, 34px)/1 var(--display); letter-spacing: -.02em; font-variant-numeric: tabular-nums; }
-.stats span { color: var(--muted); font-size: 14.5px; }
-@media (max-width: 760px) { .stats { grid-template-columns: repeat(2, minmax(0, 1fr)); } .stats div:nth-child(2) { border-right: 0; } .stats div:nth-child(-n+2) { border-bottom: 1px solid var(--line); } }
-
-section.block { padding-block: clamp(70px, 9vw, 110px) 0; }
-
-/* about */
-.about { display: grid; grid-template-columns: minmax(0, 1.1fr) minmax(0, 1fr); gap: clamp(28px, 5vw, 64px); align-items: start; }
-@media (max-width: 880px) { .about { grid-template-columns: minmax(0, 1fr); } }
-.about p { color: #cfcbd9; margin: 0 0 16px; max-width: 60ch; }
-.skills { display: grid; gap: 18px; }
-.skillrow h3 { margin: 0 0 10px; font: 500 13px/1 var(--mono); letter-spacing: .1em; text-transform: uppercase; color: var(--muted); }
-.chips { display: flex; flex-wrap: wrap; gap: 8px; }
-.chip { font: 500 14px/1 var(--body); padding: 9px 13px; border-radius: 8px; background: var(--surface); border: 1px solid var(--line); }
-.chip.hot { border-color: color-mix(in srgb, var(--accent) 60%, var(--line)); background: color-mix(in srgb, var(--accent) 14%, var(--surface)); }
-
-/* case study */
-.case { margin-top: 40px; background: var(--surface); border: 1px solid var(--line); border-radius: 22px; overflow: hidden; }
-.case-head { padding: clamp(24px, 4vw, 44px); background: radial-gradient(120% 140% at 100% 0%, color-mix(in srgb, var(--accent) 22%, transparent), transparent 60%); border-bottom: 1px solid var(--line); }
-.case-meta { display: flex; flex-wrap: wrap; gap: 10px 22px; color: var(--muted); font: 500 14px/1.4 var(--mono); margin-bottom: 18px; }
-.case-meta b { color: var(--ink); font-weight: 500; }
-.case-head h3 { font: 700 clamp(28px, 3.6vw, 42px)/1.12 var(--display); letter-spacing: -.03em; margin: 0 0 14px; text-wrap: balance; }
-.case-head p { color: #cfcbd9; max-width: 72ch; margin: 0; }
-.case-body { padding: clamp(24px, 4vw, 44px); display: grid; gap: clamp(36px, 5vw, 56px); }
-.case h4 { font: 700 21px/1.3 var(--display); margin: 0 0 14px; letter-spacing: -.01em; }
-.case-kpis { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 12px; }
-@media (max-width: 760px) { .case-kpis { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
-.case-kpis div { background: var(--bg); border: 1px solid var(--line); border-radius: 12px; padding: 16px; }
-.case-kpis b { display: block; font: 700 26px/1.1 var(--display); color: var(--accent-soft); font-variant-numeric: tabular-nums; }
-.case-kpis span { font-size: 14px; color: var(--muted); }
-
-.funnel { display: grid; gap: 8px; }
-.stage { display: grid; grid-template-columns: 34px minmax(0, 1fr) auto; gap: 14px; align-items: center; padding: 13px 16px; border-radius: 12px; background: var(--bg); border: 1px solid var(--line); }
-.stage .n { width: 34px; height: 34px; border-radius: 50%; display: grid; place-items: center; font: 700 14px/1 var(--mono); background: var(--surface-2); color: var(--accent-soft); }
-.stage strong { display: block; font-weight: 700; }
-.stage small { color: var(--muted); font-size: 14px; }
-.stage em { font: 500 13px/1 var(--mono); font-style: normal; color: var(--muted); white-space: nowrap; }
-.stage:nth-child(1) { margin-right: 0; } .stage:nth-child(2) { margin-inline: 2%; } .stage:nth-child(3) { margin-inline: 4%; } .stage:nth-child(4) { margin-inline: 6%; } .stage:nth-child(5) { margin-inline: 8%; border-style: dashed; }
-@media (max-width: 600px) { .stage { margin-inline: 0 !important; grid-template-columns: 34px minmax(0, 1fr); } .stage em { grid-column: 2; } }
-
-.problems { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 12px; }
-.problem { background: var(--bg); border: 1px solid var(--line); border-radius: 12px; padding: 16px 18px; }
-.problem code { font: 500 14px/1.5 var(--mono); color: var(--highlight); display: block; margin-bottom: 6px; }
-.problem p { margin: 0; color: var(--muted); font-size: 15px; }
-
-.bug { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 16px; }
-@media (max-width: 760px) { .bug { grid-template-columns: minmax(0, 1fr); } }
-.bug .panel { border-radius: 12px; padding: 18px; background: var(--bg); border: 1px solid var(--line); }
-.bug .panel.before { border-color: color-mix(in srgb, var(--bad) 45%, var(--line)); }
-.bug .panel.after { border-color: color-mix(in srgb, var(--ok) 45%, var(--line)); }
-.bug .tag { font: 700 12px/1 var(--mono); letter-spacing: .1em; text-transform: uppercase; }
-.bug .before .tag { color: var(--bad); } .bug .after .tag { color: var(--ok); }
-.bug p { margin: 10px 0 0; color: #cfcbd9; font-size: 15.5px; }
-.steps-inline { margin: 14px 0 0; padding-left: 20px; color: var(--muted); font-size: 15.5px; }
-.steps-inline li { margin-bottom: 6px; }
-
-.timeline { list-style: none; margin: 0; padding: 0; display: grid; gap: 0; border-left: 2px solid var(--line); }
-.timeline li { position: relative; padding: 0 0 22px 26px; }
-.timeline li::before { content: ""; position: absolute; left: -8px; top: 6px; width: 14px; height: 14px; border-radius: 50%; background: var(--bg); border: 2px solid var(--accent); }
-.timeline strong { display: block; font-weight: 700; }
-.timeline span { color: var(--muted); font-size: 15.5px; }
-.two { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: clamp(24px, 4vw, 48px); }
-@media (max-width: 880px) { .two { grid-template-columns: minmax(0, 1fr); } }
-ul.ticks { list-style: none; padding: 0; margin: 0; display: grid; gap: 10px; }
-ul.ticks li { position: relative; padding-left: 28px; color: #cfcbd9; font-size: 16px; }
-ul.ticks li::before { content: ""; position: absolute; left: 0; top: 7px; width: 14px; height: 8px; border-left: 2.5px solid var(--ok); border-bottom: 2.5px solid var(--ok); transform: rotate(-45deg); }
-.note { font-size: 14px; color: var(--muted); border-left: 3px solid var(--line); padding-left: 14px; margin: 0; }
-
-/* demo */
-.demo { background: var(--bg); border: 1px solid color-mix(in srgb, var(--accent) 50%, var(--line)); border-radius: 16px; padding: clamp(18px, 3vw, 28px); }
-.demo-grid { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 14px; margin: 16px 0 12px; }
-@media (max-width: 640px) { .demo-grid { grid-template-columns: minmax(0, 1fr); } }
-.demo fieldset { border: 1px solid var(--line); border-radius: 12px; padding: 12px 14px 14px; margin: 0; min-width: 0; }
-.demo legend { font: 500 12px/1 var(--mono); letter-spacing: .1em; text-transform: uppercase; color: var(--muted); padding: 0 6px; }
-.demo label { display: block; font-size: 13px; color: var(--muted); margin-top: 8px; }
-.demo input { width: 100%; font: 500 16px/1.2 var(--mono); padding: 10px 12px; border-radius: 8px; border: 1px solid var(--line); background: var(--surface); color: var(--ink); margin-top: 4px; }
-.demo input:focus { border-color: var(--accent); outline: none; }
-.presets { display: flex; flex-wrap: wrap; gap: 8px; }
-.presets button { font: 500 13px/1 var(--mono); padding: 8px 11px; border-radius: 8px; border: 1px solid var(--line); background: var(--surface); color: var(--muted); cursor: pointer; }
-.presets button:hover { color: var(--ink); border-color: var(--accent); }
-.trace { display: grid; gap: 6px; margin-top: 8px; }
-.trace div { display: grid; grid-template-columns: 22px minmax(0, 1fr) auto; gap: 10px; align-items: baseline; font-size: 15px; padding: 8px 10px; border-radius: 8px; }
-.trace .hit { background: color-mix(in srgb, var(--ok) 12%, transparent); }
-.trace .mark { font-family: var(--mono); font-weight: 700; }
-.trace .hit .mark { color: var(--ok); } .trace .miss .mark { color: var(--bad); } .trace .skip { color: var(--muted); } .trace .skip .mark { color: var(--muted); }
-.trace code { font: 400 13px/1.4 var(--mono); color: var(--muted); overflow-wrap: anywhere; }
-.verdict { margin-top: 12px; display: flex; flex-wrap: wrap; align-items: center; gap: 12px; font-weight: 700; }
-.verdict .pill { font: 700 13px/1 var(--mono); padding: 7px 11px; border-radius: 99px; }
-.pill.match { background: color-mix(in srgb, var(--ok) 20%, transparent); color: var(--ok); }
-.pill.review { background: color-mix(in srgb, var(--warn) 20%, transparent); color: var(--warn); }
-.pill.none { background: color-mix(in srgb, var(--bad) 20%, transparent); color: var(--bad); }
-
-/* projects */
-.projects { display: grid; gap: 22px; margin-top: 40px; }
-.project { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: clamp(22px, 4vw, 44px); background: var(--surface); border: 1px solid var(--line); border-radius: 22px; padding: clamp(22px, 4vw, 40px); transition: border-color .2s; }
-.project:hover { border-color: color-mix(in srgb, var(--accent) 55%, var(--line)); }
-@media (max-width: 880px) { .project { grid-template-columns: minmax(0, 1fr); } }
-.project .kind { font: 500 13px/1 var(--mono); letter-spacing: .1em; text-transform: uppercase; color: var(--accent-soft); }
-.project h3 { font: 800 clamp(30px, 3.6vw, 40px)/1 var(--display); letter-spacing: -.035em; margin: 12px 0 12px; }
-.project .tagline { font-size: 19px; color: var(--ink); margin: 0 0 14px; font-weight: 500; }
-.project p { color: var(--muted); margin: 0 0 16px; }
-.project .links { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 22px; }
-.project .links a { display: inline-flex; align-items: center; gap: 8px; font: 700 15px/1 var(--body); text-decoration: none; padding: 11px 16px; border-radius: 9px; border: 1.5px solid var(--line); }
-.project .links a:hover { border-color: var(--accent); }
-.project .links svg { width: 17px; height: 17px; fill: currentColor; }
-.figs { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 10px; margin-bottom: 16px; }
-.figs div { background: var(--bg); border: 1px solid var(--line); border-radius: 12px; padding: 14px; }
-.figs b { display: block; font: 700 22px/1.1 var(--display); color: var(--highlight); font-variant-numeric: tabular-nums; }
-.figs span { font-size: 13px; color: var(--muted); line-height: 1.35; display: block; margin-top: 4px; }
-.term { background: #0c0b0f; border: 1px solid var(--line); border-radius: 12px; overflow: hidden; }
-.term .bar { display: flex; gap: 6px; padding: 10px 14px; border-bottom: 1px solid var(--line); }
-.term .bar i { width: 10px; height: 10px; border-radius: 50%; background: var(--line); }
-.term pre { margin: 0; padding: 14px 16px; font: 400 13px/1.7 var(--mono); color: #d9d5e3; overflow-x: auto; white-space: pre; }
-.term .p { color: var(--muted); } .term .ok { color: var(--ok); } .term .bad { color: var(--bad); } .term .hl { color: var(--highlight); }
-
-/* education */
-.edu { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 16px; margin-top: 36px; }
-.edu article { background: var(--surface); border: 1px solid var(--line); border-radius: 16px; padding: 22px; }
-.edu .when { font: 500 13px/1 var(--mono); color: var(--accent-soft); }
-.edu h3 { font: 700 20px/1.3 var(--display); margin: 10px 0 8px; }
-.edu p { margin: 0; color: var(--muted); font-size: 15.5px; }
-
-/* contact */
-.contact { margin-top: clamp(70px, 9vw, 110px); border-radius: 26px; padding: clamp(32px, 6vw, 72px); background: radial-gradient(90% 120% at 0% 0%, color-mix(in srgb, var(--accent) 35%, transparent), transparent 60%), var(--surface); border: 1px solid var(--line); text-align: left; }
-.contact h2 { font: 800 clamp(36px, 6vw, 72px)/1.02 var(--display); letter-spacing: -.04em; margin: 16px 0 18px; max-width: 16ch; text-wrap: balance; }
-.contact p { color: #cfcbd9; max-width: 56ch; margin: 0 0 28px; }
-.mailbox { display: flex; flex-wrap: wrap; align-items: center; gap: 12px; background: var(--bg); border: 1px solid var(--line); border-radius: 12px; padding: 10px 10px 10px 18px; max-width: 560px; margin-bottom: 18px; }
-.mailbox code { flex: 1; min-width: 0; font: 500 clamp(15px, 2vw, 18px)/1.3 var(--mono); user-select: all; overflow-wrap: anywhere; }
-.mailbox .btn { padding: 11px 16px; font-size: 14px; }
-#copied { font: 500 13px/1 var(--mono); color: var(--ok); min-height: 1em; display: block; margin-bottom: 18px; }
-footer { display: flex; justify-content: space-between; gap: 12px; flex-wrap: wrap; padding-block: 36px 44px; color: var(--muted); font: 400 14px/1.5 var(--mono); }
-
-@media (prefers-reduced-motion: reduce) {
-  html { scroll-behavior: auto; }
-  *, *::before { animation: none !important; transition: none !important; }
-}
-</style>
+<link rel="stylesheet" href="assets/site.css">
 </head>
 <body>
 <div class="wrap">
@@ -302,9 +81,9 @@ footer { display: flex; justify-content: space-between; gap: 12px; flex-wrap: wr
           <p>I work best where correctness matters: when two records might be the same person, when a worker might crash mid-job, when a write must survive a power cut.</p>
         </div>
         <div class="skills">
-          <div class="skillrow"><h3>Languages</h3><div class="chips"><span class="chip hot">Python</span><span class="chip hot">SQL</span><span class="chip">Java</span><span class="chip">PL/SQL</span><span class="chip">JavaScript</span><span class="chip">Scala</span></div></div>
-          <div class="skillrow"><h3>Backend &amp; systems</h3><div class="chips"><span class="chip hot">Distributed systems</span><span class="chip">REST APIs</span><span class="chip">asyncio</span><span class="chip">Concurrency</span><span class="chip">TCP sockets</span><span class="chip">Spring Boot</span></div></div>
-          <div class="skillrow"><h3>Data</h3><div class="chips"><span class="chip hot">Data reconciliation</span><span class="chip">Fuzzy matching</span><span class="chip">Unicode text handling</span><span class="chip">SQLite</span><span class="chip">Oracle</span><span class="chip">Apache Spark</span><span class="chip">Search &amp; indexing</span></div></div>
+          <div class="skillrow"><h3>Languages</h3><div class="chips"><span class="chip hot">Python</span><span class="chip hot">SQL</span><span class="chip">Java</span><span class="chip">PL/SQL</span><span class="chip">JavaScript</span></div></div>
+          <div class="skillrow"><h3>Backend &amp; systems</h3><div class="chips"><span class="chip hot">Distributed systems</span><span class="chip">REST APIs</span><span class="chip">Concurrency</span><span class="chip">TCP sockets</span><span class="chip">Spring Boot</span></div></div>
+          <div class="skillrow"><h3>Data</h3><div class="chips"><span class="chip hot">Data reconciliation</span><span class="chip">Fuzzy matching</span><span class="chip">Unicode text handling</span><span class="chip">SQLite</span><span class="chip">Oracle</span><span class="chip">Search &amp; indexing</span></div></div>
           <div class="skillrow"><h3>Practice</h3><div class="chips"><span class="chip">Git</span><span class="chip">GitHub Actions CI</span><span class="chip">Automated testing</span><span class="chip">Debugging</span><span class="chip">Excel reporting</span></div></div>
         </div>
       </div>
@@ -319,122 +98,25 @@ footer { display: flex; justify-content: space-between; gap: 12px; flex-wrap: wr
         <div class="case-head">
           <div class="case-meta"><span><b>Tata Consultancy Services</b></span><span>Software Engineering Intern</span><span>May – Aug 2026</span><span>BFSI · banking migration</span></div>
           <h3>Signer Data Migration &amp; Reconciliation</h3>
-          <p>Before a bank cuts over to a new platform, every authorised signer must exist, with the right details, in every system that depends on them. I built the Python tool that checks this: it reads encrypted Excel exports from a source system and three target systems, matches each signer across systems despite inconsistent spellings, verifies addresses and tax IDs, and produces a reviewer-ready Excel report with a confidence score for every match.</p>
+          <p>Before a bank cuts over to a new platform, every authorised signer must exist, with the right details, in every system that depends on them. I built the Python tool that proves it: a tiered matching pipeline that finds the same person across four systems despite umlauts, accents, truncated surnames and repeated names, then reports every result with a confidence score.</p>
         </div>
-
         <div class="case-body">
           <div class="case-kpis">
             <div><b>37.5K → 85K</b><span>source records as the scope grew mid-project</span></div>
             <div><b>3 of 4</b><span>analyses delivered: address, tax ID and cross-system name matching</span></div>
             <div><b>8</b><span>real edge cases from mentor review, each traced to a root cause</span></div>
-            <div><b>100%</b><span>of results labelled with the stage that matched and a confidence score</span></div>
+            <div><b>4-stage</b><span>matching funnel: exact, first-word, accent-normalised, probable</span></div>
           </div>
-
-          <div>
-            <h4>The tiered matching funnel I designed</h4>
-            <p class="lead" style="margin-bottom:16px">Each stage runs only on records the previous stage could not resolve, so cheap exact checks handle most records and expensive fuzzy logic touches only the hard ones. Every result records which stage found it.</p>
-            <div class="funnel">
-              <div class="stage"><span class="n">1</span><div><strong>Exact match</strong><small>Name and date of birth identical across systems</small></div><em>confidence 100%</em></div>
-              <div class="stage"><span class="n">2</span><div><strong>First-word match</strong><small>Handles truncated compound surnames and repeated names</small></div><em>confidence 100%</em></div>
-              <div class="stage"><span class="n">3</span><div><strong>Accent-normalised match</strong><small>Unicode normalisation plus language rules like Ü → UE and Ł → L</small></div><em>confidence 100%</em></div>
-              <div class="stage"><span class="n">4</span><div><strong>Possible match</strong><small>Letter-frequency similarity, first name and last name scored separately</small></div><em>scaled score · human review</em></div>
-              <div class="stage"><span class="n">∅</span><div><strong>Unmatched</strong><small>Reported side by side for investigation, never silently dropped</small></div><em>flagged</em></div>
-            </div>
+          <ul class="ticks">
+            <li>Built a Python reconciliation tool that verifies signer names, addresses and tax IDs across four systems ahead of a bank's platform migration</li>
+            <li>Designed a 4-stage matching funnel that handles umlauts, non-decomposable letters like Ł, truncated surnames and repeated names, with a confidence score on every result</li>
+            <li>Diagnosed and fixed a scoring bug that matched unrelated names, then scaled the pipeline from 37.5K to 85K records with schema normalisation and candidate bucketing</li>
+            <li>Delivered reviewer-ready, multi-sheet Excel reports plus a standalone accented-name audit tool for the team</li>
+          </ul>
+          <div class="cta-row">
+            <a class="btn primary" href="projects/tcs-signer-reconciliation.html" target="_blank" rel="noopener">Read the full case study<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 17 17 7M9 7h8v8"/></svg></a>
+            <a class="btn" href="projects/tcs-signer-reconciliation.html#matcher" target="_blank" rel="noopener">Try the live matcher<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 17 17 7M9 7h8v8"/></svg></a>
           </div>
-
-          <div>
-            <h4>Try the matcher</h4>
-            <div class="demo">
-              <p class="lead" style="font-size:15.5px">A JavaScript re-creation of the funnel's logic, so you can see why each pair matches or doesn't. Pick an example or type your own names.</p>
-              <div class="presets" id="presets" style="margin-top:14px">
-                <button type="button" data-a="Jonas|Müller" data-b="Jonas|Mueller">Müller · Mueller</button>
-                <button type="button" data-a="José|García-López" data-b="Jose|Garcia Lopez">García-López</button>
-                <button type="button" data-a="Łukasz|Wiśniewski" data-b="Lukasz|Wisniewski">Ł is not an accent</button>
-                <button type="button" data-a="Anna|Kowalska Nowak" data-b="Anna|Kowalska">Truncated surname</button>
-                <button type="button" data-a="Ravi|Kumar Kumar" data-b="Ravi|Kumar">Repeated name</button>
-                <button type="button" data-a="Katherine|Novak" data-b="Kathrine|Novak">Typo → review</button>
-                <button type="button" data-a="Mia|Lorenz" data-b="Lia|Morenz">The bug I fixed</button>
-              </div>
-              <div class="demo-grid">
-                <fieldset><legend>Source system</legend>
-                  <label for="aFirst">First name</label><input id="aFirst" autocomplete="off" value="Jonas">
-                  <label for="aLast">Last name</label><input id="aLast" autocomplete="off" value="Müller">
-                </fieldset>
-                <fieldset><legend>Target system</legend>
-                  <label for="bFirst">First name</label><input id="bFirst" autocomplete="off" value="Jonas">
-                  <label for="bLast">Last name</label><input id="bLast" autocomplete="off" value="Mueller">
-                </fieldset>
-              </div>
-              <div class="trace" id="trace" aria-live="polite"></div>
-              <div class="verdict" id="verdict"></div>
-            </div>
-          </div>
-
-          <div>
-            <h4>Real-world name problems, and how the pipeline handles each</h4>
-            <div class="problems">
-              <div class="problem"><code>MÜLLER ≠ MUELLER</code><p>German convention spells Ü as UE. Unicode normalisation alone gives MULLER, so I added a multi-letter expansion table.</p></div>
-              <div class="problem"><code>ŁUKASZ ≠ LUKASZ</code><p>Polish Ł is its own letter, not L plus an accent, so standard stripping can't decompose it. It needed an explicit mapping.</p></div>
-              <div class="problem"><code>JOSÉ GARCÍA-LÓPEZ</code><p>Generic stripping via Unicode decomposition covers French, Spanish, Polish, Croatian and other Latin scripts without per-language lists.</p></div>
-              <div class="problem"><code>KOWALSKA NOWAK → KOWALSKA</code><p>One system truncated compound surnames, so first-word matching runs as a fallback.</p></div>
-              <div class="problem"><code>KUMAR KUMAR</code><p>The same name entered in both name fields. Duplicate-word removal cleans it before comparison.</p></div>
-              <div class="problem"><code>DÉBORAH + compound surname</code><p>Needed accent stripping and truncation together. I generated first-word variants after normalisation so the stages compose.</p></div>
-            </div>
-          </div>
-
-          <div>
-            <h4>The hardest bug: unrelated names matching</h4>
-            <div class="bug">
-              <div class="panel before"><span class="tag">Symptom</span>
-                <p>After adding the letter-frequency "possible match" stage, completely unrelated names were being flagged as matches.</p>
-                <ol class="steps-inline">
-                  <li>Ruled out duplicate function definitions, stale cached files and wrong file paths</li>
-                  <li>Hand-calculated expected scores to prove the logic should reject these pairs</li>
-                  <li>Wrote an isolated, zero-dependency test script to separate "the math is wrong" from "something else interferes"</li>
-                </ol>
-              </div>
-              <div class="panel after"><span class="tag">Root cause &amp; fix</span>
-                <p>A variable-naming collision merged first and last names into one bag of letters, so a mismatch in one part could be cancelled out by a coincidental overlap in the other.</p>
-                <p>I compared first names to first names and last names to last names independently, and added a length pre-filter that rejects unrelated candidates before scoring.</p>
-              </div>
-            </div>
-          </div>
-
-          <div class="two">
-            <div>
-              <h4>Scaling to the full dataset</h4>
-              <ul class="ticks">
-                <li>Mid-project the source export grew from 37,508 to 85,315 records with a completely different column schema. A normalisation layer translated it, so no downstream function had to change.</li>
-                <li>Fuzzy matching scanned the whole target index for every unmatched record, which became too slow. Bucketing candidates by first letter cut the search space while keeping accuracy.</li>
-                <li>A loose similarity threshold was producing false positives reported at 100%. I raised the threshold and made the function report its true similarity score.</li>
-              </ul>
-            </div>
-            <div>
-              <h4>What I delivered</h4>
-              <ul class="ticks">
-                <li>A multi-sheet Excel report with match status, matching stage and confidence for every signer</li>
-                <li>Side-by-side source and target names and IDs, so reviewers verify a match without re-running code</li>
-                <li>An accented-character audit across every source system, sizing the encoding problem for the team</li>
-                <li>A standalone transliteration tool that converts accented names to plain-English spellings across four systems</li>
-              </ul>
-            </div>
-          </div>
-
-          <div>
-            <h4>How the project unfolded</h4>
-            <ol class="timeline">
-              <li><strong>Kickoff</strong><span>Knowledge-transfer session on the migration and four scoped analyses comparing a source system with three targets.</span></li>
-              <li><strong>Core script</strong><span>Read encrypted Excel exports, indexed targets by name for fast lookup, and built address and tax-ID verification with fuzzy matching (difflib).</span></li>
-              <li><strong>First review: 5 missed matches</strong><span>Umlauts, accents, hyphens, repeated names and truncated surnames. My mentor asked for confidence-scored "probable matches" instead of yes/no.</span></li>
-              <li><strong>Accent-matching engine</strong><span>Unicode normalisation, multi-letter expansion, duplicate-word removal and the tiered funnel.</span></li>
-              <li><strong>Debugging cycle</strong><span>Isolated and fixed the cross-field scoring bug described above.</span></li>
-              <li><strong>Second review: 3 more cases</strong><span>Each had a different root cause: a stage-composition gap, a compound first name, and one record that existed only in the target, which exposed a limit of the one-way analysis.</span></li>
-              <li><strong>Scale-up</strong><span>Moved to the 85K-record export: schema normalisation, candidate bucketing and threshold correction.</span></li>
-              <li><strong>Outcome</strong><span>Analyses 1–3 complete and validated against production edge cases. I recommended a reverse-direction check as the next enhancement.</span></li>
-            </ol>
-          </div>
-
-          <p class="note">Built with Python, difflib, Unicode normalisation (unicodedata) and Excel input/output, working from a mentor's review of real records.</p>
         </div>
       </article>
     </section>
@@ -457,7 +139,8 @@ footer { display: flex; justify-content: space-between; gap: 12px; flex-wrap: wr
               <li>Priorities, delayed jobs, named queues and a live dashboard with one-click retry</li>
             </ul>
             <div class="links">
-              <a href="https://github.com/vinovj27/Conveyor" target="_blank" rel="noopener"><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M8 0C3.58 0 0 3.58 0 8a8 8 0 0 0 5.47 7.59c.4.07.55-.17.55-.38v-1.33c-2.23.48-2.7-1.07-2.7-1.07-.36-.92-.89-1.17-.89-1.17-.73-.5.06-.49.06-.49.8.06 1.23.83 1.23.83.71 1.23 1.88.87 2.34.67.07-.52.28-.87.5-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82a7.6 7.6 0 0 1 4 0c1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48v2.2c0 .21.15.46.55.38A8 8 0 0 0 16 8c0-4.42-3.58-8-8-8z"/></svg>View code</a>
+              <a class="primary" href="projects/conveyor.html" target="_blank" rel="noopener">View project<svg viewBox="0 0 24 24" aria-hidden="true" class="stroke"><path d="M7 17 17 7M9 7h8v8"/></svg></a>
+              <a href="https://github.com/vinovj27/Conveyor" target="_blank" rel="noopener"><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M8 0C3.58 0 0 3.58 0 8a8 8 0 0 0 5.47 7.59c.4.07.55-.17.55-.38v-1.33c-2.23.48-2.7-1.07-2.7-1.07-.36-.92-.89-1.17-.89-1.17-.73-.5.06-.49.06-.49.8.06 1.23.83 1.23.83.71 1.23 1.88.87 2.34.67.07-.52.28-.87.5-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82a7.6 7.6 0 0 1 4 0c1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48v2.2c0 .21.15.46.55.38A8 8 0 0 0 16 8c0-4.42-3.58-8-8-8z"/></svg>Source code</a>
             </div>
           </div>
           <div>
@@ -490,7 +173,8 @@ Started 3 worker processes on 151 jobs
               <li>"Did you mean" via bounded edit distance, autocomplete and highlighted snippets</li>
             </ul>
             <div class="links">
-              <a href="https://github.com/vinovj27/Sift" target="_blank" rel="noopener"><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M8 0C3.58 0 0 3.58 0 8a8 8 0 0 0 5.47 7.59c.4.07.55-.17.55-.38v-1.33c-2.23.48-2.7-1.07-2.7-1.07-.36-.92-.89-1.17-.89-1.17-.73-.5.06-.49.06-.49.8.06 1.23.83 1.23.83.71 1.23 1.88.87 2.34.67.07-.52.28-.87.5-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82a7.6 7.6 0 0 1 4 0c1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48v2.2c0 .21.15.46.55.38A8 8 0 0 0 16 8c0-4.42-3.58-8-8-8z"/></svg>View code</a>
+              <a class="primary" href="projects/sift.html" target="_blank" rel="noopener">View project<svg viewBox="0 0 24 24" aria-hidden="true" class="stroke"><path d="M7 17 17 7M9 7h8v8"/></svg></a>
+              <a href="https://github.com/vinovj27/Sift" target="_blank" rel="noopener"><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M8 0C3.58 0 0 3.58 0 8a8 8 0 0 0 5.47 7.59c.4.07.55-.17.55-.38v-1.33c-2.23.48-2.7-1.07-2.7-1.07-.36-.92-.89-1.17-.89-1.17-.73-.5.06-.49.06-.49.8.06 1.23.83 1.23.83.71 1.23 1.88.87 2.34.67.07-.52.28-.87.5-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82a7.6 7.6 0 0 1 4 0c1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48v2.2c0 .21.15.46.55.38A8 8 0 0 0 16 8c0-4.42-3.58-8-8-8z"/></svg>Source code</a>
             </div>
           </div>
           <div>
@@ -516,14 +200,15 @@ Started 3 worker processes on 151 jobs
             <span class="kind">Databases</span>
             <h3>KVLite</h3>
             <p class="tagline">A key-value database that survives a pulled plug.</p>
-            <p>Every write is appended to a checksummed write-ahead log before it's applied, the approach behind Redis's append-only file and Postgres crash recovery. On restart, KVLite replays the log; if a power cut left a half-written record, its checksum fails and the log is truncated to the last good entry. An asyncio TCP server speaks a Redis-style protocol to many clients at once.</p>
+            <p>Every write is appended to a checksummed write-ahead log before it's applied, the approach behind Redis's append-only file and Postgres crash recovery. On restart, KVLite replays the log; if a power cut left a half-written record, its checksum fails and the log is truncated to the last good entry. A TCP server speaks a Redis-style protocol to many clients at once.</p>
             <ul class="ticks">
               <li>CRC32 per record, with base64-encoded keys and values so any text is safe</li>
               <li>Snapshot compaction with fsync and atomic rename, so the snapshot is never half-written</li>
               <li>TTL expiry, atomic INCR, and fsync or buffered durability modes</li>
             </ul>
             <div class="links">
-              <a href="https://github.com/vinovj27/Kvlite" target="_blank" rel="noopener"><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M8 0C3.58 0 0 3.58 0 8a8 8 0 0 0 5.47 7.59c.4.07.55-.17.55-.38v-1.33c-2.23.48-2.7-1.07-2.7-1.07-.36-.92-.89-1.17-.89-1.17-.73-.5.06-.49.06-.49.8.06 1.23.83 1.23.83.71 1.23 1.88.87 2.34.67.07-.52.28-.87.5-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82a7.6 7.6 0 0 1 4 0c1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48v2.2c0 .21.15.46.55.38A8 8 0 0 0 16 8c0-4.42-3.58-8-8-8z"/></svg>View code</a>
+              <a class="primary" href="projects/kvlite.html" target="_blank" rel="noopener">View project<svg viewBox="0 0 24 24" aria-hidden="true" class="stroke"><path d="M7 17 17 7M9 7h8v8"/></svg></a>
+              <a href="https://github.com/vinovj27/Kvlite" target="_blank" rel="noopener"><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M8 0C3.58 0 0 3.58 0 8a8 8 0 0 0 5.47 7.59c.4.07.55-.17.55-.38v-1.33c-2.23.48-2.7-1.07-2.7-1.07-.36-.92-.89-1.17-.89-1.17-.73-.5.06-.49.06-.49.8.06 1.23.83 1.23.83.71 1.23 1.88.87 2.34.67.07-.52.28-.87.5-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82a7.6 7.6 0 0 1 4 0c1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48v2.2c0 .21.15.46.55.38A8 8 0 0 0 16 8c0-4.42-3.58-8-8-8z"/></svg>Source code</a>
             </div>
           </div>
           <div>
@@ -541,19 +226,18 @@ Started 3 worker processes on 151 jobs
 <span class="ok">:1</span>
 <span class="p">kvlite&gt;</span> STATS
 <span class="ok">+keys=3 wal_records=3 recovered=0</span></pre></div>
-            <div class="chips" style="margin-top:14px"><span class="chip">Python</span><span class="chip">asyncio</span><span class="chip">Write-ahead log</span><span class="chip">CRC32</span><span class="chip">TCP</span></div>
+            <div class="chips" style="margin-top:14px"><span class="chip">Python</span><span class="chip">Write-ahead log</span><span class="chip">CRC32</span><span class="chip">TCP</span></div>
           </div>
         </article>
       </div>
     </section>
 
     <section class="block" id="education">
-      <span class="eyebrow">Education &amp; more</span>
-      <h2 class="title">Learning, in and out of class.</h2>
+      <span class="eyebrow">Education</span>
+      <h2 class="title">Where I studied.</h2>
       <div class="edu">
-        <article><span class="when">Graduating Dec 2026</span><h3>MS Information Systems · UMBC</h3><p>Database application development in Oracle SQL and PL/SQL (stored procedures, exception handling, multi-table queries), plus machine-learning model evaluation with confusion matrices and ROC analysis.</p></article>
-        <article><span class="when">2026</span><h3>BeMyApp × IBM AI challenge</h3><p>Solo entry designing a real-time football match commentary assistant on IBM Granite.</p></article>
-        <article><span class="when">Ongoing</span><h3>Apache Spark practice</h3><p>DataFrame, Spark SQL and RDD exercises in Scala and spark-shell, from reading JSON to writing filtered CSV output.</p></article>
+        <article><span class="when">Graduating Dec 2026</span><h3>MS Information Systems · University of Maryland, Baltimore County</h3><p>Database application development in Oracle SQL and PL/SQL (stored procedures, exception handling, multi-table queries) and machine-learning model evaluation with confusion matrices and ROC analysis.</p></article>
+        <!--UNDERGRAD-->
       </div>
     </section>
 
@@ -580,85 +264,7 @@ Started 3 worker processes on 151 jobs
 
 <script>
 (() => {
-  const EXPAND = { 'Ä': 'AE', 'Ö': 'OE', 'Ü': 'UE', 'ß': 'SS', 'Æ': 'AE', 'Œ': 'OE' };
-  const DISTINCT = { 'Ł': 'L', 'Ø': 'O', 'Đ': 'D', 'Ħ': 'H', 'Ŧ': 'T', 'Þ': 'TH', 'Ð': 'D', 'ı': 'I' };
-  const clean = s => s.toUpperCase().replace(/[-'’.,]/g, ' ').replace(/\s+/g, ' ').trim();
-  const strip = s => s.normalize('NFD').replace(/\p{M}/gu, '');
-  const distinct = s => s.replace(/[ŁØĐĦŦÞÐı]/g, c => DISTINCT[c] || c);
-  const dedupe = s => [...new Set(s.split(' '))].join(' ');
-  const plain = s => dedupe(strip(distinct(clean(s))));
-  const expanded = s => dedupe(strip(distinct(clean(s).replace(/[ÄÖÜßÆŒ]/g, c => EXPAND[c]))));
-  const first = s => s.split(' ')[0];
-  const counts = s => { const m = {}; for (const ch of s.replace(/ /g, '')) m[ch] = (m[ch] || 0) + 1; return m; };
-  const letterSim = (a, b) => {
-    const ca = counts(a), cb = counts(b);
-    let diff = 0;
-    for (const k of new Set([...Object.keys(ca), ...Object.keys(cb)])) diff += Math.abs((ca[k] || 0) - (cb[k] || 0));
-    const total = a.replace(/ /g, '').length + b.replace(/ /g, '').length;
-    return total ? 1 - diff / total : 0;
-  };
-  const variants = s => [...new Set([plain(s), expanded(s)])];
-  const anyEq = (xs, ys) => xs.some(x => ys.includes(x));
-
-  function evaluate(af, al, bf, bl) {
-    const steps = [];
-    const done = v => ({ steps, verdict: v });
-    const wordOne = s => first(dedupe(clean(s)));
-    const normFirst = s => variants(s).map(first);
-
-    const exact = clean(af) === clean(bf) && clean(al) === clean(bl);
-    steps.push({ name: 'Exact match', ok: exact, detail: `${clean(af)} ${clean(al)}  vs  ${clean(bf)} ${clean(bl)}` });
-    if (exact) return done({ kind: 'match', text: 'Matched at stage 1', conf: 100 });
-
-    const fw = wordOne(af) === wordOne(bf) && wordOne(al) === wordOne(bl);
-    steps.push({ name: 'First-word match', ok: fw, detail: `${wordOne(af)} ${wordOne(al)}  vs  ${wordOne(bf)} ${wordOne(bl)}  (repeated words removed)` });
-    if (fw) return done({ kind: 'match', text: 'Matched at stage 2', conf: 100 });
-
-    const accent = anyEq(normFirst(af), normFirst(bf)) && anyEq(normFirst(al), normFirst(bl));
-    steps.push({ name: 'Accent-normalised match', ok: accent, detail: `${variants(af).join(' / ')} ${variants(al).join(' / ')}  vs  ${variants(bf).join(' / ')} ${variants(bl).join(' / ')}` });
-    if (accent) return done({ kind: 'match', text: 'Matched at stage 3', conf: 100 });
-
-    const pa = [plain(af), plain(al)], pb = [plain(bf), plain(bl)];
-    const lenOk = Math.abs(pa[0].length - pb[0].length) <= 3 && Math.abs(pa[1].length - pb[1].length) <= 3;
-    const sf = letterSim(pa[0], pb[0]), sl = letterSim(pa[1], pb[1]);
-    const score = Math.min(sf, sl);
-    const blob = Math.round(letterSim(pa.join(''), pb.join('')) * 100);
-    const ok = lenOk && score >= 0.8;
-    const detail = (lenOk ? `first names ${Math.round(sf * 100)}% · last names ${Math.round(sl * 100)}% · needs 80% on both` : 'length pre-filter rejects this pair before scoring')
-      + ` · old combined-name method would have scored ${blob}%`;
-    steps.push({ name: 'Possible match (letter frequency)', ok, detail });
-    return done(ok
-      ? { kind: 'review', text: 'Possible match: sent for human review', conf: Math.round(score * 100) }
-      : { kind: 'none', text: 'No match: reported side by side for investigation', conf: null });
-  }
-
-  const STAGES = ['Exact match', 'First-word match', 'Accent-normalised match', 'Possible match (letter frequency)'];
-  function withSkips(steps) {
-    return STAGES.map(n => steps.find(s => s.name === n) || { name: n, skip: true, detail: 'skipped: already resolved' });
-  }
-
   const $ = id => document.getElementById(id);
-  const esc = s => String(s).replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
-  function render() {
-    const vals = ['aFirst', 'aLast', 'bFirst', 'bLast'].map(id => $(id).value);
-    if (vals.some(v => !v.trim())) {
-      $('trace').innerHTML = '';
-      $('verdict').innerHTML = '<span class="pill none">Enter all four names</span>';
-      return;
-    }
-    const { steps, verdict } = evaluate(...vals);
-    $('trace').innerHTML = withSkips(steps).map(s => `<div class="${s.skip ? 'skip' : s.ok ? 'hit' : 'miss'}"><span class="mark">${s.skip ? '–' : s.ok ? '✓' : '✗'}</span><span><strong>${esc(s.name)}</strong><br><code>${esc(s.detail)}</code></span></div>`).join('');
-    const label = verdict.kind === 'match' ? 'MATCH' : verdict.kind === 'review' ? 'REVIEW' : 'NO MATCH';
-    $('verdict').innerHTML = `<span class="pill ${verdict.kind}">${label}${verdict.conf != null ? ' · ' + verdict.conf + '%' : ''}</span><span>${esc(verdict.text)}</span>`;
-  }
-  ['aFirst', 'aLast', 'bFirst', 'bLast'].forEach(id => $(id).addEventListener('input', render));
-  $('presets').querySelectorAll('button').forEach(b => b.addEventListener('click', () => {
-    const [af, al] = b.dataset.a.split('|'), [bf, bl] = b.dataset.b.split('|');
-    $('aFirst').value = af; $('aLast').value = al; $('bFirst').value = bf; $('bLast').value = bl;
-    render();
-  }));
-  render();
-
   $('year').textContent = new Date().getFullYear();
   $('copy').addEventListener('click', async () => {
     const email = $('email').textContent;

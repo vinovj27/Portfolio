@@ -1,0 +1,122 @@
+title: Sift
+description: Sift, a full-text search engine in Python with BM25 ranking, phrase queries, typo correction and an instant-search web UI. Built by Vinodhini.
+<!--SPLIT-->
+    <section class="d-hero">
+      <a class="back" href="../index.html#projects">← Back to portfolio</a><br><br>
+      <span class="eyebrow">Search &amp; information retrieval</span>
+      <h1>Sift</h1>
+      <p class="tagline">A search engine that answers in milliseconds, understands phrases and forgives typos.</p>
+      <div class="chips"><span class="chip hot">Python</span><span class="chip">Algorithms</span><span class="chip">Information retrieval</span><span class="chip">JSON API</span><span class="chip">JavaScript</span></div>
+      <div class="cta-row">
+        <a class="btn primary" href="https://github.com/vinovj27/Sift" target="_blank" rel="noopener">{GITHUB}Source code</a>
+        <a class="btn" href="#run">Run it yourself</a>
+      </div>
+    </section>
+<!--SPLIT-->
+    <section class="d-section">
+      <h2>Overview</h2>
+      <div>
+        <p>Sift is a full-text search engine built from first principles: a positional inverted index, Okapi BM25 ranking, phrase and boolean queries, typo correction, autocomplete and a web UI that searches as you type.</p>
+        <p>Out of the box it indexes the Python standard library's own documentation, about 4,000 modules, classes and functions. It reads the source with <code>ast</code> rather than importing it, so no library code runs. Point it at any folder to search your own notes or code instead.</p>
+      </div>
+    </section>
+
+    <section class="d-section">
+      <h2>At a glance</h2>
+      <div class="figs">
+        <div><b>3,930</b><span>documents indexed from the standard library</span></div>
+        <div><b>1–5 ms</b><span>typical query time</span></div>
+        <div><b>16</b><span>tests, passing on Linux, macOS and Windows</span></div>
+      </div>
+    </section>
+
+    <section class="d-section">
+      <h2>How a search works</h2>
+      <div>
+        <div class="flow">
+          <div class="node"><b>Documents</b><span>docstrings, notes, code</span></div><span class="arrow">→</span>
+          <div class="node"><b>Tokenise</b><span>split identifiers · lowercase · stem</span></div><span class="arrow">→</span>
+          <div class="node key"><b>Inverted index</b><span>term → doc → positions</span></div>
+        </div>
+        <div class="flow" style="margin-top:12px">
+          <div class="node"><b>Query</b><span>+required -excluded "phrases"</span></div><span class="arrow">→</span>
+          <div class="node"><b>Candidates</b><span>postings, then filters</span></div><span class="arrow">→</span>
+          <div class="node key"><b>BM25 ranking</b><span>top k + snippets</span></div>
+        </div>
+        <p style="margin-top:18px">Title tokens sit at positions 0 to n and body tokens start at 1,000, so a phrase can never match across the title and body boundary, and title hits can be weighted separately.</p>
+      </div>
+    </section>
+
+    <section class="d-section">
+      <h2>Features</h2>
+      <div class="table-wrap"><table class="spec">
+        <thead><tr><th>Feature</th><th>How it works</th></tr></thead>
+        <tbody>
+          <tr><td>Ranking</td><td>Okapi BM25 (k1 = 1.2, b = 0.75) with title matches weighted 3×</td></tr>
+          <tr><td>Phrases</td><td><code>"thread pool"</code> matches only adjacent words, using token positions</td></tr>
+          <tr><td>Boolean</td><td><code>+socket</code> must appear, <code>-ftp</code> must not</td></tr>
+          <tr><td>Stemming</td><td>A light suffix stripper, so parse, parsing and parsed match each other</td></tr>
+          <tr><td>Code-aware</td><td><code>ThreadPoolExecutor</code> and <code>read_file</code> are split into searchable words</td></tr>
+          <tr><td>Typo correction</td><td>"Did you mean" via bounded Levenshtein distance, ranked by word frequency</td></tr>
+          <tr><td>Autocomplete</td><td>Prefix lookup by binary search over the sorted vocabulary</td></tr>
+          <tr><td>Snippets</td><td>The best window of text with matches highlighted and HTML-escaped</td></tr>
+        </tbody>
+      </table></div>
+    </section>
+
+    <section class="d-section">
+      <h2>The ranking in code</h2>
+      <div>
+        <p>For each candidate document, every query term contributes its rarity (IDF) times a saturating term-frequency score, normalised by document length:</p>
+        <div class="code"><pre>norm = K1 * (<span class="n">1</span> - B + B * idx.lengths[doc_id] / avg)
+<span class="k">for</span> term <span class="k">in</span> set(query.terms):
+    tf = idx.weighted_tf(term, doc_id)
+    <span class="k">if</span> tf:
+        score += idx.idf(term) * tf * (K1 + <span class="n">1</span>) / (tf + norm)</pre></div>
+      </div>
+    </section>
+
+    <section class="d-section">
+      <h2>Try these queries</h2>
+      <div class="term"><div class="bar"><i></i><i></i><i></i></div>
+<pre><span class="p">$</span> python -m sift search "serialize object to json"
+652 results in 3.7 ms
+<span class="ok">1. json.dump(obj, fp)</span>
+   <span class="hl">Serialize</span> obj as a <span class="hl">JSON</span> formatted stream to fp…
+
+<span class="p">$</span> python -m sift search '"thread pool"'
+<span class="ok">1. concurrent.futures.thread.BrokenThreadPool</span>
+
+<span class="p">$</span> python -m sift search "subprocesss timout"
+<span class="ok">Did you mean: subprocess timeout</span></pre></div>
+    </section>
+
+    <section class="d-section">
+      <h2>What the tests prove</h2>
+      <ul class="ticks">
+        <li>Term frequency and title boosts put the most relevant document first</li>
+        <li>Rare terms outweigh common ones</li>
+        <li>Phrases require adjacent words, in order</li>
+        <li>Required and excluded terms filter correctly</li>
+        <li>Snippets highlight matches and escape HTML</li>
+        <li>"Did you mean" fires only for unknown words</li>
+        <li>Saved indexes load back with identical rankings</li>
+        <li>On the real standard library, "serialize object to json" finds <code>json.dump</code></li>
+      </ul>
+    </section>
+
+    <section class="d-section" id="run">
+      <h2>Run it</h2>
+      <div>
+        <p>Python 3.10 or newer, no installs needed.</p>
+        <div class="code"><pre>python -m sift serve                         <span class="c"># web UI at http://localhost:8000</span>
+python -m sift search '"thread pool"'        <span class="c"># search from the terminal</span>
+python -m sift serve --folder ~/notes        <span class="c"># search your own files</span>
+python -m unittest discover -s tests</pre></div>
+      </div>
+    </section>
+
+    <section class="d-section">
+      <h2>What I'd build next</h2>
+      <div class="next"><div>Compressed on-disk postings (delta + varint) instead of rebuilding on load</div><div>Proximity scoring, so query words close together rank higher</div><div>A crawler that respects robots.txt to index websites</div></div>
+    </section>
