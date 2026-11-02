@@ -1,6 +1,6 @@
 # vinodhini.dev
 
-Personal portfolio of Vinodhini — software engineer focused on banking and data systems.
+Personal portfolio of Vinodhini — software engineer building backend and data systems in Python.
 
 **Live site:** https://vinovj27.github.io/portfolio/
 
@@ -10,9 +10,9 @@ A single hand-written HTML page: no build step, no framework, light and dark the
 
 | Project | What it is | Stack |
 |---|---|---|
-| [LedgerFlow](https://github.com/vinovj27/ledgerflow) | Core-banking ledger with atomic, idempotent transfers | Java 17 |
-| [KVLite](https://github.com/vinovj27/kvlite) | Crash-safe key-value database with a TCP server | Java 17 |
-| [TxnGuard](https://github.com/vinovj27/txnguard) | Real-time explainable fraud detection | Python |
+| [Conveyor](https://github.com/vinovj27/conveyor) | Distributed task queue with leases, retries and a dead-letter queue | Python |
+| [Sift](https://github.com/vinovj27/sift) | Full-text search engine with BM25 ranking and instant-search UI | Python |
+| [KVLite](https://github.com/vinovj27/kvlite) | Crash-safe key-value database with an asyncio TCP server | Python |
 
 ## Run locally
 

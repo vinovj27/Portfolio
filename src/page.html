@@ -1,14 +1,14 @@
 <title>Vinodhini · Software Engineer</title>
 <meta name="claude:viewport-fit-sides" content="cover">
-<meta name="description" content="Vinodhini — software engineer building correct, fast systems for banking and data. Java, Python, SQL.">
+<meta name="description" content="Vinodhini — software engineer building reliable backend and data systems in Python.">
 <meta property="og:title" content="Vinodhini · Software Engineer">
-<meta property="og:description" content="I build systems that move money correctly.">
+<meta property="og:description" content="I build backend systems that stay correct under pressure.">
 <meta property="og:image" content="assets/og.jpg">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,600;12..96,800&family=Hanken+Grotesk:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap">
 <style>
-/* Layout: a bank statement — a narrow label column on the left, entries on the right, ruled like a ledger. */
+/* Layout: a ruled ledger — a narrow label column on the left, entries on the right. */
 :root {
   --paper: #edf3ee;
   --sheet: #f7faf7;
@@ -186,10 +186,10 @@ footer { padding-block: 24px 40px; border-top: 1px solid var(--rule); display: f
   <main id="top">
     <section class="hero">
       <div>
-        <div class="label">Software engineer · Java · Data systems</div>
+        <div class="label">Software engineer · Python · Backend &amp; data systems</div>
         <h1>Vinodhini<span class="dot">.</span></h1>
-        <p class="thesis">I build systems that move money correctly.</p>
-        <p class="lede">I work on banking software at Tata Consultancy Services and I'm finishing an MS in Information Systems at UMBC. I like the hard parts of backend work: concurrency, durability, and data that has to add up to the cent.</p>
+        <p class="thesis">I build backend systems that stay correct under pressure.</p>
+        <p class="lede">I'm finishing an MS in Information Systems at UMBC and spent summer 2026 as a software engineering intern at Tata Consultancy Services. I like the hard parts of backend work: concurrency, crash recovery, search, and data that has to be right.</p>
         <div class="actions">
           <a class="btn primary" href="#work">See the work</a>
           <a class="btn" href="https://github.com/vinovj27" target="_blank" rel="noopener">
@@ -213,87 +213,88 @@ footer { padding-block: 24px 40px; border-top: 1px solid var(--rule); display: f
       <div class="label">Selected work</div>
       <div>
         <h2>Three systems, built from first principles.</h2>
-        <p class="intro">Each project is open source, has a test suite that runs in CI, and starts with one command. They are written without frameworks on purpose, so every lock, checksum and score is code I wrote and can explain.</p>
+        <p class="intro">Each project is open source, written in Python with only the standard library, tested in CI on Linux, macOS and Windows, and starts with one command. No frameworks on purpose: every lease, checksum and ranking score is code I wrote and can explain.</p>
 
         <div class="projects">
           <article class="project">
             <div>
-              <div class="label kind">Banking · Java 17</div>
-              <h3>LedgerFlow</h3>
-              <p>A core-banking ledger service. It opens accounts, moves money between them and keeps double-entry books that always balance, even with thousands of transfers racing at once.</p>
+              <div class="label kind">Distributed systems · Python</div>
+              <h3>Conveyor</h3>
+              <p>A distributed task queue in the spirit of Celery. A broker stores jobs in SQLite and leases them to worker processes over HTTP, so work survives crashes, flaky dependencies and restarts.</p>
               <ul class="points">
-                <li>Deadlock-free transfers using ordered account locks</li>
-                <li>Idempotency keys, so a retried payment is never charged twice</li>
-                <li>Trial-balance audit endpoint and a live web console</li>
+                <li>Atomic job claims, so two workers never run the same job</li>
+                <li>Leases with heartbeats: a crashed worker's jobs return to the queue</li>
+                <li>Exponential backoff with jitter, priorities, delays and a dead-letter queue</li>
               </ul>
-              <div class="chips"><span class="chip">Java 17</span><span class="chip">REST</span><span class="chip">Concurrency</span><span class="chip">BigDecimal</span><span class="chip">Docker</span><span class="chip">GitHub Actions</span></div>
-              <a class="repo" href="https://github.com/vinovj27/ledgerflow" target="_blank" rel="noopener">vinovj27/ledgerflow →</a>
+              <div class="chips"><span class="chip">Python</span><span class="chip">SQLite</span><span class="chip">HTTP API</span><span class="chip">Multiprocessing</span><span class="chip">Concurrency</span><span class="chip">GitHub Actions</span></div>
+              <a class="repo" href="https://github.com/vinovj27/conveyor" target="_blank" rel="noopener">vinovj27/conveyor →</a>
             </div>
             <div>
               <div class="figures">
-                <div class="figure"><span>Concurrent transfers in stress test</span><strong>32,000</strong></div>
-                <div class="figure"><span>Money created or lost</span><strong class="cr">$0.00</strong></div>
-                <div class="figure"><span>External dependencies</span><strong>0</strong></div>
+                <div class="figure"><span>Duplicate claims, 8 threads racing for 300 jobs</span><strong class="cr">0</strong></div>
+                <div class="figure"><span>Jobs lost when a worker is killed mid-run</span><strong class="cr">0</strong></div>
+                <div class="figure"><span>151-job demo across 3 worker processes</span><strong>~6 s</strong></div>
               </div>
-<pre class="snippet"><span class="p">$</span> curl -X POST :8080/api/transfers \
-    -H 'Idempotency-Key: t-1' \
-    -d '{"from":"ACC-1001","to":"ACC-1002","amount":"125.50"}'
-<span class="ok">201</span> {"id":"TX-2","kind":"TRANSFER","amount":125.50}</pre>
+<pre class="snippet"><span class="p">$</span> python -m conveyor demo
+Started 3 worker processes on 151 jobs
+<span class="bad">  Chaos: killed worker-1 mid-job</span>
+<span class="ok">Finished in 5.8s · 118 done · 20 needed retries
+  · 3 in the dead-letter queue</span></pre>
             </div>
           </article>
 
           <article class="project">
             <div>
-              <div class="label kind">Databases · Java 17</div>
+              <div class="label kind">Search · Python</div>
+              <h3>Sift</h3>
+              <p>A full-text search engine with an instant-search web UI. It indexes the Python standard library's documentation out of the box, or any folder of notes and code.</p>
+              <ul class="points">
+                <li>Positional inverted index with BM25 ranking and title boosting</li>
+                <li>"Exact phrases", +required and -excluded terms, stemming</li>
+                <li>Typo correction, autocomplete and highlighted snippets</li>
+              </ul>
+              <div class="chips"><span class="chip">Python</span><span class="chip">Information retrieval</span><span class="chip">Algorithms</span><span class="chip">JSON API</span><span class="chip">JavaScript</span></div>
+              <a class="repo" href="https://github.com/vinovj27/sift" target="_blank" rel="noopener">vinovj27/sift →</a>
+            </div>
+            <div>
+              <div class="figures">
+                <div class="figure"><span>Documents indexed from the standard library</span><strong>3,930</strong></div>
+                <div class="figure"><span>Typical query time</span><strong class="cr">1–5 ms</strong></div>
+                <div class="figure"><span>External dependencies</span><strong>0</strong></div>
+              </div>
+<pre class="snippet"><span class="p">$</span> python -m sift search "serialize object to json"
+652 results in 3.7 ms
+<span class="ok">1. json.dump(obj, fp)</span>
+<span class="p">$</span> python -m sift search "subprocesss timout"
+<span class="ok">Did you mean: subprocess timeout</span></pre>
+            </div>
+          </article>
+
+          <article class="project">
+            <div>
+              <div class="label kind">Databases · Python</div>
               <h3>KVLite</h3>
-              <p>A persistent key-value database with a Redis-style TCP server. Every write hits a checksummed write-ahead log first, so the data survives a crash, a torn write or a pulled plug.</p>
+              <p>A persistent key-value database with an asyncio TCP server. Every write goes to a checksummed write-ahead log first, so data survives a crash, a torn write or a pulled plug.</p>
               <ul class="points">
                 <li>Crash recovery that detects and truncates corrupted log tails</li>
                 <li>Snapshot compaction with fsync and atomic rename</li>
-                <li>TTL expiry, concurrent clients and a throughput benchmark</li>
+                <li>TTL expiry, atomic INCR and many concurrent clients</li>
               </ul>
-              <div class="chips"><span class="chip">Java 17</span><span class="chip">WAL</span><span class="chip">CRC32</span><span class="chip">TCP sockets</span><span class="chip">fsync</span></div>
+              <div class="chips"><span class="chip">Python</span><span class="chip">asyncio</span><span class="chip">Write-ahead log</span><span class="chip">CRC32</span><span class="chip">TCP sockets</span></div>
               <a class="repo" href="https://github.com/vinovj27/kvlite" target="_blank" rel="noopener">vinovj27/kvlite →</a>
             </div>
             <div>
               <div class="figures">
-                <div class="figure"><span>Buffered writes per second</span><strong>~250,000</strong></div>
-                <div class="figure"><span>Reads per second</span><strong>~2.3M</strong></div>
+                <div class="figure"><span>Buffered writes per second</span><strong>~59,000</strong></div>
+                <div class="figure"><span>Reads per second</span><strong>~1.6M</strong></div>
                 <div class="figure"><span>Writes lost across restart in tests</span><strong class="cr">0</strong></div>
               </div>
 <pre class="snippet"><span class="p">kvlite&gt;</span> SETEX session:42 60 tok_abc
 <span class="ok">+OK</span>
+<span class="p">kvlite&gt;</span> INCR page_views
+<span class="ok">:1</span>
 <span class="p">kvlite&gt;</span> GET user:1
-<span class="ok">$Ada Lovelace</span>
-<span class="p">kvlite&gt;</span> STATS
-<span class="ok">+keys=2 wal_records=2 recovered=0 compactions=0</span></pre>
-            </div>
-          </article>
-
-          <article class="project">
-            <div>
-              <div class="label kind">Fraud detection · Python</div>
-              <h3>TxnGuard</h3>
-              <p>A real-time fraud engine that learns each customer's normal spending and scores every card transaction with plain-English reasons, streamed to a live dashboard.</p>
-              <ul class="points">
-                <li>Per-customer streaming profiles using Welford's online variance</li>
-                <li>Rules for card testing, impossible travel and account takeover</li>
-                <li>Noisy-OR risk scoring with approve, review and block decisions</li>
-              </ul>
-              <div class="chips"><span class="chip">Python 3.10+</span><span class="chip">Streaming</span><span class="chip">Statistics</span><span class="chip">Server-Sent Events</span><span class="chip">CLI</span></div>
-              <a class="repo" href="https://github.com/vinovj27/txnguard" target="_blank" rel="noopener">vinovj27/txnguard →</a>
-            </div>
-            <div>
-              <div class="figures">
-                <div class="figure"><span>Precision on labelled stream</span><strong>96.5%</strong></div>
-                <div class="figure"><span>Fraud dollars stopped</span><strong class="cr">98.3%</strong></div>
-                <div class="figure"><span>Legitimate transactions flagged</span><strong>0.13%</strong></div>
-              </div>
-<pre class="snippet"><span class="bad">BLOCK</span>  97.2  C0082  $8.82  GiftCard Depot
-       9 micro-charges under $10 in 5 min
-<span class="bad">BLOCK</span>  91.8  C0181  $502.82  CoinXpress
-       $502.82 vs typical $23.37 (z=7.4)
-       first purchase in 'crypto' at above-normal amount</pre>
+<span class="ok">$Ada Lovelace</span></pre>
             </div>
           </article>
         </div>
@@ -303,11 +304,11 @@ footer { padding-block: 24px 40px; border-top: 1px solid var(--rule); display: f
     <section class="section" id="experience">
       <div class="label">Experience &amp; education</div>
       <div>
-        <h2>Where I've been working.</h2>
+        <h2>Where I've been.</h2>
         <table class="ledger">
           <tr>
-            <td class="when">Industry</td>
-            <td><h4>Tata Consultancy Services</h4><p>Working on a Banking, Financial Services and Insurance (BFSI) project as part of an enterprise delivery team.</p></td>
+            <td class="when">May – Aug 2026</td>
+            <td><h4>Software Engineering Intern · Tata Consultancy Services</h4><p>Summer internship on an enterprise delivery team for a Banking, Financial Services and Insurance (BFSI) client project.</p></td>
           </tr>
           <tr>
             <td class="when">Dec 2026</td>
@@ -330,17 +331,17 @@ footer { padding-block: 24px 40px; border-top: 1px solid var(--rule); display: f
       <div>
         <h2>What I work with.</h2>
         <div class="skills">
-          <div><h4 class="label">Languages</h4><p>Java, Python, SQL, PL/SQL, Scala</p></div>
-          <div><h4 class="label">Backend</h4><p>Spring Boot, REST APIs, concurrency, HTTP servers, sockets</p></div>
-          <div><h4 class="label">Data</h4><p>Oracle, Apache Spark, query design, write-ahead logging, statistics</p></div>
-          <div><h4 class="label">Practice</h4><p>Git, GitHub Actions, Docker, IntelliJ IDEA, automated testing</p></div>
+          <div><h4 class="label">Languages</h4><p>Python, Java, SQL, PL/SQL, JavaScript, Scala</p></div>
+          <div><h4 class="label">Backend</h4><p>REST APIs, asyncio, concurrency, task queues, TCP sockets, Spring Boot</p></div>
+          <div><h4 class="label">Data</h4><p>SQLite, Oracle, Apache Spark, search and indexing, write-ahead logging</p></div>
+          <div><h4 class="label">Practice</h4><p>Git, GitHub Actions, automated testing, IntelliJ IDEA</p></div>
         </div>
       </div>
     </section>
 
     <section class="contact" id="contact">
       <div class="label">Contact</div>
-      <h2>Hiring for a junior SWE role? <em>Let's talk.</em></h2>
+      <h2>Hiring for a software engineering role? <em>Let's talk.</em></h2>
       <div class="email">
         <code id="email">vinodhini.vijay09@gmail.com</code>
         <button class="btn" id="copy" type="button">Copy email</button>
@@ -361,14 +362,14 @@ footer { padding-block: 24px 40px; border-top: 1px solid var(--rule); display: f
 <script>
 (() => {
   const lines = [
-    ['p', '$ ', 'cmd', './build.sh test    # ledgerflow'],
-    ['ok', '  PASS  concurrentTransfersConserveMoneyWithoutDeadlock (148 ms)'],
-    ['ok', '  10 passed, 0 failed'],
-    ['p', '$ ', 'cmd', 'echo "SET user:1 Ada Lovelace" | ./build.sh cli'],
+    ['p', '$ ', 'cmd', 'python -m conveyor demo'],
+    ['bad', '  Chaos: killed worker-1 mid-job'],
+    ['ok', 'Finished in 5.8s · 118 done · 20 needed retries · 3 in the dead-letter queue'],
+    ['p', '$ ', 'cmd', 'python -m sift search "serialize object to json"'],
+    ['dim', '652 results in 3.7 ms'],
+    ['ok', '1. json.dump(obj, fp)'],
+    ['p', '$ ', 'cmd', 'echo "SET user:1 Ada Lovelace" | python -m kvlite cli'],
     ['ok', 'kvlite> +OK'],
-    ['p', '$ ', 'cmd', 'python -m txnguard simulate -n 25000'],
-    ['dim', '  Precision 96.5%  ·  Recall 79.8%  ·  F1 0.874'],
-    ['bad', '  BLOCK 97.2  C0082  9 micro-charges under $10 in 5 min'],
   ];
   const term = document.getElementById('term');
   const esc = s => s.replace(/[&<>]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;' }[c]));
