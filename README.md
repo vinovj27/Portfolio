@@ -2,7 +2,7 @@
 
 Personal portfolio of Vinodhini — software engineer building backend and data systems in Python.
 
-**Live site:** https://vinovj27.github.io/portfolio/
+**Live site:** https://vinovj27.github.io
 
 A single hand-written HTML page: no build step, no framework, light and dark themes, and a responsive layout down to phone width.
 
@@ -24,12 +24,7 @@ python -m http.server 8000
 
 ## Publish with GitHub Pages
 
-1. Push this folder to a repository named `portfolio`.
-2. In the repository, open **Settings → Pages**.
-3. Under **Build and deployment**, choose **Deploy from a branch**, branch `main`, folder `/ (root)`.
-4. The site appears at `https://vinovj27.github.io/portfolio/` within a minute or two.
-
-To serve it from `https://vinovj27.github.io/` instead, name the repository `vinovj27.github.io`.
+This repository is named `vinovj27.github.io`, so GitHub serves it at https://vinovj27.github.io. If Pages isn't on yet, open **Settings → Pages**, choose **Deploy from a branch**, branch `main`, folder `/ (root)`.
 
 ## Editing
 
