@@ -332,3 +332,7 @@ h2.mini { font: 500 13px/1 var(--mono); letter-spacing: .14em; text-transform: u
 .xp-title .when { font: 500 clamp(16px, 2vw, 20px)/1.2 var(--mono); letter-spacing: 0; color: var(--highlight); }
 .xp-role { margin: 0 0 16px; font-size: 18px; font-weight: 500; color: var(--accent-soft); }
 .xp-row .lead { margin-bottom: 26px; font-size: 17.5px; }
+
+.orbit.li svg { width: 20px; height: 20px; fill: var(--ink); stroke: none; }
+.contact .actions .btn svg path[d^="M20.45"] { fill: currentColor; stroke: none; }
+.actions .btn svg path[d^="M20.45"] { fill: currentColor; stroke: none; }
