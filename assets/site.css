@@ -325,3 +325,10 @@ h2.mini { font: 500 13px/1 var(--mono); letter-spacing: .14em; text-transform: u
 .hl-cards p { margin: 0; color: var(--muted); font-size: 15.5px; }
 .chips.big { align-content: start; }
 .chips.big .chip { font-size: 15.5px; padding: 11px 15px; }
+
+/* experience row */
+.xp-row { margin-top: 18px; max-width: 760px; }
+.xp-title { display: flex; align-items: baseline; flex-wrap: wrap; gap: 6px 18px; margin: 0 0 8px; }
+.xp-title .when { font: 500 clamp(16px, 2vw, 20px)/1.2 var(--mono); letter-spacing: 0; color: var(--highlight); }
+.xp-role { margin: 0 0 16px; font-size: 18px; font-weight: 500; color: var(--accent-soft); }
+.xp-row .lead { margin-bottom: 26px; font-size: 17.5px; }
