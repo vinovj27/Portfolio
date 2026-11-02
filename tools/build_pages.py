@@ -19,10 +19,10 @@ FONTS = """<link rel="preconnect" href="https://fonts.googleapis.com">
 GITHUB = '<svg viewBox="0 0 16 16" aria-hidden="true" style="fill:currentColor;stroke:none"><path d="M8 0C3.58 0 0 3.58 0 8a8 8 0 0 0 5.47 7.59c.4.07.55-.17.55-.38v-1.33c-2.23.48-2.7-1.07-2.7-1.07-.36-.92-.89-1.17-.89-1.17-.73-.5.06-.49.06-.49.8.06 1.23.83 1.23.83.71 1.23 1.88.87 2.34.67.07-.52.28-.87.5-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82a7.6 7.6 0 0 1 4 0c1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48v2.2c0 .21.15.46.55.38A8 8 0 0 0 16 8c0-4.42-3.58-8-8-8z"/></svg>'
 
 PAGES = [
-    ("tcs-signer-reconciliation", "TCS internship"),
-    ("conveyor", "Conveyor"),
-    ("sift", "Sift"),
-    ("kvlite", "KVLite"),
+    ("experience", "tcs", "Experience", "Software Engineering Intern · TCS"),
+    ("projects", "conveyor", "Project", "Conveyor"),
+    ("projects", "sift", "Project", "Sift"),
+    ("projects", "kvlite", "Project", "KVLite"),
 ]
 
 
@@ -40,9 +40,9 @@ def nav() -> str:
 """
 
 
-def pager(current: str) -> str:
-    links = [f'<a href="{slug}.html"><span>{"Case study" if slug.startswith("tcs") else "Project"}</span><b>{name}</b></a>'
-             for slug, name in PAGES if slug != current]
+def pager(folder: str, current: str) -> str:
+    links = [f'<a href="{"" if f == folder else "../" + f + "/"}{slug}.html"><span>{label}</span><b>{name}</b></a>'
+             for f, slug, label, name in PAGES if slug != current]
     return f"""    <section class="d-section">
       <h2>Keep exploring</h2>
       <div class="pager">{''.join(links)}</div>
@@ -50,12 +50,12 @@ def pager(current: str) -> str:
 """
 
 
-def detail(slug: str, title: str, description: str, hero: str, body: str, scripts: str = "") -> str:
+def detail(folder: str, slug: str, title: str, description: str, hero: str, body: str, scripts: str = "") -> str:
     return (HEAD + f"<title>{title} · Vinodhini</title>\n"
             f'<meta name="description" content="{description}">\n'
             f'<meta property="og:title" content="{title} · Vinodhini">\n'
             + FONTS + '<link rel="stylesheet" href="../assets/site.css">\n</head>\n<body>\n<div class="wrap">\n'
-            + nav() + "  <main>\n" + hero + body + pager(slug) + "  </main>\n"
+            + nav() + "  <main>\n" + hero + body + pager(folder, slug) + "  </main>\n"
             + """  <footer>
     <span>© 2026 Vinodhini</span>
     <a class="back" href="../index.html">← Back to portfolio</a>
@@ -69,14 +69,13 @@ def build() -> None:
     head, body = page.split('<link rel="stylesheet" href="assets/site.css">', 1)
     (ROOT / "index.html").write_text(HEAD + head.strip() + '\n<link rel="stylesheet" href="assets/site.css">\n</head>\n<body>\n'
                                      + body.strip() + "\n</body>\n</html>\n")
-    out = ROOT / "projects"
-    out.mkdir(exist_ok=True)
-    for slug, _ in PAGES:
-        frag = (SRC / "projects" / f"{slug}.html").read_text()
+    for folder, slug, _, _ in PAGES:
+        out = ROOT / folder
+        out.mkdir(exist_ok=True)
+        frag = (SRC / folder / f"{slug}.html").read_text()
         meta, hero, content = frag.split("<!--SPLIT-->")
         lines = dict(line.split(": ", 1) for line in meta.strip().splitlines())
-        scripts = '<script src="../assets/matcher.js"></script>\n' if "matcher" in content else ""
-        html = detail(slug, lines["title"], lines["description"], hero.replace("{GITHUB}", GITHUB), content, scripts)
+        html = detail(folder, slug, lines["title"], lines["description"], hero.replace("{GITHUB}", GITHUB), content)
         (out / f"{slug}.html").write_text(html)
         print("built", out / f"{slug}.html")
 

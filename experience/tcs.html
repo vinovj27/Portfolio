@@ -1,0 +1,110 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Software Engineering Intern, Tata Consultancy Services · Vinodhini</title>
+<meta name="description" content="Vinodhini's software engineering internship at Tata Consultancy Services (May–Aug 2026): Python data reconciliation for a banking platform migration.">
+<meta property="og:title" content="Software Engineering Intern, Tata Consultancy Services · Vinodhini">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Sora:wght@600;700;800&family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,700&family=JetBrains+Mono:wght@400;500&display=swap">
+<link rel="stylesheet" href="../assets/site.css">
+</head>
+<body>
+<div class="wrap">
+  <header class="nav">
+    <a class="brand" href="../index.html">Vinodhini<span>.</span></a>
+    <nav aria-label="Sections">
+      <ul>
+        <li class="opt"><a href="../index.html#experience">Experience</a></li>
+        <li><a href="../index.html#projects">Projects</a></li>
+        <li><a href="../index.html#contact" class="hire">Hire me</a></li>
+      </ul>
+    </nav>
+  </header>
+  <main>
+
+    <section class="d-hero">
+      <a class="back" href="../index.html#experience">← Back to portfolio</a><br><br>
+      <span class="eyebrow">Work experience</span>
+      <h1>Software Engineering Intern</h1>
+      <p class="tagline">Tata Consultancy Services · May – Aug 2026 · Banking, Financial Services &amp; Insurance (BFSI)</p>
+      <div class="chips"><span class="chip hot">Python</span><span class="chip">Data reconciliation</span><span class="chip">Fuzzy matching</span><span class="chip">Unicode text handling</span><span class="chip">Excel reporting</span><span class="chip">Debugging</span></div>
+      <img class="d-shot" src="../assets/thumbs/tcs.jpg" alt="Illustration of name records being matched across systems with confidence scores" width="960" height="600">
+    </section>
+
+    <section class="d-section">
+      <h2>About the role</h2>
+      <div>
+        <p>I joined a TCS delivery team supporting a banking client through a large platform migration. Before the bank could switch to its new systems, every authorised signer on its customer accounts had to be verified as present and consistent across several internal systems, so that no signer was lost or mismatched at cutover.</p>
+        <p>I was responsible for the <strong>Signer Data Migration &amp; Reconciliation</strong> workstream: building the Python tool that compares signer records between a source system and three target systems and reports, record by record, what matches, what probably matches, and what needs investigation. I worked closely with my mentor, who reviewed results against real production records and fed back edge cases for me to resolve.</p>
+      </div>
+    </section>
+
+    <section class="d-section">
+      <h2>At a glance</h2>
+      <div class="figs">
+        <div><b>85,315</b><span>signer records in the final source dataset</span></div>
+        <div><b>3</b><span>reconciliation analyses delivered: address, tax ID and cross-system names</span></div>
+        <div><b>4</b><span>source and target systems compared</span></div>
+      </div>
+    </section>
+
+    <section class="d-section">
+      <h2>Responsibilities</h2>
+      <ul class="ticks">
+        <li>Built the reconciliation tool in Python, from reading password-protected Excel exports to producing the final report</li>
+        <li>Matched signers across systems by name and date of birth, then verified addresses (street, city, postcode, country) and tax IDs</li>
+        <li>Handled one-to-many data, marking a signer unmatched only when none of their addresses matched</li>
+        <li>Turned mentor feedback on real records into fixes, tracing each missed match to its root cause</li>
+        <li>Kept the tool working as the source data grew and changed format mid-project</li>
+      </ul>
+    </section>
+
+    <section class="d-section">
+      <h2>Key contributions</h2>
+      <div class="problems">
+        <div class="problem"><code>Tiered matching pipeline</code><p>Designed a funnel of exact, first-word, accent-normalised and confidence-scored "possible" matches. Each stage only processes what earlier stages couldn't resolve, and every result records which stage matched it.</p></div>
+        <div class="problem"><code>International name handling</code><p>Matched names across spelling conventions: German Ü written as UE, letters like Polish Ł that standard accent stripping can't decompose, truncated compound surnames, and names repeated across fields.</p></div>
+        <div class="problem"><code>Accuracy fixes</code><p>Tracked down why unrelated names were scoring as matches (first and last names were being compared as one combined string), fixed it with per-field scoring and a length pre-filter, and tightened an over-loose similarity threshold.</p></div>
+        <div class="problem"><code>Scaling to 85K records</code><p>When the source export grew from 37,508 to 85,315 records with a new column schema, I added a schema-normalisation layer and bucketed fuzzy-match candidates by first letter to keep run time practical.</p></div>
+        <div class="problem"><code>Reviewer-ready reporting</code><p>Produced multi-sheet Excel reports with match status, matching stage and a confidence score, plus source and target names and IDs side by side so reviewers could verify results without re-running code.</p></div>
+        <div class="problem"><code>Team tooling</code><p>Built a standalone audit showing how many records in each system contain accented characters, and a separate utility that converts accented names to plain-English spellings across four systems.</p></div>
+      </div>
+    </section>
+
+    <section class="d-section">
+      <h2>Outcome</h2>
+      <div>
+        <p>By the end of the internship, the address, tax-ID and cross-system name analyses were complete and validated against the real edge cases my mentor supplied. I also documented a recommended next step: a reverse-direction check, which a real case during the project showed would catch signers present in a target system but missing from the source.</p>
+      </div>
+    </section>
+
+    <section class="d-section">
+      <h2>What I learned</h2>
+      <ul class="ticks">
+        <li>Real data breaks clean assumptions. Designing for messy input from the start saves rework later</li>
+        <li>Debug by isolation: a small standalone test separated "the logic is wrong" from "something else interferes"</li>
+        <li>Build for the reviewer. Confidence scores and side-by-side output made results easy to trust and act on</li>
+        <li>Turning stakeholder feedback into concrete, root-caused fixes, one edge case at a time</li>
+      </ul>
+    </section>
+
+    <section class="d-section">
+      <h2>Skills &amp; tools</h2>
+      <div class="chips"><span class="chip hot">Python</span><span class="chip">difflib</span><span class="chip">unicodedata</span><span class="chip">Excel (encrypted input, multi-sheet output)</span><span class="chip">Fuzzy matching</span><span class="chip">Data validation</span><span class="chip">Performance tuning</span><span class="chip">Stakeholder feedback</span></div>
+      <p class="note" style="margin-top:18px">Client systems and data are confidential, so they are described generically here.</p>
+    </section>
+    <section class="d-section">
+      <h2>Keep exploring</h2>
+      <div class="pager"><a href="../projects/conveyor.html"><span>Project</span><b>Conveyor</b></a><a href="../projects/sift.html"><span>Project</span><b>Sift</b></a><a href="../projects/kvlite.html"><span>Project</span><b>KVLite</b></a></div>
+    </section>
+  </main>
+  <footer>
+    <span>© 2026 Vinodhini</span>
+    <a class="back" href="../index.html">← Back to portfolio</a>
+  </footer>
+</div>
+</body>
+</html>

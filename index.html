@@ -90,145 +90,46 @@
     </section>
 
     <section class="block" id="experience">
-      <span class="eyebrow">Experience · case study</span>
-      <h2 class="title">Matching the same person across four banking systems.</h2>
-      <p class="lead">My internship project, start to finish. Client systems are described generically and every example name below is illustrative.</p>
-
-      <article class="case">
-        <div class="case-head">
-          <div class="case-meta"><span><b>Tata Consultancy Services</b></span><span>Software Engineering Intern</span><span>May – Aug 2026</span><span>BFSI · banking migration</span></div>
-          <h3>Signer Data Migration &amp; Reconciliation</h3>
-          <p>Before a bank cuts over to a new platform, every authorised signer must exist, with the right details, in every system that depends on them. I built the Python tool that proves it: a tiered matching pipeline that finds the same person across four systems despite umlauts, accents, truncated surnames and repeated names, then reports every result with a confidence score.</p>
+      <div class="xp">
+        <div>
+          <span class="eyebrow">Experience</span>
+          <h2 class="title">Where I've worked.</h2>
+          <p class="lead">A summer building production data tooling for a banking client's platform migration. Open the card to read about the role.</p>
         </div>
-        <div class="case-body">
-          <div class="case-kpis">
-            <div><b>37.5K → 85K</b><span>source records as the scope grew mid-project</span></div>
-            <div><b>3 of 4</b><span>analyses delivered: address, tax ID and cross-system name matching</span></div>
-            <div><b>8</b><span>real edge cases from mentor review, each traced to a root cause</span></div>
-            <div><b>4-stage</b><span>matching funnel: exact, first-word, accent-normalised, probable</span></div>
-          </div>
-          <ul class="ticks">
-            <li>Built a Python reconciliation tool that verifies signer names, addresses and tax IDs across four systems ahead of a bank's platform migration</li>
-            <li>Designed a 4-stage matching funnel that handles umlauts, non-decomposable letters like Ł, truncated surnames and repeated names, with a confidence score on every result</li>
-            <li>Diagnosed and fixed a scoring bug that matched unrelated names, then scaled the pipeline from 37.5K to 85K records with schema normalisation and candidate bucketing</li>
-            <li>Delivered reviewer-ready, multi-sheet Excel reports plus a standalone accented-name audit tool for the team</li>
-          </ul>
-          <div class="cta-row">
-            <a class="btn primary" href="projects/tcs-signer-reconciliation.html" target="_blank" rel="noopener">Read the full case study<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 17 17 7M9 7h8v8"/></svg></a>
-            <a class="btn" href="projects/tcs-signer-reconciliation.html#matcher" target="_blank" rel="noopener">Try the live matcher<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 17 17 7M9 7h8v8"/></svg></a>
-          </div>
+        <div class="work-grid one">
+        <a class="work-card" href="experience/tcs.html" target="_blank" rel="noopener">
+          <div class="thumb"><img src="assets/thumbs/tcs.jpg" alt="Illustration of name records matched across systems with confidence scores" width="960" height="600" loading="lazy"><span class="num">TCS</span><span class="open">Open <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span></div>
+          <h3>Software Engineering Intern</h3>
+          <p>Tata Consultancy Services · May – Aug 2026</p>
+        </a>
         </div>
-      </article>
+      </div>
     </section>
 
     <section class="block" id="projects">
-      <span class="eyebrow">Projects</span>
-      <h2 class="title">Infrastructure I built to understand it.</h2>
-      <p class="lead">Three open-source systems in Python using only the standard library. Each has a full test suite, runs in CI on Linux, macOS and Windows, and starts with one command.</p>
-
-      <div class="projects">
-        <article class="project">
-          <div>
-            <span class="kind">Distributed systems</span>
-            <h3>Conveyor</h3>
-            <p class="tagline">A distributed task queue that keeps going when workers crash.</p>
-            <p>A broker stores jobs in SQLite and leases them to worker processes over HTTP, in the spirit of Celery and Sidekiq. If a worker dies mid-job, its lease expires and another worker picks the job up. Failing jobs retry with exponential backoff and jitter, and jobs that keep failing land in a dead-letter queue for inspection.</p>
-            <ul class="ticks">
-              <li>Atomic job claims with <code class="mono">UPDATE … RETURNING</code> inside an immediate transaction</li>
-              <li>Heartbeat lease renewal, plus fencing so a stale worker can't overwrite a result</li>
-              <li>Priorities, delayed jobs, named queues and a live dashboard with one-click retry</li>
-            </ul>
-            <div class="links">
-              <a class="primary" href="projects/conveyor.html" target="_blank" rel="noopener">View project<svg viewBox="0 0 24 24" aria-hidden="true" class="stroke"><path d="M7 17 17 7M9 7h8v8"/></svg></a>
-              <a href="https://github.com/vinovj27/Conveyor" target="_blank" rel="noopener"><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M8 0C3.58 0 0 3.58 0 8a8 8 0 0 0 5.47 7.59c.4.07.55-.17.55-.38v-1.33c-2.23.48-2.7-1.07-2.7-1.07-.36-.92-.89-1.17-.89-1.17-.73-.5.06-.49.06-.49.8.06 1.23.83 1.23.83.71 1.23 1.88.87 2.34.67.07-.52.28-.87.5-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82a7.6 7.6 0 0 1 4 0c1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48v2.2c0 .21.15.46.55.38A8 8 0 0 0 16 8c0-4.42-3.58-8-8-8z"/></svg>Source code</a>
-            </div>
-          </div>
-          <div>
-            <div class="figs">
-              <div><b>0</b><span>duplicate claims, 8 threads racing for 300 jobs</span></div>
-              <div><b>0</b><span>jobs lost when a worker is killed mid-run</span></div>
-              <div><b>~6 s</b><span>151-job demo across 3 processes</span></div>
-            </div>
-            <div class="term"><div class="bar"><i></i><i></i><i></i></div>
-<pre><span class="p">$</span> python -m conveyor demo
-Dashboard: http://127.0.0.1:8700
-Started 3 worker processes on 151 jobs
-<span class="bad">  Chaos: killed worker-1 mid-job; its leases
-  expire and other workers pick the jobs up</span>
-<span class="ok">Finished in 5.8s · 118 done · 20 needed retries
-  · 3 in the dead-letter queue</span></pre></div>
-            <div class="chips" style="margin-top:14px"><span class="chip">Python</span><span class="chip">SQLite</span><span class="chip">HTTP API</span><span class="chip">Multiprocessing</span><span class="chip">Threading</span></div>
-          </div>
-        </article>
-
-        <article class="project">
-          <div>
-            <span class="kind">Search &amp; information retrieval</span>
-            <h3>Sift</h3>
-            <p class="tagline">A search engine that answers in milliseconds and forgives typos.</p>
-            <p>Sift builds a positional inverted index and ranks results with Okapi BM25. Out of the box it indexes the Python standard library's own documentation, about 4,000 modules, classes and functions, read with <code class="mono">ast</code> so no library code runs. It can also index any folder of notes or code. A web UI searches as you type.</p>
-            <ul class="ticks">
-              <li>Exact phrases using token positions, plus +required and -excluded terms</li>
-              <li>Code-aware tokens: <code class="mono">ThreadPoolExecutor</code> becomes thread, pool, executor</li>
-              <li>"Did you mean" via bounded edit distance, autocomplete and highlighted snippets</li>
-            </ul>
-            <div class="links">
-              <a class="primary" href="projects/sift.html" target="_blank" rel="noopener">View project<svg viewBox="0 0 24 24" aria-hidden="true" class="stroke"><path d="M7 17 17 7M9 7h8v8"/></svg></a>
-              <a href="https://github.com/vinovj27/Sift" target="_blank" rel="noopener"><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M8 0C3.58 0 0 3.58 0 8a8 8 0 0 0 5.47 7.59c.4.07.55-.17.55-.38v-1.33c-2.23.48-2.7-1.07-2.7-1.07-.36-.92-.89-1.17-.89-1.17-.73-.5.06-.49.06-.49.8.06 1.23.83 1.23.83.71 1.23 1.88.87 2.34.67.07-.52.28-.87.5-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82a7.6 7.6 0 0 1 4 0c1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48v2.2c0 .21.15.46.55.38A8 8 0 0 0 16 8c0-4.42-3.58-8-8-8z"/></svg>Source code</a>
-            </div>
-          </div>
-          <div>
-            <div class="figs">
-              <div><b>3,930</b><span>documents indexed from the standard library</span></div>
-              <div><b>1–5 ms</b><span>typical query time</span></div>
-              <div><b>BM25</b><span>ranking with 3× title boost</span></div>
-            </div>
-            <div class="term"><div class="bar"><i></i><i></i><i></i></div>
-<pre><span class="p">$</span> python -m sift search "serialize object to json"
-652 results in 3.7 ms
-<span class="ok">1. json.dump(obj, fp)</span>
-   <span class="hl">Serialize</span> obj as a <span class="hl">JSON</span> formatted stream…
-
-<span class="p">$</span> python -m sift search "subprocesss timout"
-<span class="ok">Did you mean: subprocess timeout</span></pre></div>
-            <div class="chips" style="margin-top:14px"><span class="chip">Python</span><span class="chip">Algorithms</span><span class="chip">Information retrieval</span><span class="chip">JSON API</span><span class="chip">JavaScript</span></div>
-          </div>
-        </article>
-
-        <article class="project">
-          <div>
-            <span class="kind">Databases</span>
-            <h3>KVLite</h3>
-            <p class="tagline">A key-value database that survives a pulled plug.</p>
-            <p>Every write is appended to a checksummed write-ahead log before it's applied, the approach behind Redis's append-only file and Postgres crash recovery. On restart, KVLite replays the log; if a power cut left a half-written record, its checksum fails and the log is truncated to the last good entry. A TCP server speaks a Redis-style protocol to many clients at once.</p>
-            <ul class="ticks">
-              <li>CRC32 per record, with base64-encoded keys and values so any text is safe</li>
-              <li>Snapshot compaction with fsync and atomic rename, so the snapshot is never half-written</li>
-              <li>TTL expiry, atomic INCR, and fsync or buffered durability modes</li>
-            </ul>
-            <div class="links">
-              <a class="primary" href="projects/kvlite.html" target="_blank" rel="noopener">View project<svg viewBox="0 0 24 24" aria-hidden="true" class="stroke"><path d="M7 17 17 7M9 7h8v8"/></svg></a>
-              <a href="https://github.com/vinovj27/Kvlite" target="_blank" rel="noopener"><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M8 0C3.58 0 0 3.58 0 8a8 8 0 0 0 5.47 7.59c.4.07.55-.17.55-.38v-1.33c-2.23.48-2.7-1.07-2.7-1.07-.36-.92-.89-1.17-.89-1.17-.73-.5.06-.49.06-.49.8.06 1.23.83 1.23.83.71 1.23 1.88.87 2.34.67.07-.52.28-.87.5-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82a7.6 7.6 0 0 1 4 0c1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48v2.2c0 .21.15.46.55.38A8 8 0 0 0 16 8c0-4.42-3.58-8-8-8z"/></svg>Source code</a>
-            </div>
-          </div>
-          <div>
-            <div class="figs">
-              <div><b>~59K</b><span>buffered writes per second</span></div>
-              <div><b>~1.6M</b><span>reads per second</span></div>
-              <div><b>0</b><span>writes lost across restarts in tests</span></div>
-            </div>
-            <div class="term"><div class="bar"><i></i><i></i><i></i></div>
-<pre><span class="p">kvlite&gt;</span> SET user:1 Ada Lovelace
-<span class="ok">+OK</span>
-<span class="p">kvlite&gt;</span> SETEX session:42 60 tok_abc
-<span class="ok">+OK</span>
-<span class="p">kvlite&gt;</span> INCR page_views
-<span class="ok">:1</span>
-<span class="p">kvlite&gt;</span> STATS
-<span class="ok">+keys=3 wal_records=3 recovered=0</span></pre></div>
-            <div class="chips" style="margin-top:14px"><span class="chip">Python</span><span class="chip">Write-ahead log</span><span class="chip">CRC32</span><span class="chip">TCP</span></div>
-          </div>
-        </article>
+      <div class="sec-head">
+        <div>
+          <span class="eyebrow">Featured work</span>
+          <h2 class="title">Some of my<br>recent projects</h2>
+        </div>
+        <a class="view-all" href="https://github.com/vinovj27?tab=repositories" target="_blank" rel="noopener">View all projects <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+      </div>
+      <div class="work-grid">
+        <a class="work-card" href="projects/conveyor.html" target="_blank" rel="noopener">
+          <div class="thumb"><img src="assets/thumbs/conveyor.jpg" alt="Conveyor dashboard showing completed, retried and dead-lettered jobs" width="960" height="600" loading="lazy"><span class="num">01</span><span class="open">Open <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span></div>
+          <h3>Conveyor</h3>
+          <p>Distributed task queue · Python</p>
+        </a>
+        <a class="work-card" href="projects/sift.html" target="_blank" rel="noopener">
+          <div class="thumb"><img src="assets/thumbs/sift.jpg" alt="Sift search UI with ranked, highlighted results" width="960" height="600" loading="lazy"><span class="num">02</span><span class="open">Open <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span></div>
+          <h3>Sift</h3>
+          <p>Search engine · Python</p>
+        </a>
+        <a class="work-card" href="projects/kvlite.html" target="_blank" rel="noopener">
+          <div class="thumb"><img src="assets/thumbs/kvlite.jpg" alt="KVLite terminal sessions recovering data after a restart" width="960" height="600" loading="lazy"><span class="num">03</span><span class="open">Open <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span></div>
+          <h3>KVLite</h3>
+          <p>Crash-safe database · Python</p>
+        </a>
       </div>
     </section>
 
@@ -237,7 +138,7 @@ Started 3 worker processes on 151 jobs
       <h2 class="title">Where I studied.</h2>
       <div class="edu">
         <article><span class="when">Graduating Dec 2026</span><h3>MS Information Systems · University of Maryland, Baltimore County</h3><p>Database application development in Oracle SQL and PL/SQL (stored procedures, exception handling, multi-table queries) and machine-learning model evaluation with confusion matrices and ROC analysis.</p></article>
-        <!--UNDERGRAD-->
+        <article><span class="when">2020 – 2024</span><h3>BE Computer Science &amp; Engineering · R.M.K. College of Engineering and Technology, India</h3><p>Bachelor of Engineering in Computer Science and Engineering.</p></article>
       </div>
     </section>
 
