@@ -350,11 +350,11 @@ h2.mini { font: 500 13px/1 var(--mono); letter-spacing: .14em; text-transform: u
   nav a { font-size: 15px; }
   nav li:first-child { display: none; }
 }
-@media (max-width: 380px) {
-  .brand { font-size: 16px; }
-  nav li:not(:last-child) { display: none; }
-}
 
 @media (max-width: 600px) {
-  .hero h1 { font-size: min(54px, calc((100vw - 48px) / 7.2)); }
+  .hero h1 { font-size: min(40px, calc((100vw - 44px) / 9.4)); }
+}
+@media (max-width: 440px) {
+  .brand { font-size: 16px; }
+  nav li:not(:last-child) { display: none; }
 }

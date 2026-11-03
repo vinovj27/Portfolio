@@ -70,11 +70,18 @@ def detail(folder: str, slug: str, title: str, description: str, hero: str, body
 """ + scripts + "</body>\n</html>\n")
 
 
+def bust(html: str) -> str:
+    import hashlib
+    v = hashlib.sha256((ROOT / "assets" / "site.css").read_bytes()).hexdigest()[:8]
+    return html.replace('href="assets/site.css"', f'href="assets/site.css?v={v}"').replace(
+        'href="../assets/site.css"', f'href="../assets/site.css?v={v}"')
+
+
 def build() -> None:
     page = (SRC / "page.html").read_text()
     head, body = page.split('<link rel="stylesheet" href="assets/site.css">', 1)
-    (ROOT / "index.html").write_text(HEAD + head.strip() + '\n<link rel="stylesheet" href="assets/site.css">\n</head>\n<body>\n'
-                                     + body.strip() + "\n</body>\n</html>\n")
+    (ROOT / "index.html").write_text(bust(HEAD + head.strip() + '\n<link rel="stylesheet" href="assets/site.css">\n</head>\n<body>\n'
+                                     + body.strip() + "\n</body>\n</html>\n"))
     for folder, slug, _, _ in PAGES:
         out = ROOT / folder
         out.mkdir(exist_ok=True)
@@ -82,7 +89,7 @@ def build() -> None:
         meta, hero, content = frag.split("<!--SPLIT-->")
         lines = dict(line.split(": ", 1) for line in meta.strip().splitlines())
         html = detail(folder, slug, lines["title"], lines["description"], hero.replace("{GITHUB}", GITHUB), content)
-        (out / f"{slug}.html").write_text(html)
+        (out / f"{slug}.html").write_text(bust(html))
         print("built", out / f"{slug}.html")
 
 
