@@ -29,7 +29,7 @@ PAGES = [
 
 def nav() -> str:
     return """  <header class="nav">
-    <a class="brand" href="../index.html">Vinodhini<span>.</span></a>
+    <a class="brand" href="../index.html">Vinodhini Vijayakumar<span>.</span></a>
     <nav aria-label="Sections">
       <ul>
         <li class="opt"><a href="../index.html#experience">Experience</a></li>
