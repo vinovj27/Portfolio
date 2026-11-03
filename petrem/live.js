@@ -31,7 +31,9 @@
     const files = await (await realFetch('py/manifest.json')).json();
     py.FS.mkdirTree('/home/pyodide/petrem');
     await Promise.all(files.map(async name => {
-      const src = await (await realFetch(`py/petrem/${name}`)).text();
+      const res = await realFetch(`py/petrem/${name}`);
+      if (!res.ok) throw new Error(`Couldn't load ${name} (${res.status})`);
+      const src = await res.text();
       py.FS.writeFile(`/home/pyodide/petrem/${name}`, src);
     }));
     py.FS.mkdirTree('/data');
