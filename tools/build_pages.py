@@ -52,9 +52,10 @@ def pager(folder: str, current: str) -> str:
 
 
 def detail(folder: str, slug: str, title: str, description: str, hero: str, body: str, scripts: str = "") -> str:
-    return (HEAD + f"<title>{title} · Vinodhini</title>\n"
+    return (HEAD + f"<title>{title} · Vinodhini Vijayakumar</title>\n"
+            '<link rel="icon" href="../assets/favicon.svg" type="image/svg+xml">\n'
             f'<meta name="description" content="{description}">\n'
-            f'<meta property="og:title" content="{title} · Vinodhini">\n'
+            f'<meta property="og:title" content="{title} · Vinodhini Vijayakumar">\n'
             f'<meta property="og:description" content="{description}">\n'
             f'<meta property="og:url" content="https://vinovj27.github.io/Portfolio/{folder}/{slug}.html">\n'
             f'<meta property="og:image" content="https://vinovj27.github.io/Portfolio/assets/thumbs/{slug}.jpg">\n'
