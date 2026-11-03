@@ -358,3 +358,6 @@ h2.mini { font: 500 13px/1 var(--mono); letter-spacing: .14em; text-transform: u
   .brand { font-size: 16px; }
   nav li:not(:last-child) { display: none; }
 }
+@media (max-width: 340px) {
+  .brand { font-size: 14px; }
+}
