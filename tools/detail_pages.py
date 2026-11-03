@@ -72,7 +72,7 @@ PAGES = {
    hl=[("globe","International names","Matched names across umlauts, accents and spelling conventions."),
        ("bolt","Built to scale","Kept the tool fast as data more than doubled mid-project."),
        ("file","Reviewer-ready reports","Excel reports with a confidence score on every match.")],
-   stack=["Python","Data reconciliation","Fuzzy matching","Unicode","Excel"]),
+   stack=["Python","pandas","scikit-learn","ETL pipelines","Data reconciliation","Excel"]),
 }
 
 def fragment(p):
