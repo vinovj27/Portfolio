@@ -23,6 +23,7 @@ PAGES = [
     ("projects", "conveyor", "Project", "Conveyor"),
     ("projects", "sift", "Project", "Sift"),
     ("projects", "kvlite", "Project", "KVLite"),
+    ("projects", "petrem", "Project", "PetRem"),
 ]
 
 

@@ -51,6 +51,17 @@ PAGES = {
        ("lock","Crash recovery","Checksums catch half-written records and roll back cleanly."),
        ("users","Many clients","A TCP server with a Redis-style protocol.")],
    stack=["Python","Write-ahead log","CRC32","TCP sockets","GitHub Actions"]),
+ ("projects","petrem"): dict(
+   title="PetRem", desc="PetRem, a full-stack pet vaccination and care reminder app: Python REST API, SQLite and a single-page frontend. Built by Vinodhini.",
+   back="../index.html#projects", eyebrow="Full-stack web app · Python + JavaScript", h1="PetRem",
+   tagline="Never miss a pet's vaccine. Plans, reminders and calendar sync in one app.",
+   buttons=[("Live demo","../petrem/",True),("View project","https://github.com/vinovj27/Petrem-app",False),("Source code","https://github.com/vinovj27/Petrem-app/tree/main/petrem",False)],
+   shot=("../assets/thumbs/petrem.jpg","PetRem's Today dashboard with overdue vaccines and upcoming reminders"),
+   figs=[("37","automated tests, CI on 3 operating systems"),("23","REST API endpoints"),("0","external dependencies")],
+   hl=[("lock","Secure accounts","Hashed passwords, HttpOnly sessions, rate-limited logins and per-user data isolation."),
+       ("spark","Smart vaccine plans","Due dates calculated from each pet's species, age and dose history."),
+       ("chart","Reminders & calendar","Repeating reminders, desktop alerts and a live feed for Google or Apple Calendar.")],
+   stack=["Python","REST API","SQLite","JavaScript","HTML & CSS","Authentication"]),
  ("experience","tcs"): dict(
    title="Software Engineering Intern, TCS", desc="Vinodhini's software engineering internship at Tata Consultancy Services, May–Aug 2026.",
    back="../index.html#experience", eyebrow="Work experience · May – Aug 2026", h1="Software Engineering Intern",

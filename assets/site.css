@@ -336,3 +336,9 @@ h2.mini { font: 500 13px/1 var(--mono); letter-spacing: .14em; text-transform: u
 .orbit.li svg { width: 20px; height: 20px; fill: var(--ink); stroke: none; }
 .contact .actions .btn svg path[d^="M20.45"] { fill: currentColor; stroke: none; }
 .actions .btn svg path[d^="M20.45"] { fill: currentColor; stroke: none; }
+
+.work-grid:not(.one) { grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 20px; }
+@media (max-width: 1040px) { .work-grid:not(.one) { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+@media (max-width: 560px) { .work-grid:not(.one) { grid-template-columns: minmax(0, 1fr); } }
+.work-card .live-tag { position: absolute; right: 12px; top: 12px; display: inline-flex; align-items: center; gap: 6px; font: 700 12px/1 var(--mono); padding: 6px 9px; border-radius: 7px; background: var(--ok); color: #06210f; }
+.work-card .live-tag::before { content: ""; width: 7px; height: 7px; border-radius: 50%; background: currentColor; animation: pulse 2s infinite; }

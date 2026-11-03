@@ -13,6 +13,7 @@ Hand-written HTML and CSS with no framework: a dark home page with clickable exp
 | [Conveyor](https://github.com/vinovj27/conveyor) | Distributed task queue with leases, retries and a dead-letter queue | Python |
 | [Sift](https://github.com/vinovj27/sift) | Full-text search engine with BM25 ranking and instant-search UI | Python |
 | [KVLite](https://github.com/vinovj27/kvlite) | Crash-safe key-value database with a TCP server | Python |
+| [PetRem](https://github.com/vinovj27/Petrem-app) | Full-stack pet vaccination and care reminder app | Python, JavaScript |
 
 ## Run locally
 
